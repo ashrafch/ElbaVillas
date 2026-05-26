@@ -19,7 +19,8 @@ const cormorant = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://elba-luce-villas.vercel.app"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://elba-villas.vercel.app"),
+  applicationName: "Elba Luce Villas",
   title: {
     default: "Elba Luce Villas | Ville contemporanee all'Isola d'Elba",
     template: "%s | Elba Luce Villas",
@@ -32,7 +33,28 @@ export const metadata: Metadata = {
       "Residenze contemporanee tra mare, pietra e macchia mediterranea.",
     type: "website",
     locale: "it_IT",
-    images: ["/images/hero/elba-villas-hero.svg"],
+    siteName: "Elba Luce Villas",
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "Elba Luce Villas - residenze contemporanee all'Isola d'Elba",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Elba Luce Villas",
+    description: "Ville contemporanee tra mare, pietra e macchia mediterranea.",
+    images: ["/opengraph-image"],
+  },
+  alternates: {
+    canonical: "/",
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 

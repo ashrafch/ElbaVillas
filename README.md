@@ -68,12 +68,14 @@ Current assets are clear placeholders in `public/images` and `public/videos`.
 
 Replace them with real renders, drone stills, interior images, material details and the final drone video while keeping the same file paths or updating the data files.
 
+See `ASSET_GUIDE.md` for naming, dimensions, folders and replacement checklist.
+
 ## Lead Form
 
 The form posts to `/api/lead`, validates with Zod on client and server, includes a hidden honeypot field and is ready for Resend.
 
 Future production hardening:
-- Add rate limiting.
+- Replace the current in-memory rate limit with managed rate limiting for high-traffic campaigns.
 - Add privacy/cookie pages.
 - Add consent copy approved by legal counsel.
 - Add CRM or Google Sheet export only if requested.

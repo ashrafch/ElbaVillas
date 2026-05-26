@@ -24,8 +24,8 @@ export function Footer() {
                 {item.label}
               </a>
             ))}
-            <a href="#" className="transition hover:text-white">Privacy</a>
-            <a href="#" className="transition hover:text-white">Cookie</a>
+            <a href="/privacy" className="transition hover:text-white">Privacy</a>
+            <a href="/cookie" className="transition hover:text-white">Cookie</a>
           </div>
         </div>
       </div>
