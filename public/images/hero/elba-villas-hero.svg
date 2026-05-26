@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" role="img" aria-label="Costa dell'Isola d'Elba con ville contemporanee">
+  <defs>
+    <linearGradient id="sky" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#c6d8d8"/>
+      <stop offset=".45" stop-color="#efe1c4"/>
+      <stop offset="1" stop-color="#58756f"/>
+    </linearGradient>
+    <linearGradient id="sea" x1="0" x2="1">
+      <stop offset="0" stop-color="#1d4f5f"/>
+      <stop offset="1" stop-color="#0d2d3c"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="1000" fill="url(#sky)"/>
+  <path d="M0 550 C240 500 355 610 600 545 C860 475 1070 520 1600 430 L1600 1000 L0 1000Z" fill="url(#sea)"/>
+  <path d="M0 650 C220 560 480 650 760 585 C1040 520 1220 610 1600 535 L1600 1000 L0 1000Z" fill="#253f38"/>
+  <path d="M0 730 C260 650 440 760 760 700 C1110 633 1270 720 1600 660 L1600 1000 L0 1000Z" fill="#182b26"/>
+  <g fill="#e9dfcd">
+    <path d="M725 642 h165 l65 48 h-190z"/>
+    <path d="M935 620 h190 l72 55 h-210z"/>
+    <path d="M1040 706 h230 l80 60 h-258z"/>
+  </g>
+  <g fill="#bca36f" opacity=".65">
+    <rect x="780" y="676" width="95" height="12"/>
+    <rect x="1005" y="660" width="118" height="12"/>
+    <rect x="1138" y="752" width="132" height="12"/>
+  </g>
+</svg>
