@@ -18,15 +18,15 @@ function WavesIcon(props: React.ComponentProps<"svg">) {
 
 export function LocationSection() {
   return (
-    <section id="location" className="bg-background py-24 md:py-32">
+    <section id="location" className="bg-background py-20 sm:py-24 md:py-32">
       <div className="container-premium grid gap-12 lg:grid-cols-[1fr_0.9fr]">
-        <div>
+        <div className="text-center lg:text-left">
           <p className="text-xs uppercase tracking-[0.28em] text-accent">Location</p>
           <h2 className="mt-5 font-heading text-4xl font-medium md:text-6xl">Elba, senza fretta.</h2>
-          <p className="mt-6 max-w-2xl text-lg leading-8 text-muted-foreground">
+          <p className="mx-auto mt-6 max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8 lg:mx-0">
             Il valore della posizione non e solo nella distanza dal mare, ma nella qualita del tempo: luce, silenzio, borghi raggiungibili e un paesaggio che rimane protagonista.
           </p>
-          <div className="mt-10 grid gap-4 sm:grid-cols-2">
+          <div className="mt-10 grid gap-5 text-left sm:grid-cols-2">
             {pois.map((poi) => (
               <div key={poi.label} className="border-l border-border pl-5">
                 <poi.icon className="size-5 text-accent" />
@@ -35,11 +35,11 @@ export function LocationSection() {
               </div>
             ))}
           </div>
-          <a href="#contatti" className="mt-10 inline-flex h-12 items-center justify-center bg-primary px-6 text-sm uppercase tracking-[0.18em] text-primary-foreground transition hover:bg-primary/90">
+          <a href="#contatti" className="mt-10 inline-flex min-h-12 w-full items-center justify-center bg-primary px-5 py-3 text-center text-xs uppercase tracking-[0.13em] text-primary-foreground transition hover:bg-primary/90 sm:w-auto sm:px-6 sm:text-sm sm:tracking-[0.18em]">
             Ricevi la posizione e il dossier completo
           </a>
         </div>
-        <div className="relative min-h-[420px] overflow-hidden bg-[#d9d0bd]">
+        <div className="relative min-h-[360px] overflow-hidden bg-[#d9d0bd] sm:min-h-[420px]">
           <div className="absolute inset-8 border border-[#172522]/20" />
           <div className="absolute left-[18%] top-[18%] h-[58%] w-[54%] rounded-[45%] border border-[#172522]/25" />
           <div className="absolute right-[20%] top-[30%] h-[42%] w-[34%] rounded-[50%] border border-[#2f6754]/35" />

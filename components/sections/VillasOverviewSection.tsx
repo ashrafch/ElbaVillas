@@ -4,12 +4,12 @@ import { villas } from "@/lib/villas"
 
 export function VillasOverviewSection() {
   return (
-    <section id="ville" className="bg-[#efe7d8] py-24 md:py-32">
+    <section id="ville" className="bg-[#efe7d8] py-20 sm:py-24 md:py-32">
       <div className="container-premium">
-        <FadeIn className="max-w-3xl">
+        <FadeIn className="mx-auto max-w-3xl text-center">
           <p className="text-xs uppercase tracking-[0.28em] text-primary/70">Le ville</p>
           <h2 className="mt-5 font-heading text-4xl font-medium md:text-6xl">Quattro identita, un unico paesaggio.</h2>
-          <p className="mt-6 text-lg leading-8 text-foreground/70">
+          <p className="mt-6 text-base leading-7 text-foreground/70 sm:text-lg sm:leading-8">
             Ogni unita mantiene indipendenza, orientamento e spazi esterni propri. La struttura dati e gia pronta per futuri dettagli, modal e planimetrie.
           </p>
         </FadeIn>

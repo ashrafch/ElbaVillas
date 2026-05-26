@@ -103,7 +103,7 @@ export function LeadForm() {
           {status.message}
         </div>
       ) : null}
-      <Button type="submit" disabled={isSubmitting} className="h-12 rounded-none bg-primary px-6 text-sm uppercase tracking-[0.18em] text-primary-foreground hover:bg-primary/90">
+      <Button type="submit" disabled={isSubmitting} className="min-h-12 rounded-none bg-primary px-5 py-3 text-xs uppercase tracking-[0.12em] text-primary-foreground hover:bg-primary/90 sm:px-6 sm:text-sm sm:tracking-[0.18em]">
         {isSubmitting ? <Loader2 className="size-4 animate-spin" /> : null}
         Richiedi informazioni riservate
       </Button>

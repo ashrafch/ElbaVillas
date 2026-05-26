@@ -5,14 +5,14 @@ export function FaqSection() {
   return (
     <section className="bg-[#f7f1e7] py-20">
       <div className="container-premium grid gap-10 lg:grid-cols-[0.7fr_1.3fr]">
-        <div>
+        <div className="text-center lg:text-left">
           <p className="text-xs uppercase tracking-[0.28em] text-accent">FAQ</p>
           <h2 className="mt-5 font-heading text-4xl font-medium">Domande frequenti</h2>
         </div>
         <Accordion className="divide-y divide-border">
           {faqs.map((faq, index) => (
             <AccordionItem key={faq.question} value={`item-${index}`}>
-              <AccordionTrigger className="py-5 font-heading text-2xl font-normal hover:no-underline">
+              <AccordionTrigger className="py-5 font-heading text-xl font-normal leading-tight hover:no-underline sm:text-2xl">
                 {faq.question}
               </AccordionTrigger>
               <AccordionContent className="pb-5 text-base leading-7 text-muted-foreground">
