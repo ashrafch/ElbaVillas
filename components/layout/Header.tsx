@@ -10,6 +10,8 @@ import { cn } from "@/lib/utils"
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false)
+  const [hovered, setHovered] = useState(false)
+  const active = scrolled || hovered
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24)
@@ -22,12 +24,21 @@ export function Header() {
     <>
       <ScrollProgress />
       <header
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
         className={cn(
-          "fixed inset-x-0 top-0 z-50 transition-all duration-500",
-          scrolled ? "bg-[#172522]/78 shadow-sm backdrop-blur-xl" : "bg-transparent"
+          "fixed inset-x-0 top-0 z-50 border-b transition-all duration-500",
+          active
+            ? "border-white/10 bg-[#172522]/86 shadow-sm backdrop-blur-xl"
+            : "border-transparent bg-transparent"
         )}
       >
-        <div className="container-premium flex h-20 items-center justify-between text-white">
+        <div
+          className={cn(
+            "container-premium flex items-center justify-between text-white transition-all duration-500",
+            active ? "h-18" : "h-20"
+          )}
+        >
           <a href="#" className="font-heading text-2xl tracking-wide">
             {siteConfig.name}
           </a>
