@@ -149,3 +149,9 @@
     margin-inline: auto;
   }
 }
+
+@media (max-height: 560px) and (min-width: 768px) {
+  .hero-details-short {
+    display: none !important;
+  }
+}
