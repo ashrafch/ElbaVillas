@@ -23,6 +23,12 @@ export function Header() {
   return (
     <>
       <ScrollProgress />
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:bg-white focus:px-4 focus:py-3 focus:text-sm focus:text-[#172522] focus:shadow-xl"
+      >
+        Salta al contenuto
+      </a>
       <header
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
@@ -42,7 +48,7 @@ export function Header() {
           <a href="#" className="font-heading text-2xl tracking-wide">
             {siteConfig.name}
           </a>
-          <nav className="hidden items-center gap-7 md:flex">
+          <nav className="hidden items-center gap-7 md:flex" aria-label="Navigazione principale">
             {siteConfig.navItems.map((item) => (
               <a key={item.href} href={item.href} className="text-xs uppercase tracking-[0.2em] text-white/80 transition hover:text-white">
                 {item.label}

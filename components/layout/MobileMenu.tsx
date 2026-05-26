@@ -1,7 +1,7 @@
 "use client"
 
 import { Menu, X } from "lucide-react"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { createPortal } from "react-dom"
 
 import { Button } from "@/components/ui/button"
@@ -9,15 +9,25 @@ import { siteConfig } from "@/lib/site"
 
 export function MobileMenu() {
   const [open, setOpen] = useState(false)
+  const closeButtonRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
     if (!open) return
 
     const originalOverflow = document.body.style.overflow
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setOpen(false)
+      }
+    }
+
     document.body.style.overflow = "hidden"
+    document.addEventListener("keydown", onKeyDown)
+    closeButtonRef.current?.focus()
 
     return () => {
       document.body.style.overflow = originalOverflow
+      document.removeEventListener("keydown", onKeyDown)
     }
   }, [open])
 
@@ -25,6 +35,7 @@ export function MobileMenu() {
     open && typeof document !== "undefined"
       ? createPortal(
           <div
+            id="mobile-menu"
             role="dialog"
             aria-modal="true"
             aria-label="Menu principale"
@@ -33,6 +44,7 @@ export function MobileMenu() {
             <div className="flex items-center justify-between border-b border-white/12 pb-5">
               <span className="font-heading text-2xl leading-none">{siteConfig.name}</span>
               <Button
+                ref={closeButtonRef}
                 type="button"
                 variant="ghost"
                 size="icon"
@@ -79,6 +91,8 @@ export function MobileMenu() {
         size="icon"
         className="text-white hover:bg-white/10"
         aria-label="Apri menu"
+        aria-controls="mobile-menu"
+        aria-expanded={open}
         onClick={() => setOpen(true)}
       >
         <Menu className="size-5" />
