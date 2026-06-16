@@ -95,6 +95,15 @@ The project must build on Vercel without a custom server. Document env vars in `
 5. Run lint/build when possible.
 6. Summarize changed files and any residual risk.
 
+## Video Assets
+
+Two real video assets are deployed in `public/videos/`:
+
+- `elba-hero.mp4` — ambient background for the HeroSection (autoplay, muted, loop).
+- `elba-drone.mp4` — full-bleed cinematic video in DroneVideoSection (autoplay muted; user can unmute).
+
+Source files are kept in `assets/` (gitignored). Do not delete or rename the public copies without updating the component references. Both videos use `preload="metadata"` to avoid unnecessary bandwidth on load.
+
 ## Do Not Do
 
 Do not add a database, auth, admin panel, CMS, unnecessary libraries, fake investment promises, exposed secrets, massive components or unrelated refactors.
