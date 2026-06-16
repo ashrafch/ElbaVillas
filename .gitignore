@@ -42,3 +42,6 @@ next-env.d.ts
 
 .vercel
 .env*.local
+
+# raw client assets (originals kept locally, web copies go in public/)
+/assets
