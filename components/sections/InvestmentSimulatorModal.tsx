@@ -377,7 +377,7 @@ export function InvestmentSimulatorModal() {
                     "font-heading leading-none transition-all duration-300",
                     mobileTab === "results"
                       ? "text-[1.4rem] text-white"
-                      : "text-sm text-white/25",
+                      : "text-[1.15rem] text-white/55",
                   )}>
                     <AnimatedEur value={R.netIncome} />
                   </span>
