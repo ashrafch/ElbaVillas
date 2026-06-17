@@ -236,27 +236,33 @@ const DEFAULTS: Inputs = {
 // ─── Main export ─────────────────────────────────────────────────────────────
 
 export function InvestmentSimulatorModal() {
-  const [open, setOpen]         = useState(false)
-  const [mode, setMode]         = useState<Mode>("direct")
-  const [inputs, setInputs]     = useState<Inputs>(DEFAULTS)
+  const [open, setOpen]           = useState(false)
+  const [mode, setMode]           = useState<Mode>("direct")
+  const [inputs, setInputs]       = useState<Inputs>(DEFAULTS)
   const [costsOpen, setCostsOpen] = useState(false)
+  const [mobileTab, setMobileTab] = useState<"params" | "results">("params")
   const [showScrollHint, setShowScrollHint] = useState(false)
   const leftScrollRef = useRef<HTMLDivElement>(null)
 
+  // Reset tab to params when modal opens
+  useEffect(() => { if (open) setMobileTab("params") }, [open])
+
+  // Scroll hint — re-runs on mode change (mortgage adds sliders → scrollHeight grows)
   useEffect(() => {
     const el = leftScrollRef.current
-    if (!el) return
+    if (!el || !open) return
     const check = () => {
       const canScroll = el.scrollHeight > el.clientHeight + 4
       const atBottom  = el.scrollTop + el.clientHeight >= el.scrollHeight - 16
       setShowScrollHint(canScroll && !atBottom)
     }
-    check()
+    // Delay to let Framer Motion entrance animation settle
+    const t = setTimeout(check, 200)
     el.addEventListener("scroll", check, { passive: true })
     const ro = new ResizeObserver(check)
     ro.observe(el)
-    return () => { el.removeEventListener("scroll", check); ro.disconnect() }
-  }, [open])
+    return () => { clearTimeout(t); el.removeEventListener("scroll", check); ro.disconnect() }
+  }, [open, mode])
 
   const set = (key: keyof Inputs) => (v: number) =>
     setInputs((prev) => ({ ...prev, [key]: v }))
@@ -322,7 +328,7 @@ export function InvestmentSimulatorModal() {
           </div>
 
           {/* Mode toggle — mobile */}
-          <div className="flex shrink-0 gap-px border-b border-white/10 bg-[#0d1a18] p-3 sm:hidden">
+          <div className="flex shrink-0 gap-px border-b border-white/10 bg-[#0d1a18] p-3 lg:hidden">
             {(["direct", "mortgage"] as const).map((m) => (
               <button
                 key={m}
@@ -337,11 +343,43 @@ export function InvestmentSimulatorModal() {
             ))}
           </div>
 
+          {/* Tab bar — mobile only */}
+          <div className="relative flex shrink-0 border-b border-white/8 lg:hidden">
+            {(["params", "results"] as const).map((tab) => (
+              <button
+                key={tab}
+                onClick={() => setMobileTab(tab)}
+                className={cn(
+                  "relative flex flex-1 flex-col items-center gap-0.5 py-3 transition-colors",
+                  mobileTab === tab ? "text-white" : "text-white/30",
+                )}
+              >
+                <span className="text-[0.6rem] uppercase tracking-[0.2em]">
+                  {tab === "params" ? "Parametri" : "Risultati"}
+                </span>
+                {tab === "results" && (
+                  <span className={cn(
+                    "font-heading text-sm leading-none transition-colors",
+                    mobileTab === "results" ? "text-white/60" : "text-white/20",
+                  )}>
+                    <AnimatedEur value={R.netIncome} />
+                  </span>
+                )}
+                {mobileTab === tab && (
+                  <motion.div
+                    layoutId="sim-tab-indicator"
+                    className="absolute bottom-0 left-0 right-0 h-px bg-white/40"
+                  />
+                )}
+              </button>
+            ))}
+          </div>
+
           {/* ── Body — 2-col on desktop, scrollable each ──── */}
           <div className="grid min-h-0 flex-1 lg:grid-cols-[1fr_400px]">
 
             {/* LEFT — inputs */}
-            <div className="relative border-r border-white/8">
+            <div className={cn("relative border-r border-white/8", mobileTab === "results" && "max-lg:hidden")}>
             <div ref={leftScrollRef} className="sim-scroll absolute inset-0 overflow-y-auto px-5 py-7 sm:px-8 sm:py-9">
               <p className="mb-7 text-[0.6rem] uppercase tracking-[0.28em] text-white/25">Parametri</p>
               <div className="space-y-7">
@@ -419,7 +457,7 @@ export function InvestmentSimulatorModal() {
             </div>
 
             {/* RIGHT — results */}
-            <div className="relative bg-[#090f0e]">
+            <div className={cn("relative bg-[#090f0e]", mobileTab === "params" && "max-lg:hidden")}>
             <div className="sim-scroll absolute inset-0 overflow-y-auto px-5 py-7 sm:px-8 sm:py-9">
 
               {/* 1. NET INCOME — always at top */}
