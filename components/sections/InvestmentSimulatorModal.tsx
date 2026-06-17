@@ -1,7 +1,7 @@
 "use client"
 
-import { type CSSProperties, useEffect, useState } from "react"
-import { motion, useReducedMotion, useSpring, useTransform } from "framer-motion"
+import { type CSSProperties, useEffect, useRef, useState } from "react"
+import { AnimatePresence, motion, useReducedMotion, useSpring, useTransform } from "framer-motion"
 import { Calculator, ChevronDown, Info, TrendingUp, X } from "lucide-react"
 
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog"
@@ -240,6 +240,23 @@ export function InvestmentSimulatorModal() {
   const [mode, setMode]         = useState<Mode>("direct")
   const [inputs, setInputs]     = useState<Inputs>(DEFAULTS)
   const [costsOpen, setCostsOpen] = useState(false)
+  const [showScrollHint, setShowScrollHint] = useState(false)
+  const leftScrollRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const el = leftScrollRef.current
+    if (!el) return
+    const check = () => {
+      const canScroll = el.scrollHeight > el.clientHeight + 4
+      const atBottom  = el.scrollTop + el.clientHeight >= el.scrollHeight - 16
+      setShowScrollHint(canScroll && !atBottom)
+    }
+    check()
+    el.addEventListener("scroll", check, { passive: true })
+    const ro = new ResizeObserver(check)
+    ro.observe(el)
+    return () => { el.removeEventListener("scroll", check); ro.disconnect() }
+  }, [open])
 
   const set = (key: keyof Inputs) => (v: number) =>
     setInputs((prev) => ({ ...prev, [key]: v }))
@@ -325,7 +342,7 @@ export function InvestmentSimulatorModal() {
 
             {/* LEFT — inputs */}
             <div className="relative border-r border-white/8">
-            <div className="sim-scroll absolute inset-0 overflow-y-auto px-5 py-7 sm:px-8 sm:py-9">
+            <div ref={leftScrollRef} className="sim-scroll absolute inset-0 overflow-y-auto px-5 py-7 sm:px-8 sm:py-9">
               <p className="mb-7 text-[0.6rem] uppercase tracking-[0.28em] text-white/25">Parametri</p>
               <div className="space-y-7">
                 <SimSlider
@@ -379,6 +396,26 @@ export function InvestmentSimulatorModal() {
               </p>
             </div>
             <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-[#0d1a18] to-transparent" />
+            <AnimatePresence>
+              {showScrollHint && (
+                <motion.div
+                  key="scroll-hint"
+                  initial={{ opacity: 0, y: 4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 4 }}
+                  transition={{ duration: 0.4, ease: "easeOut" }}
+                  className="pointer-events-none absolute bottom-3 left-0 right-0 flex flex-col items-center gap-1"
+                >
+                  <span className="text-[0.5rem] uppercase tracking-[0.3em] text-white/20">scorri</span>
+                  <motion.div
+                    animate={{ y: [0, 3, 0] }}
+                    transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+                  >
+                    <ChevronDown className="size-2.5 text-white/18" />
+                  </motion.div>
+                </motion.div>
+              )}
+            </AnimatePresence>
             </div>
 
             {/* RIGHT — results */}
