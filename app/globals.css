@@ -218,6 +218,15 @@
   background: rgba(255,255,255,.65);
 }
 
+/* Simulator panels — hide native scrollbar, keep scroll */
+.sim-scroll {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.sim-scroll::-webkit-scrollbar {
+  display: none;
+}
+
 @keyframes marquee-scroll {
   from { transform: translateX(0) }
   to { transform: translateX(-50%) }

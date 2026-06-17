@@ -323,8 +323,9 @@ export function InvestmentSimulatorModal() {
           {/* ── Body — 2-col on desktop, scrollable each ──── */}
           <div className="grid min-h-0 flex-1 lg:grid-cols-[1fr_400px]">
 
-            {/* LEFT — inputs (scrollable) */}
-            <div className="overflow-y-auto border-r border-white/8 px-5 py-7 sm:px-8 sm:py-9">
+            {/* LEFT — inputs */}
+            <div className="relative border-r border-white/8">
+            <div className="sim-scroll absolute inset-0 overflow-y-auto px-5 py-7 sm:px-8 sm:py-9">
               <p className="mb-7 text-[0.6rem] uppercase tracking-[0.28em] text-white/25">Parametri</p>
               <div className="space-y-7">
                 <SimSlider
@@ -377,9 +378,12 @@ export function InvestmentSimulatorModal() {
                 Vedi CALCOLI_SIMULATORE.md per la metodologia completa.
               </p>
             </div>
+            <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-[#0d1a18] to-transparent" />
+            </div>
 
-            {/* RIGHT — results (scrollable) */}
-            <div className="overflow-y-auto bg-[#090f0e] px-5 py-7 sm:px-8 sm:py-9">
+            {/* RIGHT — results */}
+            <div className="relative bg-[#090f0e]">
+            <div className="sim-scroll absolute inset-0 overflow-y-auto px-5 py-7 sm:px-8 sm:py-9">
 
               {/* 1. NET INCOME — always at top */}
               <div className="mb-6 border-b border-white/8 pb-6">
@@ -488,6 +492,8 @@ export function InvestmentSimulatorModal() {
               >
                 Richiedi il dossier riservato →
               </a>
+            </div>
+            <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-[#090f0e] to-transparent" />
             </div>
           </div>
         </DialogContent>
