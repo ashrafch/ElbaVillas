@@ -1,72 +1,184 @@
-import { ArrowDown, ArrowRight } from "lucide-react"
+"use client"
 
+import { motion, useReducedMotion } from "framer-motion"
+import { ArrowRight } from "lucide-react"
+import type { ReactNode } from "react"
+
+import { SplitReveal } from "@/components/motion/SplitReveal"
 import { VideoBackground } from "@/components/motion/VideoBackground"
-import { RevealText } from "@/components/motion/RevealText"
 
-const details = ["4 ville esclusive", "Isola d'Elba", "Vista mare", "Disponibilità limitata"]
+const stats = ["4 ville esclusive", "Isola d'Elba", "Vista mare", "Disponibilità limitata"]
+
+function FadeUp({
+  children,
+  delay = 0,
+  className = "",
+}: {
+  children: ReactNode
+  delay?: number
+  className?: string
+}) {
+  const reducedMotion = useReducedMotion()
+  return (
+    <motion.div
+      className={className}
+      initial={reducedMotion ? false : { opacity: 0, y: 20 }}
+      animate={reducedMotion ? undefined : { opacity: 1, y: 0 }}
+      transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay }}
+    >
+      {children}
+    </motion.div>
+  )
+}
 
 export function HeroSection() {
+  const reducedMotion = useReducedMotion()
+
   return (
-    <section className="relative min-h-[100svh] overflow-hidden bg-[#172522] text-white">
+    <section
+      id="home"
+      className="relative min-h-[100svh] overflow-hidden bg-[#0d1e1a] text-white"
+    >
       <VideoBackground
         src="/videos/elba-hero.mp4"
         poster="/images/hero/elba-villas-hero.svg"
+        className="opacity-60"
       />
 
-      {/* Cinematic gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/20 to-[#172522]/85" />
+      {/* Multi-layer cinematic gradient */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/10 to-[#0d1e1a]/90" />
+      <div className="absolute inset-0 bg-gradient-to-r from-[#0d1e1a]/50 via-transparent to-transparent" />
 
-      {/* Decorative horizontal rule */}
-      <div className="absolute inset-x-6 top-28 hidden h-px bg-white/20 md:block" />
+      {/* Thin architectural frame — top */}
+      <motion.div
+        className="absolute inset-x-0 top-0 h-px bg-white/15"
+        initial={reducedMotion ? false : { scaleX: 0, transformOrigin: "left" }}
+        animate={reducedMotion ? undefined : { scaleX: 1 }}
+        transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
+      />
 
-      {/* Decorative vertical line */}
-      <div className="absolute bottom-32 left-1/2 hidden h-24 w-px -translate-x-1/2 bg-white/25 md:block" />
+      {/* Thin vertical accent — left side */}
+      <motion.div
+        className="absolute left-6 top-28 hidden h-32 w-px bg-white/20 md:block lg:left-10"
+        initial={reducedMotion ? false : { scaleY: 0, transformOrigin: "top" }}
+        animate={reducedMotion ? undefined : { scaleY: 1 }}
+        transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: 0.6 }}
+      />
 
-      <div className="container-premium relative flex min-h-[100svh] flex-col items-center justify-center pb-36 pt-28 text-center sm:pb-40 lg:pb-36 lg:pt-32 [@media(max-height:560px)]:pb-8 [@media(max-height:560px)]:pt-20">
-        <div className="mx-auto max-w-5xl -translate-y-4 sm:-translate-y-6 lg:-translate-y-8 [@media(max-height:560px)]:translate-y-0">
-          <p className="mb-5 text-[0.68rem] uppercase tracking-[0.3em] text-white/60 sm:text-xs sm:tracking-[0.36em]">
-            Nuove residenze private · Isola d&apos;Elba
-          </p>
-          <h1 className="mx-auto max-w-5xl overflow-visible font-heading text-[clamp(3.1rem,8.2vw,6.7rem)] font-medium leading-[0.98] text-balance [@media(max-height:560px)]:max-w-4xl [@media(max-height:560px)]:text-[clamp(2.7rem,5.6vw,4.5rem)]">
-            <RevealText>Ville contemporanee immerse nella luce dell&apos;Isola d&apos;Elba</RevealText>
-          </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-base leading-7 text-white/72 sm:mt-7 sm:text-lg sm:leading-8 [@media(max-height:560px)]:mt-4 [@media(max-height:560px)]:text-base">
-            Un progetto residenziale esclusivo tra mare, natura e architettura mediterranea.
-          </p>
-          <div className="mx-auto mt-8 flex w-full max-w-sm flex-col gap-3 sm:mt-9 sm:max-w-none sm:flex-row sm:justify-center [@media(max-height:560px)]:mt-6">
-            <a
-              href="#progetto"
-              className="inline-flex h-12 items-center justify-center gap-2 bg-white px-5 text-xs uppercase tracking-[0.14em] text-[#172522] transition hover:bg-[#efe3cf] sm:px-6 sm:text-sm sm:tracking-[0.18em]"
-            >
-              Scopri il progetto <ArrowRight className="size-4" />
-            </a>
-            <a
-              href="#contatti"
-              className="inline-flex h-12 items-center justify-center border border-white/35 px-5 text-xs uppercase tracking-[0.14em] text-white transition hover:bg-white hover:text-[#172522] sm:px-6 sm:text-sm sm:tracking-[0.18em]"
-            >
-              Richiedi brochure
-            </a>
-          </div>
-        </div>
+      {/* Coordinates — left micro-detail */}
+      <FadeUp
+        delay={1.2}
+        className="absolute left-6 bottom-48 hidden flex-col items-center gap-3 md:flex lg:left-10 lg:bottom-52"
+      >
+        <span className="[writing-mode:vertical-lr] rotate-180 text-[0.58rem] uppercase tracking-[0.3em] text-white/30">
+          42° 46′ N · 10° 11′ E
+        </span>
+        <div className="h-10 w-px bg-white/20" />
+      </FadeUp>
 
-        {/* Bottom stats bar */}
-        <div className="hero-details-short absolute bottom-6 left-1/2 grid w-[calc(100%-2rem)] max-w-5xl -translate-x-1/2 grid-cols-2 gap-px border-y border-white/15 bg-white/10 sm:grid-cols-4 lg:bottom-12 [@media(max-height:560px)]:hidden">
-          {details.map((detail) => (
-            <div
-              key={detail}
-              className="hero-detail-cell bg-[#172522]/30 px-3 py-3 text-center text-[0.62rem] uppercase tracking-[0.16em] text-white/70 backdrop-blur-sm sm:px-4 sm:py-4 sm:text-xs sm:tracking-[0.18em]"
-            >
-              {detail}
+      <div className="container-premium relative flex min-h-[100svh] flex-col justify-between pb-0 pt-24">
+
+        {/* Main content — vertically centered */}
+        <div className="flex flex-1 flex-col items-start justify-center pb-32 pt-8 sm:items-center sm:text-center lg:pb-40">
+
+          {/* Eyebrow */}
+          <FadeUp delay={0.15} className="mb-6 sm:mb-8">
+            <div className="flex items-center gap-3">
+              <div className="h-px w-8 bg-white/35 sm:w-12" />
+              <span className="text-[0.62rem] uppercase tracking-[0.36em] text-white/55 sm:text-[0.68rem]">
+                Nuove residenze private · Isola d'Elba
+              </span>
+              <div className="hidden h-px w-8 bg-white/35 sm:block sm:w-12" />
             </div>
-          ))}
+          </FadeUp>
+
+          {/* Headline — editorial three-line with italic centre */}
+          <h1 className="mx-auto max-w-5xl text-left text-[clamp(2.8rem,7.2vw,6.2rem)] font-medium leading-[0.97] tracking-[-0.02em] sm:text-center [@media(max-height:560px)]:text-[clamp(2.2rem,5vw,4rem)]">
+            <span className="block overflow-hidden">
+              <SplitReveal delay={0.3} stagger={0.06} className="font-heading text-white">
+                Ville contemporanee
+              </SplitReveal>
+            </span>
+            <span className="block overflow-hidden">
+              <SplitReveal
+                delay={0.52}
+                stagger={0.065}
+                italic
+                className="font-heading text-white/82"
+              >
+                immerse nella luce
+              </SplitReveal>
+            </span>
+            <span className="block overflow-hidden">
+              <SplitReveal delay={0.74} stagger={0.06} className="font-heading text-white">
+                dell&apos;Isola d&apos;Elba
+              </SplitReveal>
+            </span>
+          </h1>
+
+          {/* Subtitle */}
+          <FadeUp delay={1.05} className="mx-auto mt-7 max-w-xl sm:mt-8">
+            <p className="text-left text-base leading-[1.85] text-white/58 sm:text-center sm:text-lg">
+              Un progetto residenziale esclusivo tra mare,<br className="hidden sm:block" /> natura e architettura mediterranea.
+            </p>
+          </FadeUp>
+
+          {/* CTAs */}
+          <FadeUp delay={1.22} className="mt-9 sm:mt-10">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-5">
+              {/* Primary */}
+              <a
+                href="#progetto"
+                className="group relative inline-flex h-12 items-center gap-3 overflow-hidden bg-white px-6 text-[0.7rem] uppercase tracking-[0.18em] text-[#172522] transition-colors duration-300 hover:bg-[#ede7d9] sm:px-8"
+              >
+                <span>Scopri il progetto</span>
+                <ArrowRight className="size-3.5 transition-transform duration-300 group-hover:translate-x-1" />
+              </a>
+
+              {/* Secondary — refined text link */}
+              <a
+                href="#contatti"
+                className="group inline-flex h-12 items-center gap-2 px-2 text-[0.7rem] uppercase tracking-[0.18em] text-white/70 transition-colors hover:text-white sm:px-0"
+              >
+                <span className="relative">
+                  Richiedi brochure
+                  <span className="absolute -bottom-px left-0 h-px w-0 bg-white/50 transition-all duration-300 group-hover:w-full" />
+                </span>
+              </a>
+            </div>
+          </FadeUp>
         </div>
 
-        {/* Scroll indicator */}
-        <div className="absolute bottom-32 left-6 hidden flex-col items-center gap-3 md:flex lg:bottom-28">
-          <span className="text-[0.62rem] uppercase tracking-[0.3em] text-white/35 [writing-mode:vertical-lr]">Scorri</span>
-          <ArrowDown className="size-4 animate-bounce text-white/35" />
-        </div>
+        {/* Bottom stats bar — pinned */}
+        <FadeUp
+          delay={1.4}
+          className="hero-details-short w-full [@media(max-height:560px)]:hidden"
+        >
+          <div className="grid grid-cols-2 gap-px border-t border-white/10 bg-white/8 sm:grid-cols-4">
+            {stats.map((stat) => (
+              <div
+                key={stat}
+                className="bg-[#0d1e1a]/55 px-4 py-4 text-center text-[0.6rem] uppercase tracking-[0.18em] text-white/55 backdrop-blur-sm sm:px-5 sm:py-5 sm:text-xs sm:tracking-[0.2em]"
+              >
+                {stat}
+              </div>
+            ))}
+          </div>
+        </FadeUp>
       </div>
+
+      {/* Scroll cue — bottom right */}
+      <FadeUp
+        delay={1.5}
+        className="absolute right-6 bottom-24 hidden flex-col items-center gap-2 md:flex lg:right-10 lg:bottom-28 [@media(max-height:560px)]:hidden"
+      >
+        <motion.div
+          className="h-8 w-px bg-white/30"
+          animate={reducedMotion ? undefined : { scaleY: [1, 0.4, 1], opacity: [0.3, 0.8, 0.3] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <span className="text-[0.58rem] uppercase tracking-[0.3em] text-white/30">scroll</span>
+      </FadeUp>
     </section>
   )
 }
