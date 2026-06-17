@@ -304,20 +304,20 @@
 <!-- ── Annotations ── -->
 <div class="annotations">
   <div>
-    <div class="ann-label">Slider fix</div>
-    <div class="ann-val"><code>.simulator-slider</code><br>CSS custom prop <code>--slider-pct</code><br>background: linear-gradient fill<br>thumb: margin-top -8px su track 2px<br>hover glow + active scale</div>
+    <div class="ann-label">Scroll hint</div>
+    <div class="ann-val">"scorri" + ChevronDown bouncing<br><code>text-white/40</code> · <code>size-2.5</code><br>AnimatePresence fade in/out<br>Sinistra: watch mode (mutuo)<br>Destra: watch costsOpen (350ms delay)<br>Sparisce a fondo pannello</div>
   </div>
   <div>
-    <div class="ann-label">Results layout</div>
-    <div class="ann-val">Net income sempre in cima<br>Yield gauge bar 0–12% colorata<br>Metrics grid sempre visibili<br>Costs accordion in basso<br>espande verso CTA, non verso l'alto</div>
+    <div class="ann-label">Scrollbar</div>
+    <div class="ann-val"><code>.sim-scroll</code> su entrambi i pannelli<br><code>scrollbar-width: none</code><br><code>::-webkit-scrollbar {display:none}</code><br>Gradiente h-16 bottom fisso<br>fuori dal div scrollabile</div>
   </div>
   <div>
-    <div class="ann-label">Costs toggle</div>
-    <div class="ann-val">ChevronDown ruota 180° on open<br>Sempre visibile: apre E chiude<br>Framer Motion animate height<br>Ogni voce: barra proporzione %</div>
+    <div class="ann-label">Mobile tabs (lg:hidden)</div>
+    <div class="ann-val">Tab "Parametri" / "Risultati"<br>Underline: <code>layoutId="sim-tab-indicator"</code><br>"Risultati" mostra rendita netta<br>Attiva: <code>text-[1.4rem] text-white</code><br>Inattiva: <code>text-sm text-white/25</code><br>Reset a "Parametri" all'apertura</div>
   </div>
   <div>
     <div class="ann-label">Animated numbers</div>
-    <div class="ann-val"><code>useSpring</code> + <code>useTransform</code><br>Framer Motion — numeri contano<br>fluidamente al cambio slider<br>Rispetta prefers-reduced-motion</div>
+    <div class="ann-val"><code>useSpring</code> + <code>useTransform</code><br>Framer Motion — numeri contano<br>fluidamente al cambio slider<br>Rispetta prefers-reduced-motion<br>Usato anche nel tab bar mobile</div>
   </div>
 </div>
 
