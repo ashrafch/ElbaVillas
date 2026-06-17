@@ -240,14 +240,16 @@ export function InvestmentSimulatorModal() {
   const [mode, setMode]           = useState<Mode>("direct")
   const [inputs, setInputs]       = useState<Inputs>(DEFAULTS)
   const [costsOpen, setCostsOpen] = useState(false)
-  const [mobileTab, setMobileTab] = useState<"params" | "results">("params")
-  const [showScrollHint, setShowScrollHint] = useState(false)
-  const leftScrollRef = useRef<HTMLDivElement>(null)
+  const [mobileTab, setMobileTab]               = useState<"params" | "results">("params")
+  const [showScrollHint, setShowScrollHint]     = useState(false)
+  const [showRightHint, setShowRightHint]       = useState(false)
+  const leftScrollRef  = useRef<HTMLDivElement>(null)
+  const rightScrollRef = useRef<HTMLDivElement>(null)
 
   // Reset tab to params when modal opens
   useEffect(() => { if (open) setMobileTab("params") }, [open])
 
-  // Scroll hint — re-runs on mode change (mortgage adds sliders → scrollHeight grows)
+  // Left scroll hint — re-runs on mode change (mortgage adds sliders)
   useEffect(() => {
     const el = leftScrollRef.current
     if (!el || !open) return
@@ -256,13 +258,26 @@ export function InvestmentSimulatorModal() {
       const atBottom  = el.scrollTop + el.clientHeight >= el.scrollHeight - 16
       setShowScrollHint(canScroll && !atBottom)
     }
-    // Delay to let Framer Motion entrance animation settle
     const t = setTimeout(check, 200)
     el.addEventListener("scroll", check, { passive: true })
     const ro = new ResizeObserver(check)
     ro.observe(el)
     return () => { clearTimeout(t); el.removeEventListener("scroll", check); ro.disconnect() }
   }, [open, mode])
+
+  // Right scroll hint — re-runs when costs accordion opens/closes
+  useEffect(() => {
+    const el = rightScrollRef.current
+    if (!el || !open) return
+    const check = () => {
+      const canScroll = el.scrollHeight > el.clientHeight + 4
+      const atBottom  = el.scrollTop + el.clientHeight >= el.scrollHeight - 16
+      setShowRightHint(canScroll && !atBottom)
+    }
+    const t = setTimeout(check, 350) // accordion animation is 0.25s
+    el.addEventListener("scroll", check, { passive: true })
+    return () => { clearTimeout(t); el.removeEventListener("scroll", check) }
+  }, [open, costsOpen])
 
   const set = (key: keyof Inputs) => (v: number) =>
     setInputs((prev) => ({ ...prev, [key]: v }))
@@ -359,8 +374,10 @@ export function InvestmentSimulatorModal() {
                 </span>
                 {tab === "results" && (
                   <span className={cn(
-                    "font-heading text-sm leading-none transition-colors",
-                    mobileTab === "results" ? "text-white/60" : "text-white/20",
+                    "font-heading leading-none transition-all duration-300",
+                    mobileTab === "results"
+                      ? "text-[1.4rem] text-white"
+                      : "text-sm text-white/25",
                   )}>
                     <AnimatedEur value={R.netIncome} />
                   </span>
@@ -444,12 +461,12 @@ export function InvestmentSimulatorModal() {
                   transition={{ duration: 0.4, ease: "easeOut" }}
                   className="pointer-events-none absolute bottom-3 left-0 right-0 flex flex-col items-center gap-1"
                 >
-                  <span className="text-[0.5rem] uppercase tracking-[0.3em] text-white/20">scorri</span>
+                  <span className="text-[0.5rem] uppercase tracking-[0.3em] text-white/40">scorri</span>
                   <motion.div
                     animate={{ y: [0, 3, 0] }}
                     transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
                   >
-                    <ChevronDown className="size-2.5 text-white/18" />
+                    <ChevronDown className="size-2.5 text-white/35" />
                   </motion.div>
                 </motion.div>
               )}
@@ -458,7 +475,7 @@ export function InvestmentSimulatorModal() {
 
             {/* RIGHT — results */}
             <div className={cn("relative bg-[#090f0e]", mobileTab === "params" && "max-lg:hidden")}>
-            <div className="sim-scroll absolute inset-0 overflow-y-auto px-5 py-7 sm:px-8 sm:py-9">
+            <div ref={rightScrollRef} className="sim-scroll absolute inset-0 overflow-y-auto px-5 py-7 sm:px-8 sm:py-9">
 
               {/* 1. NET INCOME — always at top */}
               <div className="mb-6 border-b border-white/8 pb-6">
@@ -569,6 +586,26 @@ export function InvestmentSimulatorModal() {
               </a>
             </div>
             <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-[#090f0e] to-transparent" />
+            <AnimatePresence>
+              {showRightHint && (
+                <motion.div
+                  key="right-scroll-hint"
+                  initial={{ opacity: 0, y: 4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 4 }}
+                  transition={{ duration: 0.4, ease: "easeOut" }}
+                  className="pointer-events-none absolute bottom-3 left-0 right-0 flex flex-col items-center gap-1"
+                >
+                  <span className="text-[0.5rem] uppercase tracking-[0.3em] text-white/40">scorri</span>
+                  <motion.div
+                    animate={{ y: [0, 3, 0] }}
+                    transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+                  >
+                    <ChevronDown className="size-2.5 text-white/35" />
+                  </motion.div>
+                </motion.div>
+              )}
+            </AnimatePresence>
             </div>
           </div>
         </DialogContent>
