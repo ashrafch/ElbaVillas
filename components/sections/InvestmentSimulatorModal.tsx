@@ -461,12 +461,12 @@ export function InvestmentSimulatorModal() {
                   transition={{ duration: 0.4, ease: "easeOut" }}
                   className="pointer-events-none absolute bottom-3 left-0 right-0 flex flex-col items-center gap-1"
                 >
-                  <span className="text-[0.5rem] uppercase tracking-[0.3em] text-white/40">scorri</span>
+                  <span className="text-[0.58rem] uppercase tracking-[0.3em] text-white/65">scorri</span>
                   <motion.div
-                    animate={{ y: [0, 3, 0] }}
-                    transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+                    animate={{ y: [0, 4, 0] }}
+                    transition={{ repeat: Infinity, duration: 1.6, ease: "easeInOut" }}
                   >
-                    <ChevronDown className="size-2.5 text-white/35" />
+                    <ChevronDown className="size-3 text-white/55" />
                   </motion.div>
                 </motion.div>
               )}
@@ -596,12 +596,12 @@ export function InvestmentSimulatorModal() {
                   transition={{ duration: 0.4, ease: "easeOut" }}
                   className="pointer-events-none absolute bottom-3 left-0 right-0 flex flex-col items-center gap-1"
                 >
-                  <span className="text-[0.5rem] uppercase tracking-[0.3em] text-white/40">scorri</span>
+                  <span className="text-[0.58rem] uppercase tracking-[0.3em] text-white/65">scorri</span>
                   <motion.div
-                    animate={{ y: [0, 3, 0] }}
-                    transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+                    animate={{ y: [0, 4, 0] }}
+                    transition={{ repeat: Infinity, duration: 1.6, ease: "easeInOut" }}
                   >
-                    <ChevronDown className="size-2.5 text-white/35" />
+                    <ChevronDown className="size-3 text-white/55" />
                   </motion.div>
                 </motion.div>
               )}
