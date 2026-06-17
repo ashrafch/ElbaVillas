@@ -7,8 +7,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&display=swap" rel="stylesheet">
 <style>
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:system-ui,-apple-system,sans-serif;background:#172522;min-width:1200px}
-  .section{padding:80px 40px;color:white;max-width:1180px;margin:0 auto}
+  body{font-family:system-ui,-apple-system,sans-serif;background:#172522;min-width:1200px;color:white}
+
+  /* ── Section ── */
+  .section{padding:80px 40px;max-width:1180px;margin:0 auto}
   .stats-band{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid rgba(255,255,255,.12);border-bottom:1px solid rgba(255,255,255,.12);margin-bottom:64px}
   .stat{padding:40px 32px;text-align:center;border-right:1px solid rgba(255,255,255,.12)}
   .stat:last-child{border-right:none}
@@ -21,21 +23,84 @@
   .items{margin-bottom:36px}
   .item{display:grid;grid-template-columns:1fr auto;align-items:center;gap:16px;border-bottom:1px solid rgba(255,255,255,.1);padding:16px 0;font-size:13px;line-height:1.5;color:rgba(255,255,255,.75)}
   .item-arrow{font-size:14px;color:rgba(255,255,255,.25);flex-shrink:0}
-  /* CTA pair — the redesigned harmonious system */
   .cta-pair{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
   .cta-primary{display:inline-flex;align-items:center;justify-content:center;height:48px;padding:0 32px;background:white;color:#172522;font-size:10.5px;text-transform:uppercase;letter-spacing:.18em;text-decoration:none;white-space:nowrap}
-  .cta-secondary{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:48px;padding:0 32px;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.65);font-size:10.5px;text-transform:uppercase;letter-spacing:.18em;cursor:pointer;background:none;white-space:nowrap}
+  .cta-secondary{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:48px;padding:0 32px;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.65);font-size:10.5px;text-transform:uppercase;letter-spacing:.18em;cursor:pointer;background:none;white-space:nowrap;transition:border-color .2s,color .2s}
   .cta-secondary:hover{border-color:rgba(255,255,255,.45);color:white}
   .calc-icon{width:14px;height:14px;opacity:.7}
-  /* Annotations */
-  .annotations{background:#0f1e1a;padding:28px 40px;display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+
+  /* ── Modal preview ── */
+  .modal-demo{background:#0d1a18;border:1px solid rgba(255,255,255,.1);overflow:hidden;margin-top:48px}
+  .modal-header{display:flex;align-items:center;justify-content:space-between;padding:14px 32px;border-bottom:1px solid rgba(255,255,255,.1);background:rgba(13,26,24,.95)}
+  .modal-brand{display:flex;align-items:center;gap:12px}
+  .modal-title-small{font-size:9px;text-transform:uppercase;letter-spacing:.28em;color:rgba(255,255,255,.3)}
+  .modal-title{font-family:'Cormorant Garamond',Georgia,serif;font-size:16px;color:white;line-height:1}
+  .modal-mode-toggle{display:flex;gap:2px;border:1px solid rgba(255,255,255,.12);padding:2px}
+  .mode-btn{padding:6px 14px;font-size:9px;text-transform:uppercase;letter-spacing:.16em;cursor:pointer;border:none;background:none;color:rgba(255,255,255,.4);transition:all .2s}
+  .mode-btn.active{background:white;color:#172522}
+  .close-btn{width:36px;height:36px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.45);cursor:pointer}
+
+  /* ── Modal body ── */
+  .modal-body{display:grid;grid-template-columns:1fr 400px;height:560px}
+  .modal-left{overflow-y:auto;border-right:1px solid rgba(255,255,255,.08);padding:36px 32px}
+  .modal-right{overflow-y:auto;background:#090f0e;padding:36px 32px}
+  .panel-label{font-size:9px;text-transform:uppercase;letter-spacing:.28em;color:rgba(255,255,255,.25);margin-bottom:28px}
+
+  /* ── Slider ── */
+  .slider-group{margin-bottom:28px}
+  .slider-meta{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:12px}
+  .slider-label{font-size:9px;text-transform:uppercase;letter-spacing:.18em;color:rgba(255,255,255,.45)}
+  .slider-value{font-family:'Cormorant Garamond',Georgia,serif;font-size:20px;color:white}
+  .slider-track-wrap{position:relative;height:2px;background:rgba(255,255,255,.1);margin:10px 0}
+  .slider-fill{height:2px;background:rgba(255,255,255,.65);position:absolute;left:0;top:0}
+  .slider-thumb{width:18px;height:18px;border-radius:50%;background:white;position:absolute;top:50%;transform:translate(-50%,-50%);box-shadow:0 0 0 6px rgba(255,255,255,.1)}
+  .slider-range{display:flex;justify-content:space-between;margin-top:6px;font-size:8.5px;color:rgba(255,255,255,.2)}
+
+  /* ── Results ── */
+  .net-income-block{border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:24px;margin-bottom:24px}
+  .net-label{font-size:9px;text-transform:uppercase;letter-spacing:.22em;color:rgba(255,255,255,.3);margin-bottom:4px}
+  .net-value{font-family:'Cormorant Garamond',Georgia,serif;font-size:44px;color:white;line-height:1}
+  .yield-gauge{margin-top:12px}
+  .gauge-bar{height:2px;background:rgba(255,255,255,.1);position:relative;overflow:hidden;margin-bottom:4px}
+  .gauge-fill{position:absolute;left:0;top:0;height:100%;background:rgba(52,211,153,.5)}
+  .gauge-labels{display:flex;justify-content:space-between;font-size:8px;color:rgba(255,255,255,.2)}
+  .metrics-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:24px}
+  .metric-tile{padding:14px 16px;border:1px solid rgba(255,255,255,.08);display:flex;flex-direction:column;gap:6px}
+  .metric-tile.accent{border-color:rgba(255,255,255,.18);background:rgba(255,255,255,.05)}
+  .metric-label{font-size:8.5px;text-transform:uppercase;letter-spacing:.2em;color:rgba(255,255,255,.35)}
+  .metric-value{font-family:'Cormorant Garamond',Georgia,serif;font-size:22px;color:white;line-height:1}
+  .gross-row{display:flex;align-items:baseline;justify-content:space-between;border-top:1px solid rgba(255,255,255,.08);padding-top:20px;margin-bottom:4px}
+  .gross-label{font-size:9px;text-transform:uppercase;letter-spacing:.2em;color:rgba(255,255,255,.25)}
+  .gross-value{font-family:'Cormorant Garamond',Georgia,serif;font-size:20px;color:rgba(255,255,255,.6)}
+  .gross-sub{font-size:8.5px;color:rgba(255,255,255,.2);margin-bottom:16px}
+  .costs-toggle{display:flex;align-items:center;justify-content:space-between;padding:16px 0;border-top:1px solid rgba(255,255,255,.08);cursor:pointer;width:100%;background:none;border-left:none;border-right:none;border-bottom:none}
+  .costs-toggle-left{font-size:9px;text-transform:uppercase;letter-spacing:.2em;color:rgba(255,255,255,.25)}
+  .costs-toggle-right{display:flex;align-items:center;gap:8px}
+  .costs-value{font-family:'Cormorant Garamond',Georgia,serif;font-size:16px;color:rgba(255,255,255,.5)}
+  .chevron{font-size:11px;color:rgba(255,255,255,.3);transition:transform .2s}
+  .chevron.open{transform:rotate(180deg)}
+  .cost-rows{padding-top:12px}
+  .cost-row{padding:12px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+  .cost-row:last-child{border-bottom:none}
+  .cost-row-top{display:flex;justify-content:space-between;margin-bottom:6px}
+  .cost-name{font-size:10px;color:rgba(255,255,255,.55)}
+  .cost-sub{font-size:8.5px;color:rgba(255,255,255,.25);margin-left:6px}
+  .cost-amount{font-size:10px;color:rgba(255,255,255,.6)}
+  .cost-bar{height:1px;background:rgba(255,255,255,.08);overflow:hidden}
+  .cost-bar-fill{height:1px;background:rgba(255,255,255,.25)}
+  .modal-cta{display:flex;align-items:center;justify-content:center;height:48px;background:white;color:#172522;font-size:10px;text-transform:uppercase;letter-spacing:.18em;text-decoration:none;margin-top:28px;transition:background .2s}
+  .modal-cta:hover{background:#ede7d9}
+
+  /* ── Annotations ── */
+  .annotations{background:#0f1e1a;padding:28px 40px;display:grid;grid-template-columns:repeat(4,1fr);gap:20px;border-top:1px solid rgba(255,255,255,.06)}
   .ann-label{font-size:9px;text-transform:uppercase;letter-spacing:.18em;color:rgba(255,255,255,.3);margin-bottom:6px}
-  .ann-val{font-size:11px;color:rgba(255,255,255,.7);line-height:1.6}
+  .ann-val{font-size:11px;color:rgba(255,255,255,.7);line-height:1.7}
   code{font-family:'SFMono-Regular',Consolas,monospace;font-size:10px;background:rgba(255,255,255,.08);padding:1px 4px}
 </style>
 </head>
 <body>
 
+<!-- ── Investment Section ── -->
 <div style="background:#172522">
   <div class="section">
     <div class="stats-band">
@@ -56,8 +121,6 @@
           <div class="item"><span>Uso personale con potenziale locazione di qualità</span><span class="item-arrow">↗</span></div>
           <div class="item"><span>Valore legato a posizione, progetto e scarsità</span><span class="item-arrow">↗</span></div>
         </div>
-
-        <!-- CTA pair — harmonious system -->
         <div class="cta-pair">
           <a class="cta-primary" href="#">Richiedi il dossier riservato</a>
           <button class="cta-secondary">
@@ -70,11 +133,192 @@
   </div>
 </div>
 
+<!-- ── Simulator Modal preview ── -->
+<div class="modal-demo">
+
+  <!-- Header -->
+  <div class="modal-header">
+    <div class="modal-brand">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="1.5"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+      <div>
+        <div class="modal-title-small">Elba Luce Villas</div>
+        <div class="modal-title">Simulatore Investimento</div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px">
+      <div class="modal-mode-toggle">
+        <button class="mode-btn active">Acquisto diretto</button>
+        <button class="mode-btn">Con mutuo</button>
+      </div>
+      <div class="close-btn">✕</div>
+    </div>
+  </div>
+
+  <!-- Body -->
+  <div class="modal-body">
+
+    <!-- LEFT — inputs -->
+    <div class="modal-left">
+      <div class="panel-label">Parametri</div>
+
+      <!-- Slider: Prezzo -->
+      <div class="slider-group">
+        <div class="slider-meta">
+          <span class="slider-label">Prezzo di acquisto</span>
+          <span class="slider-value">€ 850.000</span>
+        </div>
+        <div class="slider-track-wrap">
+          <div class="slider-fill" style="width:27%"></div>
+          <div class="slider-thumb" style="left:27%"></div>
+        </div>
+        <div class="slider-range"><span>€ 400.000</span><span>€ 2.500.000</span></div>
+      </div>
+
+      <!-- Slider: Notti -->
+      <div class="slider-group">
+        <div class="slider-meta">
+          <span class="slider-label">Notti in affitto al mese</span>
+          <span class="slider-value">20 notti</span>
+        </div>
+        <div class="slider-track-wrap">
+          <div class="slider-fill" style="width:65%"></div>
+          <div class="slider-thumb" style="left:65%"></div>
+        </div>
+        <div class="slider-range"><span>5 notti</span><span>28 notti</span></div>
+      </div>
+
+      <!-- Slider: Tariffa -->
+      <div class="slider-group">
+        <div class="slider-meta">
+          <span class="slider-label">Tariffa media per notte</span>
+          <span class="slider-value">€ 850</span>
+        </div>
+        <div class="slider-track-wrap">
+          <div class="slider-fill" style="width:33%"></div>
+          <div class="slider-thumb" style="left:33%"></div>
+        </div>
+        <div class="slider-range"><span>€ 300</span><span>€ 2.000</span></div>
+      </div>
+
+      <p style="margin-top:32px;display:flex;align-items:flex-start;gap:8px;font-size:8.5px;line-height:1.7;color:rgba(255,255,255,.22)">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="margin-top:1px;flex-shrink:0"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+        Stime basate su medie di mercato (Casevacanza.it, Globalpropertyguide.com, D.L. 50/2017 cedolare secca). Non costituisce consulenza finanziaria o fiscale.
+      </p>
+    </div>
+
+    <!-- RIGHT — results -->
+    <div class="modal-right">
+
+      <!-- 1. Net income — always top -->
+      <div class="net-income-block">
+        <div class="net-label">Rendita netta annua</div>
+        <div class="net-value">€ 95.780</div>
+        <div class="yield-gauge">
+          <div class="gauge-bar"><div class="gauge-fill" style="width:94%"></div></div>
+          <div class="gauge-labels"><span>0%</span><span>basso · medio · ottimo</span><span>12%</span></div>
+        </div>
+      </div>
+
+      <!-- 2. Metrics — always visible -->
+      <div class="metrics-grid">
+        <div class="metric-tile">
+          <div class="metric-label">Rendimento netto</div>
+          <div class="metric-value">11.3%</div>
+        </div>
+        <div class="metric-tile">
+          <div class="metric-label">Rendimento lordo</div>
+          <div class="metric-value">24.0%</div>
+        </div>
+        <div class="metric-tile accent">
+          <div class="metric-label">Break-even</div>
+          <div class="metric-value">8.9 anni</div>
+        </div>
+      </div>
+
+      <!-- 3. Gross income -->
+      <div class="gross-row">
+        <span class="gross-label">Rendita lorda annua</span>
+        <span class="gross-value">€ 204.000</span>
+      </div>
+      <div class="gross-sub">240 notti × € 850</div>
+
+      <!-- 4. Costs accordion — open state shown -->
+      <button class="costs-toggle">
+        <span class="costs-toggle-left">Costi stimati annui</span>
+        <div class="costs-toggle-right">
+          <span class="costs-value">€ 108.220</span>
+          <span class="chevron open">▾</span>
+        </div>
+      </button>
+      <div class="cost-rows">
+        <div class="cost-row">
+          <div class="cost-row-top">
+            <span><span class="cost-name">Gestione locativa</span><span class="cost-sub">22% lordo</span></span>
+            <span class="cost-amount">€ 44.880</span>
+          </div>
+          <div class="cost-bar"><div class="cost-bar-fill" style="width:41%"></div></div>
+        </div>
+        <div class="cost-row">
+          <div class="cost-row-top">
+            <span><span class="cost-name">Cedolare secca</span><span class="cost-sub">21% lordo</span></span>
+            <span class="cost-amount">€ 42.840</span>
+          </div>
+          <div class="cost-bar"><div class="cost-bar-fill" style="width:40%"></div></div>
+        </div>
+        <div class="cost-row">
+          <div class="cost-row-top">
+            <span><span class="cost-name">Manutenzione</span><span class="cost-sub">1.2% prezzo</span></span>
+            <span class="cost-amount">€ 10.200</span>
+          </div>
+          <div class="cost-bar"><div class="cost-bar-fill" style="width:9%"></div></div>
+        </div>
+        <div class="cost-row">
+          <div class="cost-row-top">
+            <span><span class="cost-name">Assicurazione</span><span class="cost-sub">0.4% prezzo</span></span>
+            <span class="cost-amount">€ 3.400</span>
+          </div>
+          <div class="cost-bar"><div class="cost-bar-fill" style="width:3%"></div></div>
+        </div>
+        <div class="cost-row">
+          <div class="cost-row-top">
+            <span><span class="cost-name">IMU e tasse locali</span><span class="cost-sub">~0.2% prezzo</span></span>
+            <span class="cost-amount">€ 1.700</span>
+          </div>
+          <div class="cost-bar"><div class="cost-bar-fill" style="width:2%"></div></div>
+        </div>
+        <div class="cost-row">
+          <div class="cost-row-top">
+            <span><span class="cost-name">Utenze, piscina, giardino</span></span>
+            <span class="cost-amount">€ 5.200</span>
+          </div>
+          <div class="cost-bar"><div class="cost-bar-fill" style="width:5%"></div></div>
+        </div>
+      </div>
+
+      <a class="modal-cta" href="#">Richiedi il dossier riservato →</a>
+    </div>
+
+  </div>
+</div>
+
+<!-- ── Annotations ── -->
 <div class="annotations">
-  <div><div class="ann-label">CTA system</div><div class="ann-val">flex gap-3 sm:flex-row<br>Primary: <code>bg-white h-12 px-8</code><br>Secondary: <code>border-white/20 h-12</code><br>Stessa altezza h-12, stesso padding</div></div>
-  <div><div class="ann-label">Simulatore trigger</div><div class="ann-val">Bottone outlined border/20<br>hover: border/45 + text bianco<br>Icon Calculator lucide-react<br>Opens full-screen dark modal</div></div>
-  <div><div class="ann-label">Calcoli reali</div><div class="ann-val">Gestione 22% · Cedolare 21%<br>Manutenzione 1.2% · Assicurazione 0.4%<br>IMU ~0.2% · Fissi €5.200/anno<br>Mutuo: formula PMT standard</div></div>
-  <div><div class="ann-label">Componente</div><div class="ann-val"><code>InvestmentSimulatorModal.tsx</code><br>Self-contained: trigger + Dialog<br>Server component can import it<br>(Next.js client boundary)</div></div>
+  <div>
+    <div class="ann-label">Slider fix</div>
+    <div class="ann-val"><code>.simulator-slider</code><br>CSS custom prop <code>--slider-pct</code><br>background: linear-gradient fill<br>thumb: margin-top -8px su track 2px<br>hover glow + active scale</div>
+  </div>
+  <div>
+    <div class="ann-label">Results layout</div>
+    <div class="ann-val">Net income sempre in cima<br>Yield gauge bar 0–12% colorata<br>Metrics grid sempre visibili<br>Costs accordion in basso<br>espande verso CTA, non verso l'alto</div>
+  </div>
+  <div>
+    <div class="ann-label">Costs toggle</div>
+    <div class="ann-val">ChevronDown ruota 180° on open<br>Sempre visibile: apre E chiude<br>Framer Motion animate height<br>Ogni voce: barra proporzione %</div>
+  </div>
+  <div>
+    <div class="ann-label">Animated numbers</div>
+    <div class="ann-val"><code>useSpring</code> + <code>useTransform</code><br>Framer Motion — numeri contano<br>fluidamente al cambio slider<br>Rispetta prefers-reduced-motion</div>
+  </div>
 </div>
 
 </body>
