@@ -1,0 +1,136 @@
+<!-- @dsCard group="Foundation" -->
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=1200">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:system-ui,-apple-system,sans-serif;background:#FAF6EE;padding:48px 40px;min-width:1200px}
+  .page-title{font-family:'Cormorant Garamond',Georgia,serif;font-size:32px;font-weight:500;color:#2F2921;margin-bottom:8px}
+  .subtitle{font-size:11px;text-transform:uppercase;letter-spacing:.22em;color:#9B9489;margin-bottom:40px}
+  .rhythm-grid{display:flex;gap:0;width:100%;border:1px solid rgba(0,0,0,.08)}
+  .flow{display:flex;flex-direction:column;width:100%}
+  .section-row{display:flex;align-items:stretch;min-height:56px;border-bottom:1px solid rgba(0,0,0,.06)}
+  .section-row:last-child{border-bottom:none}
+  .order{width:32px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#9B9489;flex-shrink:0;border-right:1px solid rgba(0,0,0,.06);background:rgba(0,0,0,.02)}
+  .swatch{width:20px;flex-shrink:0}
+  .name{display:flex;align-items:center;padding:0 16px;font-size:12px;color:#2F2921;font-weight:500;min-width:180px;border-right:1px solid rgba(0,0,0,.06)}
+  .bg-val{display:flex;align-items:center;padding:0 16px;font-size:10.5px;color:#6A6354;font-family:'SFMono-Regular',Consolas,monospace;min-width:200px;border-right:1px solid rgba(0,0,0,.06)}
+  .desc{display:flex;align-items:center;padding:0 16px;font-size:11px;color:#9B9489;flex:1}
+  .tag{display:inline-flex;align-items:center;padding:2px 8px;font-size:9px;text-transform:uppercase;letter-spacing:.12em;margin-left:8px;flex-shrink:0}
+  .tag-dark{background:#172522;color:rgba(255,255,255,.7)}
+  .tag-light{background:#efe7d8;color:rgba(23,37,34,.6);border:1px solid rgba(23,37,34,.1)}
+  .tag-warm{background:#f7f1e7;color:rgba(23,37,34,.6);border:1px solid rgba(23,37,34,.08)}
+  .tag-bg{background:#FAF6EE;color:rgba(23,37,34,.6);border:1px solid rgba(23,37,34,.08)}
+  .rule{font-size:10px;color:#9B9489;margin-top:28px;line-height:1.7;padding:16px 20px;background:rgba(0,0,0,.03);border:1px solid rgba(0,0,0,.07)}
+  .rule strong{color:#2F2921;font-weight:600}
+</style>
+</head>
+<body>
+<p class="page-title">Ritmo Visivo Sezioni</p>
+<p class="subtitle">Elba Luce Villas — Design System · Foundation · Ordine background sezioni</p>
+
+<div class="flow">
+  <div class="section-row">
+    <div class="order">1</div>
+    <div class="swatch" style="background:#172522"></div>
+    <div class="name">HeroSection</div>
+    <div class="bg-val">bg-[#172522]</div>
+    <div class="desc">Full screen video ambient · dark opaco<span class="tag tag-dark">dark</span></div>
+  </div>
+  <div class="section-row">
+    <div class="order">2</div>
+    <div class="swatch" style="background:#efe7d8"></div>
+    <div class="name">MarqueeStrip</div>
+    <div class="bg-val">bg-[#efe7d8]</div>
+    <div class="desc">Keyword strip in scorrimento · respiro dopo il dark<span class="tag tag-light">sabbia</span></div>
+  </div>
+  <div class="section-row">
+    <div class="order">3</div>
+    <div class="swatch" style="background:#FAF6EE;border-right:1px solid #eee"></div>
+    <div class="name">ProjectIntroSection</div>
+    <div class="bg-val">bg-background</div>
+    <div class="desc">Descrizione progetto · neutro caldo<span class="tag tag-bg">background</span></div>
+  </div>
+  <div class="section-row">
+    <div class="order">4</div>
+    <div class="swatch" style="background:#efe7d8"></div>
+    <div class="name">KeyFiguresSection</div>
+    <div class="bg-val">bg-[#efe7d8]</div>
+    <div class="desc">4 numeri grandi · sabbia calda su base neutra<span class="tag tag-light">sabbia</span></div>
+  </div>
+  <div class="section-row">
+    <div class="order">5</div>
+    <div class="swatch" style="background:#efe7d8"></div>
+    <div class="name">VillasOverviewSection</div>
+    <div class="bg-val">bg-[#efe7d8]</div>
+    <div class="desc">Griglia 4 ville · continuità da KeyFigures<span class="tag tag-light">sabbia</span></div>
+  </div>
+  <div class="section-row">
+    <div class="order">6</div>
+    <div class="swatch" style="background:#172522"></div>
+    <div class="name">DroneVideoSection</div>
+    <div class="bg-val">bg-[#0d1e1a]</div>
+    <div class="desc">Video drone full-bleed · scuro cinematico<span class="tag tag-dark">dark</span></div>
+  </div>
+  <div class="section-row">
+    <div class="order">7</div>
+    <div class="swatch" style="background:#FAF6EE;border-right:1px solid #eee"></div>
+    <div class="name">ImmersiveGallerySection</div>
+    <div class="bg-val">bg-background</div>
+    <div class="desc">Galleria con lightbox · neutro dopo il dark<span class="tag tag-bg">background</span></div>
+  </div>
+  <div class="section-row">
+    <div class="order">8</div>
+    <div class="swatch" style="background:#f7f1e7"></div>
+    <div class="name">ArchitectureSection</div>
+    <div class="bg-val">bg-[#f7f1e7]</div>
+    <div class="desc">Materiali e design · bianco caldo<span class="tag tag-warm">caldo</span></div>
+  </div>
+  <div class="section-row">
+    <div class="order">9</div>
+    <div class="swatch" style="background:#FAF6EE;border-right:1px solid #eee"></div>
+    <div class="name">LocationSection</div>
+    <div class="bg-val">bg-background</div>
+    <div class="desc">Mappa e POI · neutro<span class="tag tag-bg">background</span></div>
+  </div>
+  <div class="section-row">
+    <div class="order">10</div>
+    <div class="swatch" style="background:#172522"></div>
+    <div class="name">LifestyleSection</div>
+    <div class="bg-val">bg-[#172522]</div>
+    <div class="desc">Mosaico immagini + tag lifestyle · dark editoriale<span class="tag tag-dark">dark</span></div>
+  </div>
+  <div class="section-row">
+    <div class="order">11</div>
+    <div class="swatch" style="background:#172522"></div>
+    <div class="name">InvestmentSection</div>
+    <div class="bg-val">bg-[#172522]</div>
+    <div class="desc">Stats + motivazioni investimento · dark peso → dark consecutive intenzionale<span class="tag tag-dark">dark ★</span></div>
+  </div>
+  <div class="section-row">
+    <div class="order">12</div>
+    <div class="swatch" style="background:#FAF6EE;border-right:1px solid #eee"></div>
+    <div class="name">ContactLeadSection</div>
+    <div class="bg-val">bg-background</div>
+    <div class="desc">Form lead · neutro dopo il blocco dark<span class="tag tag-bg">background</span></div>
+  </div>
+  <div class="section-row">
+    <div class="order">13</div>
+    <div class="swatch" style="background:#FAF6EE;border-right:1px solid #eee"></div>
+    <div class="name">FaqSection</div>
+    <div class="bg-val">bg-background</div>
+    <div class="desc">Accordion FAQ · neutro chiude la pagina<span class="tag tag-bg">background</span></div>
+  </div>
+</div>
+
+<div class="rule">
+  <strong>Regola:</strong> Non mettere due sezioni chiare o due sezioni scure consecutive senza motivazione visiva.<br>
+  <strong>Eccezione documentata:</strong> Lifestyle (#10) + Investment (#11) entrambe dark — scelta intenzionale per dare peso visivo al pitch di investimento.<br>
+  <strong>Regola sugli asset:</strong> Aggiornare solo i file in <code>public/</code> — mai commitare file da <code>assets/</code> (gitignored).
+</div>
+
+</body>
+</html>

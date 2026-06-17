@@ -1,0 +1,96 @@
+<!-- @dsCard group="Foundation" -->
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=1200">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:system-ui,-apple-system,sans-serif;background:#FAF6EE;padding:48px 40px;min-width:1200px}
+  h1{font-family:'Cormorant Garamond',Georgia,serif;font-size:32px;font-weight:500;color:#2F2921;margin-bottom:8px;letter-spacing:.02em}
+  .subtitle{font-size:11px;text-transform:uppercase;letter-spacing:.22em;color:#9B9489;margin-bottom:36px}
+  .section-label{font-size:10px;text-transform:uppercase;letter-spacing:.22em;color:#9B9489;margin-bottom:16px;margin-top:32px}
+  .grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+  .grid-2{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  .swatch{overflow:hidden;border:1px solid rgba(0,0,0,.07)}
+  .color-block{height:76px}
+  .info{padding:10px 12px;background:white}
+  .name{font-size:11px;font-weight:600;color:#2F2921;margin-bottom:2px}
+  .val{font-size:9.5px;color:#6A6354;font-family:'SFMono-Regular',Consolas,monospace;word-break:break-all}
+  .role{font-size:9px;color:#9B9489;margin-top:3px;line-height:1.4}
+  .dark-swatch .info{background:#1e2d29}
+  .dark-swatch .name{color:#fff}
+  .dark-swatch .val{color:rgba(255,255,255,.55)}
+  .dark-swatch .role{color:rgba(255,255,255,.35)}
+</style>
+</head>
+<body>
+<h1>Palette Colori</h1>
+<p class="subtitle">Elba Luce Villas — Design System · Foundation</p>
+
+<p class="section-label">Brand primari</p>
+<div class="grid">
+  <div class="swatch dark-swatch">
+    <div class="color-block" style="background:#172522"></div>
+    <div class="info"><div class="name">Scuro Primario</div><div class="val">#172522</div><div class="role">BG sezioni dark, header, testo su chiaro</div></div>
+  </div>
+  <div class="swatch">
+    <div class="color-block" style="background:#efe7d8"></div>
+    <div class="info"><div class="name">Sabbia Calda</div><div class="val">#efe7d8</div><div class="role">BG sezioni alternate chiare</div></div>
+  </div>
+  <div class="swatch">
+    <div class="color-block" style="background:#f7f1e7"></div>
+    <div class="info"><div class="name">Bianco Caldo</div><div class="val">#f7f1e7</div><div class="role">ArchitectureSection</div></div>
+  </div>
+  <div class="swatch">
+    <div class="color-block" style="background:#FAF6EE;border:1px solid #e8e2d8"></div>
+    <div class="info"><div class="name">Background</div><div class="val">oklch(0.985 0.012 83)</div><div class="role">Base pagina</div></div>
+  </div>
+  <div class="swatch">
+    <div class="color-block" style="background:#F2EDE1;border:1px solid #e8e2d8"></div>
+    <div class="info"><div class="name">Card</div><div class="val">oklch(0.965 0.015 83)</div><div class="role">Bg card, superfici elevate</div></div>
+  </div>
+</div>
+
+<p class="section-label">Colori semantici</p>
+<div class="grid-2">
+  <div class="swatch">
+    <div class="color-block" style="background:#498A61"></div>
+    <div class="info"><div class="name">Accent</div><div class="val">oklch(0.56 0.075 153)</div><div class="role">Verde mediterraneo · badge, label sezione</div></div>
+  </div>
+  <div class="swatch">
+    <div class="color-block" style="background:#2C5C60"></div>
+    <div class="info"><div class="name">Primary</div><div class="val">oklch(0.31 0.04 189)</div><div class="role">Verde scuro · bottoni, link</div></div>
+  </div>
+  <div class="swatch">
+    <div class="color-block" style="background:#2F2921"></div>
+    <div class="info"><div class="name">Foreground</div><div class="val">oklch(0.19 0.018 73)</div><div class="role">Testo principale</div></div>
+  </div>
+  <div class="swatch">
+    <div class="color-block" style="background:#6A6354"></div>
+    <div class="info"><div class="name">Muted Foreground</div><div class="val">oklch(0.43 0.025 75)</div><div class="role">Sottotitoli, descrizioni secondarie</div></div>
+  </div>
+</div>
+
+<p class="section-label">Utility</p>
+<div class="grid">
+  <div class="swatch">
+    <div class="color-block" style="background:#C8BFB0;border:1px solid #b8b0a4"></div>
+    <div class="info"><div class="name">Border</div><div class="val">oklch(0.79 0.025 82)</div><div class="role">Bordi UI, divisori</div></div>
+  </div>
+  <div class="swatch">
+    <div class="color-block" style="background:#E2D8C9;border:1px solid #d4ccbf"></div>
+    <div class="info"><div class="name">Secondary</div><div class="val">oklch(0.88 0.03 86)</div><div class="role">Variante secondaria</div></div>
+  </div>
+  <div class="swatch">
+    <div class="color-block" style="background:#EAE3D7;border:1px solid #ddd7cd"></div>
+    <div class="info"><div class="name">Muted</div><div class="val">oklch(0.91 0.021 86)</div><div class="role">Bg muted, input disabilitati</div></div>
+  </div>
+  <div class="swatch">
+    <div class="color-block" style="background:#D7EDE0;border:1px solid #c8e3d4"></div>
+    <div class="info"><div class="name">Ring</div><div class="val">oklch(0.45 0.052 154)</div><div class="role">Focus ring su interactive elements</div></div>
+  </div>
+</div>
+</body>
+</html>

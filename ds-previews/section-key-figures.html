@@ -1,0 +1,94 @@
+<!-- @dsCard group="Sections" -->
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=1200">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:system-ui,-apple-system,sans-serif;background:#FAF6EE;min-width:1200px}
+  /* Marquee strip */
+  .marquee-section{background:#efe7d8;border-top:1px solid rgba(23,37,34,.1);border-bottom:1px solid rgba(23,37,34,.1);padding:16px 0;overflow:hidden}
+  .marquee-track{display:flex;white-space:nowrap;animation:marquee 40s linear infinite}
+  .marquee-item{display:inline-flex;align-items:center;gap:32px;padding:0 32px;font-size:10px;text-transform:uppercase;letter-spacing:.28em;color:rgba(23,37,34,.5)}
+  .dot{opacity:.3}
+  @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  /* Key figures section */
+  .figures-section{background:#efe7d8;border-top:1px solid rgba(23,37,34,.1);border-bottom:1px solid rgba(23,37,34,.1)}
+  .figures-grid{display:grid;grid-template-columns:repeat(4,1fr);max-width:1180px;margin:0 auto}
+  .figure-cell{padding:56px 32px;text-align:center;border-right:1px solid rgba(23,37,34,.1)}
+  .figure-cell:last-child{border-right:none}
+  .num{font-family:'Cormorant Garamond',Georgia,serif;font-size:72px;font-weight:500;color:#172522;line-height:1}
+  .num sup{font-size:36px;vertical-align:super;line-height:0}
+  .fig-label{margin-top:12px;font-size:10px;text-transform:uppercase;letter-spacing:.22em;color:rgba(23,37,34,.8)}
+  .fig-sub{margin-top:4px;font-size:11px;color:rgba(23,37,34,.45)}
+  /* Annotations */
+  .annotations{padding:28px 40px;background:white;display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .ann-label{font-size:9px;text-transform:uppercase;letter-spacing:.18em;color:#9B9489;margin-bottom:6px}
+  .ann-val{font-size:11px;color:#2F2921;line-height:1.6}
+</style>
+</head>
+<body>
+
+<!-- Marquee text strip -->
+<div class="marquee-section">
+  <div class="marquee-track">
+    <span class="marquee-item">Isola d'Elba<span class="dot">·</span></span>
+    <span class="marquee-item">Architettura mediterranea<span class="dot">·</span></span>
+    <span class="marquee-item">Privacy assoluta<span class="dot">·</span></span>
+    <span class="marquee-item">Vista mare<span class="dot">·</span></span>
+    <span class="marquee-item">Pietra locale<span class="dot">·</span></span>
+    <span class="marquee-item">Luce naturale<span class="dot">·</span></span>
+    <span class="marquee-item">Residenze esclusive<span class="dot">·</span></span>
+    <span class="marquee-item">Toscana<span class="dot">·</span></span>
+    <span class="marquee-item">Piscina privata<span class="dot">·</span></span>
+    <span class="marquee-item">Progetto contemporaneo<span class="dot">·</span></span>
+    <!-- repeated for seamless loop -->
+    <span class="marquee-item">Isola d'Elba<span class="dot">·</span></span>
+    <span class="marquee-item">Architettura mediterranea<span class="dot">·</span></span>
+    <span class="marquee-item">Privacy assoluta<span class="dot">·</span></span>
+    <span class="marquee-item">Vista mare<span class="dot">·</span></span>
+    <span class="marquee-item">Pietra locale<span class="dot">·</span></span>
+    <span class="marquee-item">Luce naturale<span class="dot">·</span></span>
+    <span class="marquee-item">Residenze esclusive<span class="dot">·</span></span>
+    <span class="marquee-item">Toscana<span class="dot">·</span></span>
+    <span class="marquee-item">Piscina privata<span class="dot">·</span></span>
+    <span class="marquee-item">Progetto contemporaneo<span class="dot">·</span></span>
+  </div>
+</div>
+
+<!-- Key figures -->
+<div class="figures-section">
+  <div class="figures-grid">
+    <div class="figure-cell">
+      <p class="num">4</p>
+      <p class="fig-label">Ville esclusive</p>
+      <p class="fig-sub">unità indipendenti</p>
+    </div>
+    <div class="figure-cell">
+      <p class="num">210<sup>m²</sup></p>
+      <p class="fig-label">Superficie massima</p>
+      <p class="fig-sub">spazi interni</p>
+    </div>
+    <div class="figure-cell">
+      <p class="num">4</p>
+      <p class="fig-label">Piscine private</p>
+      <p class="fig-sub">una per villa</p>
+    </div>
+    <div class="figure-cell">
+      <p class="num">2026</p>
+      <p class="fig-label">Anno di consegna</p>
+      <p class="fig-sub">prenotazioni aperte</p>
+    </div>
+  </div>
+</div>
+
+<div class="annotations">
+  <div><div class="ann-label">Marquee</div><div class="ann-val">CSS keyframe marquee-scroll<br>Items × 2 per loop seamless<br>translateX(-50%) loop<br>Rispetta prefers-reduced-motion</div></div>
+  <div><div class="ann-label">Key figures</div><div class="ann-val">Grid 4 colonne (2 su mobile)<br>divide-x divide-[#172522]/10<br>FadeIn stagger delay 0, .08, .16, .24s<br>Numero: font-heading text-7xl</div></div>
+  <div><div class="ann-label">Background</div><div class="ann-val">Entrambe le sezioni: bg-[#efe7d8]<br>Sabbia calda — tra hero e ville<br>Crea respiro dopo il dark dell'hero</div></div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!-- @dsCard group="Navigation" -->
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=1200">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:system-ui,-apple-system,sans-serif;background:#2a3d36;padding:0;min-width:1200px}
+  .label{font-size:10px;text-transform:uppercase;letter-spacing:.22em;color:rgba(255,255,255,.4);padding:20px 32px 12px;background:#1a2c26}
+  /* Progress bar */
+  .progress{height:2px;background:rgba(255,255,255,.08);position:relative;overflow:hidden}
+  .progress-fill{position:absolute;left:0;top:0;height:100%;background:#4A8B62;width:35%;opacity:.7}
+  /* Transparent header (on hero) */
+  .header{display:flex;align-items:center;justify-content:space-between;padding:0 40px;border-bottom:1px solid transparent;transition:all .5s}
+  .header-transparent{background:transparent;height:80px}
+  .header-scrolled{background:rgba(23,37,34,.86);border-bottom-color:rgba(255,255,255,.1);height:72px;backdrop-filter:blur(20px)}
+  .logo{font-family:'Cormorant Garamond',Georgia,serif;font-size:22px;color:white;letter-spacing:.04em;text-decoration:none}
+  .nav{display:flex;align-items:center;gap:28px}
+  .nav-link{font-size:10px;text-transform:uppercase;letter-spacing:.2em;color:rgba(255,255,255,.8);text-decoration:none;transition:color .2s}
+  .nav-link:hover{color:white}
+  .cta-btn{display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 16px;font-size:10px;text-transform:uppercase;letter-spacing:.18em;color:white;border:1px solid rgba(255,255,255,.25);text-decoration:none;transition:all .2s;white-space:nowrap}
+  .cta-btn:hover{border-color:white;background:white;color:#172522}
+  .spacer{height:48px;background:linear-gradient(180deg,#1a2c26 0%,rgba(23,37,34,.4) 100%)}
+  .annotations{background:#0f1e1a;padding:24px 40px;display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  .ann-label{font-size:9px;text-transform:uppercase;letter-spacing:.18em;color:rgba(255,255,255,.3);margin-bottom:6px}
+  .ann-val{font-size:11px;color:rgba(255,255,255,.75);line-height:1.6}
+  .divider{padding:12px 32px;background:#1a2c26}
+  .divider-text{font-size:10px;text-transform:uppercase;letter-spacing:.22em;color:rgba(255,255,255,.35)}
+</style>
+</head>
+<body>
+
+<div class="label">Header — Stato trasparente (hero visibile)</div>
+<div class="progress"><div class="progress-fill"></div></div>
+<div class="header header-transparent">
+  <a class="logo" href="#">Elba Luce Villas</a>
+  <nav class="nav">
+    <a class="nav-link" href="#">Progetto</a>
+    <a class="nav-link" href="#">Le ville</a>
+    <a class="nav-link" href="#">Location</a>
+    <a class="nav-link" href="#">Investimento</a>
+  </nav>
+  <a class="cta-btn" href="#">Richiedi informazioni ↗</a>
+</div>
+
+<div class="spacer"></div>
+
+<div class="divider"><span class="divider-text">Header — Stato scrolled (bg dark attivato dopo 24px scroll)</span></div>
+<div class="header header-scrolled">
+  <a class="logo" href="#">Elba Luce Villas</a>
+  <nav class="nav">
+    <a class="nav-link" href="#">Progetto</a>
+    <a class="nav-link" href="#">Le ville</a>
+    <a class="nav-link" href="#">Location</a>
+    <a class="nav-link" href="#">Investimento</a>
+  </nav>
+  <a class="cta-btn" href="#">Richiedi informazioni ↗</a>
+</div>
+
+<div class="annotations">
+  <div><div class="ann-label">Comportamento</div><div class="ann-val">Trasparente su hero<br>Scrolled dopo 24px<br>bg-[#172522]/86 + blur(20px)<br>Hover su header: attiva scrolled</div></div>
+  <div><div class="ann-label">Logo</div><div class="ann-val">font-heading text-2xl<br>tracking-wide text-white<br>→ sostituire con Image<br>quando arriva logo SVG</div></div>
+  <div><div class="ann-label">Nav links</div><div class="ann-val">text-xs uppercase<br>tracking-[.2em]<br>text-white/80<br>hover:text-white</div></div>
+  <div><div class="ann-label">Progress bar</div><div class="ann-val">h-0.5 fixed top-0 z-60<br>bg-accent/70<br>width = scroll%<br>ScrollProgress component</div></div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!-- @dsCard group="Cards" -->
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=1200">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:system-ui,-apple-system,sans-serif;background:#efe7d8;padding:48px 40px;min-width:1200px}
+  .page-title{font-family:'Cormorant Garamond',Georgia,serif;font-size:32px;font-weight:500;color:#2F2921;margin-bottom:8px}
+  .subtitle{font-size:11px;text-transform:uppercase;letter-spacing:.22em;color:#9B9489;margin-bottom:40px}
+  .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;background:#FAF6EE}
+  .card{overflow:hidden;background:#F2EDE1;transition:transform .35s ease}
+  .card:hover{transform:translateY(-6px)}
+  .card-image{position:relative;aspect-ratio:5/6;overflow:hidden}
+  .card-img-fill{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .7s ease}
+  .card:hover .card-img-fill{transform:scale(1.07)}
+  .gradient{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.8) 0%,rgba(0,0,0,.15) 55%,transparent 100%)}
+  .badge{position:absolute;top:16px;left:16px;padding:4px 10px;font-size:9px;text-transform:uppercase;letter-spacing:.12em}
+  .badge-available{background:rgba(255,255,255,.9);color:#172522}
+  .badge-reserved{background:rgba(23,37,34,.9);color:white}
+  .badge-coming{background:rgba(239,231,216,.95);color:#172522}
+  .pool-badge{position:absolute;top:16px;right:16px;display:flex;align-items:center;gap:6px;padding:4px 8px;font-size:9px;text-transform:uppercase;letter-spacing:.1em;border:1px solid rgba(255,255,255,.25);background:rgba(0,0,0,.3);color:rgba(255,255,255,.8)}
+  .card-content{position:absolute;bottom:0;left:0;right:0;padding:20px}
+  .villa-name{font-family:'Cormorant Garamond',Georgia,serif;font-size:28px;color:white;margin-bottom:8px}
+  .villa-desc{font-size:12px;line-height:1.6;color:rgba(255,255,255,.68);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .specs{display:flex;align-items:center;gap:16px;margin-top:16px;padding-top:16px;border-top:1px solid rgba(255,255,255,.15);font-size:10px;color:rgba(255,255,255,.55)}
+  .spec-item{display:flex;align-items:center;gap:6px}
+  .spec-icon{font-size:11px}
+  .card-footer{display:flex;align-items:center;justify-content:space-between;border:1px solid rgba(23,37,34,.1);border-top:none;padding:16px 20px;background:#F2EDE1}
+  .outdoor{font-size:11px;color:#6A6354}
+  .esplora{display:flex;align-items:center;gap:6px;font-size:10px;text-transform:uppercase;letter-spacing:.14em;color:#2C5C60}
+  /* Fake image gradient backgrounds for the 4 villa states */
+  .bg-azzurra{background:linear-gradient(145deg,#1a4a3e 0%,#2d7a6e 30%,#4a9e8f 55%,#8ec8bf 80%,#b8ddd8 100%)}
+  .bg-ginestra{background:linear-gradient(145deg,#3d2c1a 0%,#7a5c2d 30%,#9e824a 55%,#c8b08e 80%,#ddd0b8 100%)}
+  .bg-maestrale{background:linear-gradient(145deg,#1a2c4a 0%,#2d4c7a 30%,#4a6f9e 55%,#8ea8c8 80%,#b8cedd 100%)}
+  .bg-tramonto{background:linear-gradient(145deg,#4a1a1a 0%,#7a3030 30%,#b06060 55%,#d4a090 80%,#f0d5c8 100%)}
+  .placeholder-label{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:9px;text-transform:uppercase;letter-spacing:.2em;color:rgba(255,255,255,.3);text-align:center}
+  .section-label{font-size:10px;text-transform:uppercase;letter-spacing:.22em;color:#9B9489;margin-bottom:16px}
+  .annotations{margin-top:24px;background:white;padding:20px 24px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .ann-item .ann-label{font-size:9px;text-transform:uppercase;letter-spacing:.18em;color:#9B9489;margin-bottom:4px}
+  .ann-item .ann-val{font-size:11px;color:#2F2921;line-height:1.5}
+</style>
+</head>
+<body>
+<p class="page-title">Villa Card</p>
+<p class="subtitle">Elba Luce Villas — Design System · Cards · 4 stati</p>
+
+<p class="section-label">Griglia 4 ville — aspect-ratio 5:6 full image</p>
+<div class="grid">
+  <!-- Villa Azzurra — Disponibile + Piscina -->
+  <div class="card">
+    <div class="card-image">
+      <div class="card-img-fill bg-azzurra"></div>
+      <div class="gradient"></div>
+      <span class="badge badge-available">Disponibile</span>
+      <div class="pool-badge">⌀ Piscina</div>
+      <div class="placeholder-label">villa-azzurra.webp<br>1400 × 1680px</div>
+      <div class="card-content">
+        <h3 class="villa-name">Villa Azzurra</h3>
+        <p class="villa-desc">Affacciata direttamente sul golfo, con una piscina a sfioro che si fonde con l'orizzonte marino.</p>
+        <div class="specs">
+          <span class="spec-item"><span class="spec-icon">⊡</span> 210 m²</span>
+          <span class="spec-item"><span class="spec-icon">⌂</span> 4 camere</span>
+          <span class="spec-item"><span class="spec-icon">◎</span> 3 bagni</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <span class="outdoor">Terrazza 45 m² · Vista mare</span>
+      <a class="esplora">Esplora ↗</a>
+    </div>
+  </div>
+
+  <!-- Villa Ginestra — Riservata + Piscina -->
+  <div class="card">
+    <div class="card-image">
+      <div class="card-img-fill bg-ginestra"></div>
+      <div class="gradient"></div>
+      <span class="badge badge-reserved">Riservata</span>
+      <div class="pool-badge">⌀ Piscina</div>
+      <div class="placeholder-label">villa-ginestra.webp<br>1400 × 1680px</div>
+      <div class="card-content">
+        <h3 class="villa-name">Villa Ginestra</h3>
+        <p class="villa-desc">Immersa nella macchia mediterranea, circondata da ginestre profumate e pietra locale.</p>
+        <div class="specs">
+          <span class="spec-item"><span class="spec-icon">⊡</span> 185 m²</span>
+          <span class="spec-item"><span class="spec-icon">⌂</span> 3 camere</span>
+          <span class="spec-item"><span class="spec-icon">◎</span> 3 bagni</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <span class="outdoor">Giardino 80 m² · Patio</span>
+      <a class="esplora">Esplora ↗</a>
+    </div>
+  </div>
+
+  <!-- Villa Maestrale — Disponibile -->
+  <div class="card">
+    <div class="card-image">
+      <div class="card-img-fill bg-maestrale"></div>
+      <div class="gradient"></div>
+      <span class="badge badge-available">Disponibile</span>
+      <div class="pool-badge">⌀ Piscina</div>
+      <div class="placeholder-label">villa-maestrale.webp<br>1400 × 1680px</div>
+      <div class="card-content">
+        <h3 class="villa-name">Villa Maestrale</h3>
+        <p class="villa-desc">Esposta al vento del maestrale, con grandi vetrate e spazi living integrati con l'esterno.</p>
+        <div class="specs">
+          <span class="spec-item"><span class="spec-icon">⊡</span> 195 m²</span>
+          <span class="spec-item"><span class="spec-icon">⌂</span> 4 camere</span>
+          <span class="spec-item"><span class="spec-icon">◎</span> 3 bagni</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <span class="outdoor">Terrazza 60 m² · Pool deck</span>
+      <a class="esplora">Esplora ↗</a>
+    </div>
+  </div>
+
+  <!-- Villa Tramonto — Coming soon -->
+  <div class="card">
+    <div class="card-image">
+      <div class="card-img-fill bg-tramonto"></div>
+      <div class="gradient"></div>
+      <span class="badge badge-coming">Prossimamente</span>
+      <div class="placeholder-label">villa-tramonto.webp<br>1400 × 1680px</div>
+      <div class="card-content">
+        <h3 class="villa-name">Villa Tramonto</h3>
+        <p class="villa-desc">Il punto più elevato del complesso. Vista a 180° sul mare e tramonto sull'arcipelago toscano.</p>
+        <div class="specs">
+          <span class="spec-item"><span class="spec-icon">⊡</span> 175 m²</span>
+          <span class="spec-item"><span class="spec-icon">⌂</span> 3 camere</span>
+          <span class="spec-item"><span class="spec-icon">◎</span> 2 bagni</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <span class="outdoor">Loggia panoramica · Giardino</span>
+      <a class="esplora">Esplora ↗</a>
+    </div>
+  </div>
+</div>
+
+<div class="annotations">
+  <div class="ann-item"><div class="ann-label">Layout</div><div class="ann-val">Grid 4 colonne · gap-0<br>Hover: translateY(-6px)<br>Image: scale(1.07) on hover</div></div>
+  <div class="ann-item"><div class="ann-label">Image slot</div><div class="ann-val">aspect-[5/6] overflow-hidden<br>Gradient: black/80 → transparent<br>Replace .svg → .webp (1400×1680)</div></div>
+  <div class="ann-item"><div class="ann-label">Config data</div><div class="ann-val">lib/villas.ts<br>Campi: name, image, description,<br>surface, bedrooms, bathrooms,<br>outdoor, pool, status, highlights</div></div>
+</div>
+</body>
+</html>

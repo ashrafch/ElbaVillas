@@ -1,0 +1,91 @@
+<!-- @dsCard group="Foundation" -->
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=1200">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:system-ui,-apple-system,sans-serif;background:#FAF6EE;padding:48px 40px;min-width:1200px}
+  .heading-font{font-family:'Cormorant Garamond',Georgia,serif}
+  .page-title{font-family:'Cormorant Garamond',Georgia,serif;font-size:32px;font-weight:500;color:#2F2921;margin-bottom:8px}
+  .subtitle{font-size:11px;text-transform:uppercase;letter-spacing:.22em;color:#9B9489;margin-bottom:48px}
+  .row{display:grid;grid-template-columns:180px 1fr 160px;gap:24px;align-items:baseline;padding:20px 0;border-bottom:1px solid rgba(0,0,0,.07)}
+  .row:first-of-type{border-top:1px solid rgba(0,0,0,.07)}
+  .meta{display:flex;flex-direction:column;gap:3px}
+  .meta-label{font-size:10px;text-transform:uppercase;letter-spacing:.18em;color:#9B9489}
+  .meta-val{font-size:10.5px;color:#6A6354;font-family:'SFMono-Regular',Consolas,monospace}
+  .spec{font-size:10px;color:#9B9489;line-height:1.6;text-align:right}
+  .overline{font-size:10.5px;text-transform:uppercase;letter-spacing:.28em;color:#498A61}
+  .h1-sample{font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(3rem,6vw,5.5rem);font-weight:500;line-height:.98;color:#2F2921;letter-spacing:-.01em}
+  .h2-sample{font-family:'Cormorant Garamond',Georgia,serif;font-size:3.2rem;font-weight:500;line-height:1.05;color:#2F2921}
+  .h3-sample{font-family:'Cormorant Garamond',Georgia,serif;font-size:2rem;font-weight:500;color:#2F2921}
+  .h3-card{font-family:'Cormorant Garamond',Georgia,serif;font-size:1.875rem;font-weight:400;color:#2F2921}
+  .stat-sample{font-family:'Cormorant Garamond',Georgia,serif;font-size:4.5rem;font-weight:500;color:#172522}
+  .body-lg{font-size:1.125rem;line-height:2;color:#6A6354}
+  .body-base{font-size:1rem;line-height:1.75;color:#6A6354}
+  .label-ui{font-size:.68rem;text-transform:uppercase;letter-spacing:.28em;color:#2F2921}
+  .caption{font-size:.75rem;color:#9B9489}
+</style>
+</head>
+<body>
+<p class="page-title heading-font">Tipografia</p>
+<p class="subtitle">Elba Luce Villas — Design System · Foundation</p>
+
+<div class="row">
+  <div class="meta"><span class="meta-label">Overline</span><span class="meta-val">Geist · 0.68rem · tracking[.28em]</span></div>
+  <span class="overline">Residenze esclusive · Isola d'Elba</span>
+  <div class="spec">text-[.68rem]<br>uppercase<br>tracking-[.28em]<br>text-accent</div>
+</div>
+
+<div class="row">
+  <div class="meta"><span class="meta-label">H1 Hero</span><span class="meta-val">Cormorant · clamp(3.1rem → 6.7rem)</span></div>
+  <span class="h1-sample">Ville contemporanee<br>nell'Isola d'Elba</span>
+  <div class="spec">font-heading<br>clamp(3.1rem,8.2vw,6.7rem)<br>leading-[.98]<br>font-medium</div>
+</div>
+
+<div class="row">
+  <div class="meta"><span class="meta-label">H2 Sezione</span><span class="meta-val">Cormorant · 3.2rem / 4.2rem</span></div>
+  <span class="h2-sample">Una casa per abitare<br>l'isola, non solo guardarla.</span>
+  <div class="spec">font-heading<br>text-4xl md:text-6xl<br>font-medium</div>
+</div>
+
+<div class="row">
+  <div class="meta"><span class="meta-label">H3 Card / Feature</span><span class="meta-val">Cormorant · 1.875rem</span></div>
+  <span class="h3-card">Villa Azzurra</span>
+  <div class="spec">font-heading<br>text-3xl<br>font-normal / text-white</div>
+</div>
+
+<div class="row">
+  <div class="meta"><span class="meta-label">Stat / Numero</span><span class="meta-val">Cormorant · 4.5rem</span></div>
+  <span class="stat-sample">210<span style="font-size:2.25rem">m²</span></span>
+  <div class="spec">font-heading<br>text-5xl–7xl<br>font-medium</div>
+</div>
+
+<div class="row">
+  <div class="meta"><span class="meta-label">Body Large</span><span class="meta-val">Geist · 1.125rem · leading-8</span></div>
+  <span class="body-lg">Un progetto residenziale esclusivo tra mare, natura e architettura mediterranea. Quattro ville indipendenti.</span>
+  <div class="spec">text-lg<br>leading-8<br>text-muted-foreground</div>
+</div>
+
+<div class="row">
+  <div class="meta"><span class="meta-label">Body Base</span><span class="meta-val">Geist · 1rem · leading-7</span></div>
+  <span class="body-base">Pietra locale, legno naturale e ampie vetrate orientate verso il mare. Ogni villa è pensata come un rifugio privato.</span>
+  <div class="spec">text-base<br>leading-7<br>text-muted-foreground</div>
+</div>
+
+<div class="row">
+  <div class="meta"><span class="meta-label">Label UI</span><span class="meta-val">Geist · 0.68rem · tracking[.28em]</span></div>
+  <span class="label-ui">Scopri il progetto · Richiedi brochure · Esplora</span>
+  <div class="spec">text-[.68rem]<br>uppercase<br>tracking-[.14–.28em]</div>
+</div>
+
+<div class="row">
+  <div class="meta"><span class="meta-label">Caption / Sub</span><span class="meta-val">Geist · 0.75rem</span></div>
+  <span class="caption">spazi interni · una per villa · prenotazioni aperte</span>
+  <div class="spec">text-xs<br>text-muted-foreground/60</div>
+</div>
+
+</body>
+</html>

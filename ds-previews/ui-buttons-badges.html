@@ -1,0 +1,118 @@
+<!-- @dsCard group="UI Components" -->
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=1200">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:system-ui,-apple-system,sans-serif;background:#FAF6EE;padding:48px 40px;min-width:1200px}
+  .page-title{font-family:'Cormorant Garamond',Georgia,serif;font-size:32px;font-weight:500;color:#2F2921;margin-bottom:8px}
+  .subtitle{font-size:11px;text-transform:uppercase;letter-spacing:.22em;color:#9B9489;margin-bottom:40px}
+  .section{margin-bottom:40px}
+  .section-label{font-size:10px;text-transform:uppercase;letter-spacing:.22em;color:#9B9489;margin-bottom:20px;padding-bottom:10px;border-bottom:1px solid rgba(0,0,0,.08)}
+  .row{display:flex;flex-wrap:wrap;align-items:center;gap:16px;margin-bottom:16px}
+  .row-dark{display:flex;flex-wrap:wrap;align-items:center;gap:16px;background:#172522;padding:24px;margin-bottom:16px}
+  /* Buttons */
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:48px;padding:0 24px;font-size:11px;text-transform:uppercase;letter-spacing:.18em;cursor:pointer;border:none;font-family:inherit;transition:all .2s}
+  .btn-primary{background:#2F2921;color:white}
+  .btn-primary:hover{background:#172522}
+  .btn-white{background:white;color:#172522}
+  .btn-white:hover{background:#efe3cf}
+  .btn-outline-dark{background:transparent;color:#172522;border:1px solid #172522}
+  .btn-outline-dark:hover{background:#172522;color:white}
+  .btn-outline-white{background:transparent;color:white;border:1px solid rgba(255,255,255,.35)}
+  .btn-outline-white:hover{background:white;color:#172522}
+  .btn-ghost{background:transparent;color:#2C5C60;padding:0;height:auto;font-size:10px;letter-spacing:.14em;border:none;gap:4px}
+  .btn-sm{height:40px;padding:0 16px;font-size:10px;letter-spacing:.14em}
+  .arrow{font-size:14px;line-height:1}
+  /* Badges */
+  .badge{display:inline-flex;align-items:center;padding:4px 10px;font-size:9.5px;text-transform:uppercase;letter-spacing:.12em;font-family:inherit}
+  .badge-available{background:rgba(255,255,255,.9);color:#172522}
+  .badge-reserved{background:rgba(23,37,34,.9);color:white}
+  .badge-coming{background:rgba(239,231,216,.95);color:#172522}
+  .badge-accent{background:#498A61;color:white}
+  /* Tags lifestyle */
+  .tag{display:inline-flex;align-items:center;padding:8px 12px;font-size:9.5px;text-transform:uppercase;letter-spacing:.14em;border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.65)}
+  .tag-light{border:1px solid rgba(23,37,34,.15);color:rgba(23,37,34,.65)}
+  /* Pool badge */
+  .pool-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 8px;font-size:9px;text-transform:uppercase;letter-spacing:.1em;border:1px solid rgba(255,255,255,.25);background:rgba(0,0,0,.3);color:rgba(255,255,255,.8);backdrop-filter:blur(4px)}
+  /* Scroll progress bar */
+  .progress-bar{height:2px;width:200px;background:rgba(0,0,0,.08);position:relative;overflow:hidden}
+  .progress-fill{position:absolute;left:0;top:0;height:100%;background:#2C5C60;width:40%}
+  /* CTA link */
+  .cta-link{display:inline-flex;align-items:center;gap:6px;font-size:10px;text-transform:uppercase;letter-spacing:.14em;color:#2C5C60}
+  .annotate{font-size:10px;color:#9B9489;margin-top:8px}
+</style>
+</head>
+<body>
+<p class="page-title">Bottoni & Badge</p>
+<p class="subtitle">Elba Luce Villas — Design System · UI Components</p>
+
+<div class="section">
+  <p class="section-label">Bottoni primari — su background chiaro</p>
+  <div class="row">
+    <button class="btn btn-primary">Scopri il progetto <span class="arrow">→</span></button>
+    <button class="btn btn-outline-dark">Richiedi brochure</button>
+    <button class="btn btn-sm btn-primary">Contatti <span class="arrow">→</span></button>
+    <button class="btn btn-ghost">Esplora <span class="arrow" style="font-size:12px">↗</span></button>
+  </div>
+  <p class="annotate">btn-primary: bg-[#172522] · btn-outline: border-[#172522] · btn-ghost: text-primary inline</p>
+</div>
+
+<div class="section">
+  <p class="section-label">Bottoni — su background scuro #172522</p>
+  <div class="row-dark">
+    <button class="btn btn-white">Scopri il progetto <span class="arrow">→</span></button>
+    <button class="btn btn-outline-white">Richiedi brochure</button>
+    <button class="btn btn-white">Richiedi il dossier riservato <span class="arrow">→</span></button>
+  </div>
+  <p class="annotate">Su dark bg: btn-white (bg-white text-[#172522]) · btn-outline-white (border-white/35)</p>
+</div>
+
+<div class="section">
+  <p class="section-label">Badge stato villa — usati in VillaCard</p>
+  <div class="row" style="padding:16px;background:linear-gradient(135deg,#2a3d36,#172522)">
+    <span class="badge badge-available">Disponibile</span>
+    <span class="badge badge-reserved">Riservata</span>
+    <span class="badge badge-coming">Prossimamente</span>
+    <span class="pool-badge">⌀ Piscina</span>
+  </div>
+  <p class="annotate">Status badge: positioned absolute top-left. Pool badge: top-right. Both in VillaCard image overlay.</p>
+</div>
+
+<div class="section">
+  <p class="section-label">Badge accent & label sezione</p>
+  <div class="row">
+    <span class="badge badge-accent">Progetto</span>
+    <span style="font-size:10px;text-transform:uppercase;letter-spacing:.28em;color:#498A61">Investimento</span>
+    <span style="font-size:10px;text-transform:uppercase;letter-spacing:.28em;color:rgba(255,255,255,.45);background:#172522;padding:6px 12px">Lifestyle</span>
+  </div>
+  <p class="annotate">Overline label: text-[.68rem] uppercase tracking-[.28em] text-accent / text-white/45 su dark</p>
+</div>
+
+<div class="section">
+  <p class="section-label">Tag lifestyle — su background scuro</p>
+  <div class="row" style="background:#172522;padding:20px">
+    <span class="tag">mare al mattino</span>
+    <span class="tag">pranzi all'aperto</span>
+    <span class="tag">sentieri tra i profumi</span>
+    <span class="tag">privacy di famiglia</span>
+  </div>
+  <p class="annotate">Tags: border-white/18 px-3 py-2 text-[.68rem] uppercase tracking-[.14em] text-white/65</p>
+</div>
+
+<div class="section">
+  <p class="section-label">CTA link inline & scroll progress</p>
+  <div class="row">
+    <a class="cta-link">Esplora <span style="font-size:12px">↗</span></a>
+    <div>
+      <div class="progress-bar"><div class="progress-fill"></div></div>
+      <p class="annotate" style="margin-top:4px">Scroll progress: top of page, h-0.5 bg-primary/60, grows right</p>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
