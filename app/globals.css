@@ -156,6 +156,41 @@
   }
 }
 
+/* Investment simulator range sliders */
+.slider-track {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 1px;
+  background: transparent;
+  outline: none;
+  cursor: pointer;
+  display: block;
+  margin: 8px 0;
+}
+.slider-track::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+  margin-top: -7.5px;
+  box-shadow: 0 0 0 3px rgba(255,255,255,.12);
+  transition: box-shadow .2s;
+}
+.slider-track::-webkit-slider-thumb:hover {
+  box-shadow: 0 0 0 5px rgba(255,255,255,.2);
+}
+.slider-track::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: none;
+  background: white;
+  cursor: pointer;
+}
+
 @keyframes marquee-scroll {
   from { transform: translateX(0) }
   to { transform: translateX(-50%) }

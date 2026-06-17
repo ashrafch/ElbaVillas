@@ -1,6 +1,7 @@
 import { ArrowUpRight } from "lucide-react"
 
 import { FadeIn } from "@/components/motion/FadeIn"
+import { InvestmentSimulatorModal } from "@/components/sections/InvestmentSimulatorModal"
 
 const stats = [
   { value: "3ª", label: "Isola toscana per estensione" },
@@ -55,6 +56,7 @@ export function InvestmentSection() {
             >
               Richiedi il dossier riservato
             </a>
+            <InvestmentSimulatorModal />
           </FadeIn>
         </div>
       </div>
