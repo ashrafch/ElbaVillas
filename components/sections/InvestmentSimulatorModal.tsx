@@ -197,13 +197,10 @@ export function InvestmentSimulatorModal() {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="group mt-5 inline-flex items-center gap-2.5 text-[0.7rem] uppercase tracking-[0.18em] text-white/55 transition-colors hover:text-white/90"
+        className="group inline-flex h-12 items-center justify-center gap-2.5 border border-white/20 px-6 text-[0.7rem] uppercase tracking-[0.18em] text-white/65 transition-all duration-200 hover:border-white/45 hover:text-white sm:px-8"
       >
-        <Calculator className="size-3.5 transition-transform group-hover:scale-110" />
-        <span className="relative">
-          Simula il tuo investimento
-          <span className="absolute -bottom-px left-0 h-px w-0 bg-white/40 transition-all duration-300 group-hover:w-full" />
-        </span>
+        <Calculator className="size-3.5 shrink-0 opacity-70 transition-opacity group-hover:opacity-100" />
+        Simula il tuo investimento
       </button>
 
       {/* Modal */}

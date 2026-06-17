@@ -1,0 +1,81 @@
+<!-- @dsCard group="Sections" -->
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=1200">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:system-ui,-apple-system,sans-serif;background:#172522;min-width:1200px}
+  .section{padding:80px 40px;color:white;max-width:1180px;margin:0 auto}
+  .stats-band{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid rgba(255,255,255,.12);border-bottom:1px solid rgba(255,255,255,.12);margin-bottom:64px}
+  .stat{padding:40px 32px;text-align:center;border-right:1px solid rgba(255,255,255,.12)}
+  .stat:last-child{border-right:none}
+  .stat-num{font-family:'Cormorant Garamond',Georgia,serif;font-size:48px;font-weight:500}
+  .stat-label{margin-top:8px;font-size:10px;text-transform:uppercase;letter-spacing:.22em;color:rgba(255,255,255,.5)}
+  .two-col{display:grid;grid-template-columns:.9fr 1.1fr;gap:40px;align-items:start}
+  .overline{font-size:10px;text-transform:uppercase;letter-spacing:.28em;color:rgba(255,255,255,.45);margin-bottom:20px}
+  .heading{font-family:'Cormorant Garamond',Georgia,serif;font-size:48px;font-weight:500;line-height:1.08;color:white}
+  .body{font-size:16px;line-height:1.8;color:rgba(255,255,255,.65);margin-bottom:32px}
+  .items{margin-bottom:36px}
+  .item{display:grid;grid-template-columns:1fr auto;align-items:center;gap:16px;border-bottom:1px solid rgba(255,255,255,.1);padding:16px 0;font-size:13px;line-height:1.5;color:rgba(255,255,255,.75)}
+  .item-arrow{font-size:14px;color:rgba(255,255,255,.25);flex-shrink:0}
+  /* CTA pair — the redesigned harmonious system */
+  .cta-pair{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .cta-primary{display:inline-flex;align-items:center;justify-content:center;height:48px;padding:0 32px;background:white;color:#172522;font-size:10.5px;text-transform:uppercase;letter-spacing:.18em;text-decoration:none;white-space:nowrap}
+  .cta-secondary{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:48px;padding:0 32px;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.65);font-size:10.5px;text-transform:uppercase;letter-spacing:.18em;cursor:pointer;background:none;white-space:nowrap}
+  .cta-secondary:hover{border-color:rgba(255,255,255,.45);color:white}
+  .calc-icon{width:14px;height:14px;opacity:.7}
+  /* Annotations */
+  .annotations{background:#0f1e1a;padding:28px 40px;display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+  .ann-label{font-size:9px;text-transform:uppercase;letter-spacing:.18em;color:rgba(255,255,255,.3);margin-bottom:6px}
+  .ann-val{font-size:11px;color:rgba(255,255,255,.7);line-height:1.6}
+  code{font-family:'SFMono-Regular',Consolas,monospace;font-size:10px;background:rgba(255,255,255,.08);padding:1px 4px}
+</style>
+</head>
+<body>
+
+<div style="background:#172522">
+  <div class="section">
+    <div class="stats-band">
+      <div class="stat"><div class="stat-num">3ª</div><div class="stat-label">Isola toscana per estensione</div></div>
+      <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Vista mare garantita</div></div>
+      <div class="stat"><div class="stat-num">Limitata</div><div class="stat-label">Offerta residenziale</div></div>
+    </div>
+    <div class="two-col">
+      <div>
+        <p class="overline">Investimento</p>
+        <h2 class="heading">Una scelta patrimoniale da valutare con misura.</h2>
+      </div>
+      <div>
+        <p class="body">Il progetto parla a chi desidera una casa privata in una destinazione riconoscibile e a chi valuta un bene con potenziale uso misto.</p>
+        <div class="items">
+          <div class="item"><span>Proprietà esclusiva in un contesto a offerta limitata</span><span class="item-arrow">↗</span></div>
+          <div class="item"><span>Forte appeal turistico dell'Isola d'Elba</span><span class="item-arrow">↗</span></div>
+          <div class="item"><span>Uso personale con potenziale locazione di qualità</span><span class="item-arrow">↗</span></div>
+          <div class="item"><span>Valore legato a posizione, progetto e scarsità</span><span class="item-arrow">↗</span></div>
+        </div>
+
+        <!-- CTA pair — harmonious system -->
+        <div class="cta-pair">
+          <a class="cta-primary" href="#">Richiedi il dossier riservato</a>
+          <button class="cta-secondary">
+            <svg class="calc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="8" y2="10" stroke-width="2"/><line x1="12" y1="10" x2="12" y2="10" stroke-width="2"/><line x1="16" y1="10" x2="16" y2="10" stroke-width="2"/><line x1="8" y1="14" x2="8" y2="14" stroke-width="2"/><line x1="12" y1="14" x2="12" y2="14" stroke-width="2"/><line x1="16" y1="14" x2="16" y2="18"/></svg>
+            Simula il tuo investimento
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="annotations">
+  <div><div class="ann-label">CTA system</div><div class="ann-val">flex gap-3 sm:flex-row<br>Primary: <code>bg-white h-12 px-8</code><br>Secondary: <code>border-white/20 h-12</code><br>Stessa altezza h-12, stesso padding</div></div>
+  <div><div class="ann-label">Simulatore trigger</div><div class="ann-val">Bottone outlined border/20<br>hover: border/45 + text bianco<br>Icon Calculator lucide-react<br>Opens full-screen dark modal</div></div>
+  <div><div class="ann-label">Calcoli reali</div><div class="ann-val">Gestione 22% · Cedolare 21%<br>Manutenzione 1.2% · Assicurazione 0.4%<br>IMU ~0.2% · Fissi €5.200/anno<br>Mutuo: formula PMT standard</div></div>
+  <div><div class="ann-label">Componente</div><div class="ann-val"><code>InvestmentSimulatorModal.tsx</code><br>Self-contained: trigger + Dialog<br>Server component can import it<br>(Next.js client boundary)</div></div>
+</div>
+
+</body>
+</html>

@@ -243,6 +243,39 @@ Se arrivano versioni HD, ottimizzare prima con FFmpeg (vedi `ASSET_GUIDE.md`) po
 5. Eseguire `npm run build` prima di committare.
 6. Commit descrittivi: cosa cambia e perché.
 7. Push su `main` → deploy automatico Vercel.
+8. **Aggiornare sempre il Design System Claude** (vedi sezione sotto) dopo ogni modifica visiva a componenti o sezioni.
+
+---
+
+## Claude Design System Sync
+
+Il Design System è pubblicato su `claude.ai/design` — progetto ID `0b01fb47-f630-4614-ac38-7756fe5ff4ef`.
+
+**Regola obbligatoria:** ogni volta che un componente o una sezione viene modificata visivamente, aggiornare il file HTML corrispondente in `ds-previews/` e caricare su Claude Design.
+
+### File ds-previews/ e gruppo di appartenenza
+
+| File | Gruppo | Aggiornare quando... |
+|---|---|---|
+| `foundation-colors.html` | Foundation | Cambiano i token colore in `globals.css` |
+| `foundation-typography.html` | Foundation | Cambia la scala tipografica o i font |
+| `section-visual-rhythm.html` | Foundation | Cambia l'ordine o i bg delle sezioni |
+| `ui-buttons-badges.html` | UI Components | Cambiano bottoni, badge, tag, CTA |
+| `component-villa-card.html` | Cards | Cambia `VillaCard.tsx` |
+| `component-header.html` | Navigation | Cambia `Header.tsx` |
+| `section-hero.html` | Sections | Cambia `HeroSection.tsx` |
+| `section-key-figures.html` | Sections | Cambia `KeyFiguresSection.tsx` o `MarqueeText.tsx` |
+| `section-investment.html` | Sections | Cambia `InvestmentSection.tsx` o `InvestmentSimulatorModal.tsx` |
+
+### Procedura di sync
+
+```
+# 1. Aggiornare il file HTML in ds-previews/
+# 2. Caricare su Claude Design (DesignSync tool):
+#    - finalize_plan con il file modificato
+#    - write_files con localPath relativo a ds-previews/
+# 3. Committare ds-previews/ insieme al componente modificato
+```
 
 ---
 

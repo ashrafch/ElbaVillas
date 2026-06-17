@@ -50,13 +50,15 @@ export function InvestmentSection() {
                 </div>
               ))}
             </div>
-            <a
-              href="#contatti"
-              className="mt-9 inline-flex min-h-12 w-full items-center justify-center bg-white px-5 py-3 text-center text-xs uppercase tracking-[0.13em] text-[#172522] transition hover:bg-[#efe3cf] sm:w-auto sm:px-6 sm:text-sm sm:tracking-[0.18em]"
-            >
-              Richiedi il dossier riservato
-            </a>
-            <InvestmentSimulatorModal />
+            <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
+              <a
+                href="#contatti"
+                className="inline-flex h-12 items-center justify-center bg-white px-6 text-xs uppercase tracking-[0.18em] text-[#172522] transition hover:bg-[#efe3cf] sm:px-8"
+              >
+                Richiedi il dossier riservato
+              </a>
+              <InvestmentSimulatorModal />
+            </div>
           </FadeIn>
         </div>
       </div>
