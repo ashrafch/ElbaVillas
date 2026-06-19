@@ -75,10 +75,10 @@ export function VillaCard({ villa }: { villa: Villa }) {
       <div className="flex items-center justify-between border border-border/70 border-t-0 px-5 py-4">
         <p className="text-xs text-muted-foreground">{villa.outdoor}</p>
         <a
-          href="#contatti"
+          href="#disponibilita"
           className="group/cta inline-flex items-center gap-1.5 text-xs uppercase tracking-[0.14em] text-primary transition hover:text-accent"
         >
-          Esplora
+          Disponibilità
           <ArrowUpRight className="size-3.5 transition group-hover/cta:translate-x-0.5 group-hover/cta:-translate-y-0.5" />
         </a>
       </div>

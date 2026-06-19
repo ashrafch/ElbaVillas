@@ -13,7 +13,7 @@ export function ArchitectureSection() {
     <section className="bg-[#f7f1e7] py-24 md:py-32">
       <div className="container-premium grid gap-12 lg:grid-cols-2 lg:items-center">
         {/* Staggered image pair */}
-        <FadeIn direction="right" className="relative grid gap-4 sm:grid-cols-2">
+        <FadeIn direction="right" className="relative hidden gap-4 sm:grid-cols-2 lg:grid">
           <div className="relative aspect-[4/5] overflow-hidden sm:mt-16">
             <Image
               src="/images/architecture/stone-detail.svg"

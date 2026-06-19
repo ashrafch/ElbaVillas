@@ -1,4 +1,4 @@
-export type VillaStatus = "available" | "reserved" | "coming-soon"
+export type VillaStatus = "available" | "reserved" | "coming-soon" | "sold"
 
 export type Villa = {
   id: string
@@ -12,4 +12,6 @@ export type Villa = {
   pool: boolean
   status: VillaStatus
   highlights: string[]
+  featured?: boolean  // shown in VillasOverviewSection editorial cards
+  priceLabel?: string // e.g. "Da €850.000" — show when ready
 }
