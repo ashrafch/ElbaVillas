@@ -46,11 +46,13 @@ const milestones: Milestone[] = [
   },
 ]
 
-// Current milestone is index 2 out of 5 → progress = 2/(5-1) = 50% of the line
+// Each dot lives at column center: 10%, 30%, 50%, 70%, 90%
+// Progress = from 10% to 50% (current dot) = 50% of the line's own width
+const DOT_POSITIONS = [10, 30, 50, 70, 90] // % from container left
 const PROGRESS_PCT = "50%"
 
 const ease = [0.22, 1, 0.36, 1] as const
-const spring = { type: "spring", stiffness: 320, damping: 22 } as const
+const spring = { type: "spring", stiffness: 300, damping: 24 } as const
 
 function DesktopDot({
   status,
@@ -67,44 +69,37 @@ function DesktopDot({
         initial={{ scale: 0, opacity: 0 }}
         animate={inView ? { scale: 1, opacity: 1 } : {}}
         transition={{ delay, duration: 0.45, ease }}
-        className="size-3 rounded-full border border-[#172522]/25 bg-transparent"
+        className="size-[10px] rounded-full border border-[#172522]/28 bg-transparent"
       />
     )
   }
-
   if (status === "current") {
     return (
-      <div className="relative flex items-center justify-center" style={{ width: 12, height: 12 }}>
+      <div className="relative flex items-center justify-center" style={{ width: 10, height: 10 }}>
         {inView && (
           <motion.div
-            className="absolute rounded-full bg-[#172522]/14"
-            style={{ width: 30, height: 30, top: -9, left: -9 }}
+            className="absolute rounded-full bg-[#172522]/12"
+            style={{ width: 32, height: 32, top: -11, left: -11 }}
             initial={{ scale: 0.5, opacity: 0 }}
-            animate={{ scale: [1, 2.4, 1], opacity: [0.55, 0, 0.55] }}
-            transition={{
-              delay: delay + 0.5,
-              duration: 2.5,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
+            animate={{ scale: [1, 2.5, 1], opacity: [0.5, 0, 0.5] }}
+            transition={{ delay: delay + 0.6, duration: 2.6, repeat: Infinity, ease: "easeInOut" }}
           />
         )}
         <motion.div
           initial={{ scale: 0 }}
-          animate={inView ? { scale: 1, boxShadow: "0 0 0 4px rgba(23,37,34,.08)" } : {}}
+          animate={inView ? { scale: 1, boxShadow: "0 0 0 4px rgba(23,37,34,.1)" } : {}}
           transition={{ delay, ...spring }}
-          className="relative size-3 rounded-full bg-[#172522]"
+          className="relative size-[10px] rounded-full bg-[#172522]"
         />
       </div>
     )
   }
-
   return (
     <motion.div
       initial={{ scale: 0 }}
       animate={inView ? { scale: 1 } : {}}
       transition={{ delay, ...spring }}
-      className="size-3 rounded-full bg-[#172522]"
+      className="size-[10px] rounded-full bg-[#172522]"
     />
   )
 }
@@ -116,26 +111,26 @@ function MobileDot({ status, delay, inView }: { status: Status; delay: number; i
         initial={{ scale: 0 }}
         animate={inView ? { scale: 1 } : {}}
         transition={{ delay, ...spring }}
-        className="size-3 rounded-full bg-[#172522]"
+        className="size-[10px] rounded-full bg-[#172522]"
       />
     )
   }
   if (status === "current") {
     return (
-      <div className="relative flex items-center justify-center" style={{ width: 12, height: 12 }}>
+      <div className="relative flex items-center justify-center" style={{ width: 10, height: 10 }}>
         {inView && (
           <motion.div
-            className="absolute rounded-full bg-[#172522]/14"
-            style={{ width: 28, height: 28, top: -8, left: -8 }}
-            animate={{ scale: [1, 2.4, 1], opacity: [0.55, 0, 0.55] }}
-            transition={{ delay: delay + 0.4, duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute rounded-full bg-[#172522]/12"
+            style={{ width: 28, height: 28, top: -9, left: -9 }}
+            animate={{ scale: [1, 2.5, 1], opacity: [0.5, 0, 0.5] }}
+            transition={{ delay: delay + 0.5, duration: 2.6, repeat: Infinity, ease: "easeInOut" }}
           />
         )}
         <motion.div
           initial={{ scale: 0 }}
-          animate={inView ? { scale: 1, boxShadow: "0 0 0 4px rgba(23,37,34,.08)" } : {}}
+          animate={inView ? { scale: 1, boxShadow: "0 0 0 4px rgba(23,37,34,.1)" } : {}}
           transition={{ delay, ...spring }}
-          className="relative size-3 rounded-full bg-[#172522]"
+          className="relative size-[10px] rounded-full bg-[#172522]"
         />
       </div>
     )
@@ -145,7 +140,7 @@ function MobileDot({ status, delay, inView }: { status: Status; delay: number; i
       initial={{ scale: 0, opacity: 0 }}
       animate={inView ? { scale: 1, opacity: 1 } : {}}
       transition={{ delay, duration: 0.4, ease }}
-      className="size-3 rounded-full border border-[#172522]/25"
+      className="size-[10px] rounded-full border border-[#172522]/28"
     />
   )
 }
@@ -163,7 +158,7 @@ export function TimelineSection() {
           initial={{ opacity: 0, y: 22 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.65, ease }}
-          className="mb-14 text-center lg:text-left"
+          className="mb-16 text-center lg:text-left"
         >
           <p className="text-xs uppercase tracking-[0.28em] text-[#172522]/45">
             Avanzamento lavori
@@ -176,48 +171,52 @@ export function TimelineSection() {
           </p>
         </motion.div>
 
-        {/* ── Desktop: horizontal timeline ── */}
-        <div className="hidden lg:block">
+        {/* ── Desktop: single grid, 3 explicit rows ── */}
+        <div
+          className="hidden lg:grid"
+          style={{ gridTemplateColumns: "repeat(5, 1fr)", gridTemplateRows: "auto 56px auto" }}
+        >
+          {/* Row 1 — Labels */}
+          {milestones.map((m, i) => (
+            <motion.div
+              key={m.label}
+              initial={{ opacity: 0, y: 16 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: 0.14 + i * 0.09, duration: 0.5, ease }}
+              className="flex flex-col items-center px-3 pb-5 text-center"
+              style={{ gridColumn: i + 1, gridRow: 1 }}
+            >
+              <span className={cn(
+                "text-[0.55rem] uppercase tracking-[0.22em]",
+                m.status === "upcoming" ? "text-[#172522]/28" : "text-[#172522]/50",
+              )}>
+                {m.date}
+              </span>
+              <span className={cn(
+                "mt-1.5 text-[0.75rem] font-medium leading-snug",
+                m.status === "current" ? "text-[#172522] font-semibold" :
+                m.status === "upcoming" ? "text-[#172522]/32" : "text-[#172522]",
+              )}>
+                {m.label}
+              </span>
+              {m.status === "current" && (
+                <motion.span
+                  animate={inView ? { opacity: [0.45, 1, 0.45] } : { opacity: 0 }}
+                  transition={{ delay: 1.2, duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
+                  className="mt-1.5 text-[0.48rem] uppercase tracking-[0.2em] text-[#172522]/65"
+                >
+                  in corso
+                </motion.span>
+              )}
+            </motion.div>
+          ))}
 
-          {/* Labels + dates */}
-          <div className="grid grid-cols-5">
-            {milestones.map((m, i) => (
-              <motion.div
-                key={m.label}
-                initial={{ opacity: 0, y: 16 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: 0.15 + i * 0.09, duration: 0.5, ease }}
-                className="flex flex-col items-center px-3 text-center"
-              >
-                <span className={cn(
-                  "text-[0.55rem] uppercase tracking-[0.22em]",
-                  m.status === "upcoming" ? "text-[#172522]/28" : "text-[#172522]/50",
-                )}>
-                  {m.date}
-                </span>
-                <span className={cn(
-                  "mt-1.5 text-[0.75rem] font-medium leading-snug",
-                  m.status === "upcoming" ? "text-[#172522]/32" : "text-[#172522]",
-                )}>
-                  {m.label}
-                </span>
-                {m.status === "current" && (
-                  <motion.span
-                    animate={inView ? { opacity: [0.45, 1, 0.45] } : { opacity: 0 }}
-                    transition={{ delay: 1.2, duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
-                    className="mt-1 text-[0.5rem] uppercase tracking-[0.2em] text-[#172522]/70"
-                  >
-                    in corso
-                  </motion.span>
-                )}
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Lines + dots */}
-          <div className="relative my-7 grid grid-cols-5" style={{ minHeight: 28 }}>
-
-            {/* Base connecting line */}
+          {/* Row 2 — Line + dots (spans all 5 columns) */}
+          <div
+            className="relative"
+            style={{ gridColumn: "1 / -1", gridRow: 2 }}
+          >
+            {/* Base line */}
             <motion.div
               className="absolute left-[10%] right-[10%] top-1/2 h-px -translate-y-1/2 bg-[#172522]/10"
               initial={{ scaleX: 0 }}
@@ -226,48 +225,48 @@ export function TimelineSection() {
               transition={{ duration: 0.9, ease }}
             />
 
-            {/* Progress fill — animates to current milestone (50%) */}
+            {/* Progress fill */}
             <div className="pointer-events-none absolute left-[10%] right-[10%] top-1/2 h-px -translate-y-1/2 overflow-hidden">
               <motion.div
-                className="h-full bg-[#172522]/35"
+                className="h-full bg-[#172522]/38"
                 initial={{ width: "0%" }}
                 animate={inView ? { width: PROGRESS_PCT } : {}}
                 transition={{ duration: 1.15, delay: 0.12, ease }}
               />
             </div>
 
-            {/* Dots */}
+            {/* Dots — absolutely positioned at exact column centers */}
             {milestones.map((m, i) => (
-              <div key={`dot-${m.label}`} className="relative z-10 flex justify-center">
+              <div
+                key={`dot-${m.label}`}
+                className="absolute top-1/2 -translate-x-1/2 -translate-y-1/2"
+                style={{ left: `${DOT_POSITIONS[i]}%` }}
+              >
                 <DesktopDot status={m.status} delay={0.38 + i * 0.1} inView={inView} />
               </div>
             ))}
           </div>
 
-          {/* Descriptions */}
-          <div className="grid grid-cols-5">
-            {milestones.map((m, i) => (
-              <motion.p
-                key={`desc-${m.label}`}
-                initial={{ opacity: 0 }}
-                animate={inView ? { opacity: 1 } : {}}
-                transition={{ delay: 0.65 + i * 0.09, duration: 0.55, ease }}
-                className={cn(
-                  "px-3 text-center text-[0.68rem] leading-5",
-                  m.status === "upcoming" ? "text-[#172522]/25" : "text-[#172522]/55",
-                )}
-              >
-                {m.description}
-              </motion.p>
-            ))}
-          </div>
-
+          {/* Row 3 — Descriptions */}
+          {milestones.map((m, i) => (
+            <motion.p
+              key={`desc-${m.label}`}
+              initial={{ opacity: 0 }}
+              animate={inView ? { opacity: 1 } : {}}
+              transition={{ delay: 0.65 + i * 0.09, duration: 0.55, ease }}
+              className={cn(
+                "px-3 pt-5 text-center text-[0.68rem] leading-5",
+                m.status === "upcoming" ? "text-[#172522]/25" : "text-[#172522]/55",
+              )}
+              style={{ gridColumn: i + 1, gridRow: 3 }}
+            >
+              {m.description}
+            </motion.p>
+          ))}
         </div>
 
         {/* ── Mobile: vertical timeline ── */}
         <div className="relative lg:hidden">
-
-          {/* Animated vertical line */}
           <motion.div
             className="absolute left-[5px] top-2 bottom-2 w-px bg-[#172522]/12"
             initial={{ scaleY: 0 }}
@@ -284,7 +283,7 @@ export function TimelineSection() {
               transition={{ delay: 0.18 + i * 0.12, duration: 0.5, ease }}
               className="flex items-start gap-5 pb-9 last:pb-0"
             >
-              <div className="relative z-10 mt-0.5 shrink-0" style={{ width: 12, height: 12 }}>
+              <div className="relative z-10 mt-0.5 shrink-0" style={{ width: 10, height: 10 }}>
                 <MobileDot status={m.status} delay={0.28 + i * 0.12} inView={inView} />
               </div>
               <div>
@@ -305,6 +304,7 @@ export function TimelineSection() {
                 </span>
                 <p className={cn(
                   "mt-0.5 text-sm font-medium leading-snug",
+                  m.status === "current" ? "text-[#172522] font-semibold" :
                   m.status === "upcoming" ? "text-[#172522]/35" : "text-[#172522]",
                 )}>
                   {m.label}
