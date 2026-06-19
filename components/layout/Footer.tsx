@@ -29,8 +29,17 @@ export function Footer() {
           </div>
         </div>
       </div>
-      <div className="container-premium mt-12 border-t border-white/10 pt-6 text-xs text-white/45">
-        (c) 2026 {siteConfig.name}. Contenuti e asset placeholder da sostituire prima della pubblicazione commerciale.
+      <div className="container-premium mt-12 flex flex-col gap-2 border-t border-white/10 pt-6 text-xs text-white/45 sm:flex-row sm:items-center sm:justify-between">
+        <span>© 2026 {siteConfig.name}. Tutti i diritti riservati.</span>
+        <span>
+          Site by{" "}
+          <a
+            href="mailto:a.chouikh@pulsarengineering.com"
+            className="text-white/55 transition hover:text-white/80"
+          >
+            Ashraf Chouikh
+          </a>
+        </span>
       </div>
     </footer>
   )
