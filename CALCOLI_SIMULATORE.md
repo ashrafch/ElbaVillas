@@ -290,3 +290,342 @@ anni_rientro_acconto = acconto / cash_flow
 ---
 
 *Documento generato per il progetto Elba Luce Villas. Per aggiornamenti ai calcoli, modificare `InvestmentSimulatorModal.tsx` e aggiornare questo documento contestualmente.*
+
+---
+
+## 10. Architettura Tecnica del Simulatore — Know-How
+
+Questa sezione documenta la struttura del componente per riutilizzarlo in altri progetti (immobiliare, energia, finanza, leasing, ecc.).
+
+---
+
+### 10.1 Struttura del File
+
+```
+components/sections/InvestmentSimulatorModal.tsx   ← componente unico self-contained
+app/globals.css                                    ← .simulator-slider, .sim-scroll
+```
+
+Il simulatore è **completamente self-contained**: trigger button + Dialog + tutta la logica sono in un unico file. Il parent (`InvestmentSection.tsx`) importa solo `<InvestmentSimulatorModal />` senza passare props.
+
+---
+
+### 10.2 Stack e Dipendenze
+
+| Dipendenza | Versione | Utilizzo |
+|---|---|---|
+| Next.js App Router | 16 | Server component può importare il client component |
+| `"use client"` | — | Necessario: useState, useRef, useEffect, Framer Motion |
+| Framer Motion | 12 | Animazioni, AnimatePresence, useSpring, useTransform |
+| shadcn/ui `Dialog` | base-ui/react | Modal full-screen, `showCloseButton={false}` |
+| lucide-react | — | Icone: Calculator, ChevronDown, TrendingUp, X, Info |
+| Tailwind CSS v4 | — | Styling, `max-lg:hidden` per mobile tabs |
+
+---
+
+### 10.3 Pattern Architetturale
+
+```
+InvestmentSimulatorModal
+│
+├── CONSTANTS         (percentuali, valori fissi — modificare per ogni progetto)
+├── Types             (Inputs, Results, Mode)
+├── Pure functions    (pmt, compute, eur, yrs)
+│
+├── Sub-components    (definiti nello stesso file)
+│   ├── AnimatedEur   (numero animato con useSpring)
+│   ├── SimSlider     (slider con fill CSS custom property)
+│   ├── YieldGauge    (barra 0–12% con colori semantici)
+│   ├── CostRow       (voce costo con barra proporzionale)
+│   └── Tile          (metric card, variante accent/warn)
+│
+└── Main component
+    ├── State         (open, mode, inputs, costsOpen, mobileTab, scroll hints)
+    ├── Effects       (scroll hint left, scroll hint right, reset tab on open)
+    ├── Trigger       (button che apre il Dialog)
+    └── Dialog
+        ├── Header    (brand + mode toggle desktop + close)
+        ├── Mode bar  (toggle diretto/mutuo — mobile)
+        ├── Tab bar   (Parametri / Risultati — mobile only, lg:hidden)
+        └── Body grid (lg: 2 colonne | mobile: 1 colonna con tabs)
+            ├── LEFT  (sliders + scroll hint)
+            └── RIGHT (risultati + scroll hint)
+```
+
+---
+
+### 10.4 Il Pattern dello Slider
+
+Il problema classico degli `input[type=range]` è il fill parziale: il browser non lo supporta nativamente su tutti i browser. La soluzione usata:
+
+```css
+/* globals.css */
+.simulator-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 2px;
+  /* Fill via CSS custom property — aggiornata da React al cambio valore */
+  background: linear-gradient(
+    to right,
+    rgba(255,255,255,.65) 0%,
+    rgba(255,255,255,.65) var(--slider-pct, 0%),
+    rgba(255,255,255,.1)  var(--slider-pct, 0%),
+    rgba(255,255,255,.1)  100%
+  );
+  padding: 10px 0; /* aumenta l'area di touch senza cambiare il look */
+}
+
+.simulator-slider::-webkit-slider-runnable-track {
+  height: 2px;
+  background: transparent; /* il background è sull'input, non sul track */
+}
+
+.simulator-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: white;
+  margin-top: -8px; /* centra il thumb: -(thumbH - trackH) / 2 = -(18-2)/2 */
+}
+```
+
+```tsx
+// Nel componente React
+function SimSlider({ value, min, max, ... }) {
+  const pct = ((value - min) / (max - min)) * 100
+
+  return (
+    <input
+      type="range"
+      className="simulator-slider w-full"
+      style={{ "--slider-pct": `${pct}%` } as unknown as CSSProperties}
+      value={value}
+      onChange={(e) => onChange(Number(e.target.value))}
+    />
+  )
+}
+```
+
+**Riutilizzo**: copiare `.simulator-slider` in `globals.css` e il componente `SimSlider`. Funziona su qualsiasi sfondo — cambiare solo i colori `rgba(255,255,255,...)` con quelli del progetto.
+
+---
+
+### 10.5 Il Pattern del Numero Animato
+
+Ogni volta che un valore cambia (slider mosso), i numeri nel pannello risultati contano fluidamente dal vecchio al nuovo valore tramite una spring fisica di Framer Motion:
+
+```tsx
+import { useSpring, useTransform, motion } from "framer-motion"
+import { useEffect } from "react"
+
+function AnimatedEur({ value }: { value: number }) {
+  const reduced = useReducedMotion()
+
+  // Spring fisica: stiffness e damping controllano velocità e rimbalzo
+  const spring  = useSpring(value, { stiffness: 90, damping: 20 })
+
+  // Quando il valore cambia, la spring si muove verso il nuovo target
+  useEffect(() => { spring.set(value) }, [value, spring])
+
+  // useTransform crea un MotionValue derivato — formattato come valuta
+  const display = useTransform(spring, (v) =>
+    new Intl.NumberFormat("it-IT", {
+      style: "currency", currency: "EUR", maximumFractionDigits: 0
+    }).format(Math.round(v))
+  )
+
+  // Se l'utente ha impostato prefers-reduced-motion, mostra il valore statico
+  if (reduced) return <span>{eur(value)}</span>
+
+  // motion.span è necessario per consumare un MotionValue come testo
+  return <motion.span>{display}</motion.span>
+}
+```
+
+**Adattare per altri formati:**
+
+```tsx
+// Percentuale
+const display = useTransform(spring, (v) => `${v.toFixed(1)}%`)
+
+// Anni
+const display = useTransform(spring, (v) => `${Math.round(v)} anni`)
+
+// Numero generico con separatore italiano
+const display = useTransform(spring, (v) =>
+  new Intl.NumberFormat("it-IT").format(Math.round(v))
+)
+```
+
+---
+
+### 10.6 Il Pattern della Logica di Calcolo Separata
+
+Tutta la matematica è in **funzioni pure** fuori dal componente React — nessun hook, nessun side effect. Questo le rende testabili e portabili:
+
+```tsx
+// Tipi
+interface Inputs { price: number; nightsPerMonth: number; nightlyRate: number; ... }
+interface Results { grossIncome: number; netIncome: number; netYield: number; ... }
+type Mode = "direct" | "mortgage"
+
+// Costanti di mercato — l'unica cosa che cambia tra progetti
+const MANAGEMENT_FEE_PCT = 0.22
+const CEDOLARE_SECCA_PCT  = 0.21
+// ...
+
+// Funzione pura: nessuna dipendenza da React, testabile con Jest/Vitest
+function compute(inp: Inputs, mode: Mode): Results {
+  const grossIncome    = inp.nightsPerMonth * 12 * inp.nightlyRate
+  const managementCost = grossIncome * MANAGEMENT_FEE_PCT
+  // ...
+  return { grossIncome, netIncome, netYield, ... }
+}
+```
+
+Nel componente si usa semplicemente:
+
+```tsx
+const R = compute(inputs, mode)
+// R.netIncome, R.netYield, R.paybackYears, ecc.
+```
+
+**Vantaggi**: si possono testare i calcoli senza montare React, si possono esportare in un file `lib/simulator.ts` separato se il progetto cresce, e si possono riusare in API route per calcoli server-side.
+
+---
+
+### 10.7 Il Pattern dei Pannelli Scrollabili Senza Scrollbar
+
+```css
+/* globals.css */
+.sim-scroll { scrollbar-width: none; -ms-overflow-style: none; }
+.sim-scroll::-webkit-scrollbar { display: none; }
+```
+
+```tsx
+{/* Wrapper relativo — prende l'altezza dalla griglia */}
+<div className="relative">
+
+  {/* Contenuto scrollabile — occupa tutto il wrapper */}
+  <div ref={scrollRef} className="sim-scroll absolute inset-0 overflow-y-auto px-8 py-9">
+    {/* contenuto */}
+  </div>
+
+  {/* Gradiente fisso — fuori dal div scrollabile, non scorre */}
+  <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-16
+                  bg-gradient-to-t from-[#0d1a18] to-transparent" />
+
+  {/* Hint "scorri" — appare solo quando c'è overflow e non si è in fondo */}
+  <AnimatePresence>
+    {showHint && (
+      <motion.div
+        key="hint"
+        initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 4 }}
+        className="pointer-events-none absolute bottom-3 left-0 right-0
+                   flex flex-col items-center gap-1"
+      >
+        <span className="text-[0.58rem] uppercase tracking-[0.3em] text-white/65">scorri</span>
+        <motion.div animate={{ y: [0, 4, 0] }} transition={{ repeat: Infinity, duration: 1.6 }}>
+          <ChevronDown className="size-3 text-white/55" />
+        </motion.div>
+      </motion.div>
+    )}
+  </AnimatePresence>
+</div>
+```
+
+```tsx
+// Hook per gestire lo stato dell'hint
+useEffect(() => {
+  const el = scrollRef.current
+  if (!el || !open) return
+  const check = () => {
+    const canScroll = el.scrollHeight > el.clientHeight + 4
+    const atBottom  = el.scrollTop + el.clientHeight >= el.scrollHeight - 16
+    setShowHint(canScroll && !atBottom)
+  }
+  const t = setTimeout(check, 200) // attende animazioni di entrata
+  el.addEventListener("scroll", check, { passive: true })
+  const ro = new ResizeObserver(check) // detecta contenuto che cambia altezza
+  ro.observe(el)
+  return () => { clearTimeout(t); el.removeEventListener("scroll", check); ro.disconnect() }
+}, [open, /* trigger esterno, es: costsOpen, mode */])
+```
+
+---
+
+### 10.8 Il Pattern della Tab Bar Mobile (con Framer Motion layoutId)
+
+Per evitare scroll verticale eccessivo su mobile quando ci sono due pannelli affiancati su desktop:
+
+```tsx
+type Tab = "params" | "results"
+const [mobileTab, setMobileTab] = useState<Tab>("params")
+
+// Reset quando il modal si apre
+useEffect(() => { if (open) setMobileTab("params") }, [open])
+```
+
+```tsx
+{/* Tab bar — visibile solo sotto lg */}
+<div className="relative flex shrink-0 border-b border-white/8 lg:hidden">
+  {(["params", "results"] as const).map((tab) => (
+    <button
+      key={tab}
+      onClick={() => setMobileTab(tab)}
+      className={cn(
+        "relative flex flex-1 flex-col items-center gap-0.5 py-3 transition-colors",
+        mobileTab === tab ? "text-white" : "text-white/30",
+      )}
+    >
+      <span className="text-[0.6rem] uppercase tracking-[0.2em]">
+        {tab === "params" ? "Parametri" : "Risultati"}
+      </span>
+
+      {/* Valore chiave nel tab inattivo — crea curiosità nell'utente */}
+      {tab === "results" && (
+        <span className={cn(
+          "font-heading leading-none transition-all duration-300",
+          mobileTab === "results" ? "text-[1.4rem] text-white" : "text-[1.15rem] text-white/55",
+        )}>
+          <AnimatedEur value={R.netIncome} />
+        </span>
+      )}
+
+      {/* Underline animato che scivola tra i tab con layoutId */}
+      {mobileTab === tab && (
+        <motion.div
+          layoutId="sim-tab-indicator"
+          className="absolute bottom-0 left-0 right-0 h-px bg-white/40"
+        />
+      )}
+    </button>
+  ))}
+</div>
+
+{/* Pannelli — nascosti su mobile con max-lg:hidden in base al tab attivo */}
+<div className={cn("relative ...", mobileTab === "results" && "max-lg:hidden")}>
+  {/* pannello sinistra */}
+</div>
+<div className={cn("relative ...", mobileTab === "params" && "max-lg:hidden")}>
+  {/* pannello destra */}
+</div>
+```
+
+**Il trucco del `layoutId`**: Framer Motion tiene traccia dell'elemento con quel `layoutId` e quando si sposta tra i tab anima automaticamente la posizione. Non serve scrivere nessuna logica di animazione manuale.
+
+---
+
+### 10.9 Adattare il Simulatore ad Altri Settori
+
+| Settore | Cosa cambiare |
+| --- | --- |
+| **Immobiliare residenziale** | Costanti fiscali (cedolare 21%), costi gestione, valori default |
+| **Immobiliare commerciale** | Aggiungere IRAP, IVA, contratti 6+6 invece di affitti brevi |
+| **Energia solare (ROI pannelli)** | `grossIncome` = risparmio bolletta + incentivi; costi = manutenzione, assicurazione |
+| **Leasing auto aziendale** | `pmt()` riutilizzabile direttamente; aggiungere valore residuo |
+| **Crowdfunding immobiliare** | Aggiungere quota percentuale investor, rendimento distribuito |
+| **B&B / hotel boutique** | Aggiungere costo del lavoro, IVA su fatturato |
+
+Le costanti da aggiornare sono sempre all'inizio del file, identificate con commenti che citano le fonti — questo pattern rende la manutenzione immediata.
