@@ -12,6 +12,7 @@ import { KeyFiguresSection } from "@/components/sections/KeyFiguresSection"
 import { LifestyleSection } from "@/components/sections/LifestyleSection"
 import { LocationSection } from "@/components/sections/LocationSection"
 import { ProjectIntroSection } from "@/components/sections/ProjectIntroSection"
+import { AvailabilitySection } from "@/components/sections/AvailabilitySection"
 import { TimelineSection } from "@/components/sections/TimelineSection"
 import { VillasOverviewSection } from "@/components/sections/VillasOverviewSection"
 import { MarqueeText } from "@/components/motion/MarqueeText"
@@ -55,6 +56,7 @@ export default function Home() {
         <LifestyleSection />
         <InvestmentSection />
         <TimelineSection />
+        <AvailabilitySection />
         <ContactLeadSection />
         <FaqSection />
       </main>

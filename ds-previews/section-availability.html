@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Design Preview — AvailabilitySection</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; background: #0b1613; }
+
+  .section { padding: 80px 24px; max-width: 1180px; margin: 0 auto; }
+
+  /* Header */
+  .eyebrow { font-size: 0.6rem; letter-spacing: 0.28em; text-transform: uppercase; color: rgba(255,255,255,.35); }
+  .heading { font-family: Georgia, serif; font-size: 2.6rem; font-weight: 500; color: #fff; margin-top: 14px; line-height: 1.15; }
+  .sub { margin-top: 10px; font-size: 0.8rem; line-height: 1.75; color: rgba(255,255,255,.50); max-width: 480px; }
+
+  /* Header row */
+  .header-row { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 28px; margin-bottom: 48px; }
+
+  /* Stats */
+  .stats { display: flex; align-items: center; gap: 32px; }
+  .stat { text-align: center; }
+  .stat-num { font-family: Georgia, serif; font-size: 2.2rem; font-weight: 500; line-height: 1; }
+  .stat-num.green { color: #7dba96; }
+  .stat-num.amber { color: #c9975a; }
+  .stat-num.muted { color: rgba(255,255,255,.55); }
+  .stat-label { margin-top: 6px; font-size: 0.52rem; text-transform: uppercase; letter-spacing: 0.2em; color: rgba(255,255,255,.35); }
+  .stat-divider { width: 1px; height: 32px; background: rgba(255,255,255,.10); }
+
+  /* Grid */
+  .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  @media (max-width: 640px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+
+  /* Tile */
+  .tile {
+    border: 1px solid rgba(255,255,255,.08);
+    background: rgba(255,255,255,.03);
+    border-radius: 2px;
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 120px;
+    position: relative;
+    transition: border-color .2s, background .2s;
+  }
+  .tile.available { cursor: pointer; }
+  .tile.available:hover { border-color: rgba(255,255,255,.18); background: rgba(255,255,255,.07); }
+  .tile.reserved { opacity: .70; }
+
+  .tile-top { display: flex; justify-content: space-between; align-items: flex-start; }
+  .tile-eyebrow { font-size: 0.5rem; text-transform: uppercase; letter-spacing: 0.24em; color: rgba(255,255,255,.35); }
+  .tile-id { font-family: Georgia, serif; font-size: 1.5rem; font-weight: 500; color: #fff; margin-top: 2px; line-height: 1; }
+  .tile-status { display: flex; align-items: center; gap: 5px; padding-top: 2px; }
+  .status-dot { width: 6px; height: 6px; border-radius: 50%; }
+  .status-dot.green { background: #7dba96; }
+  .status-dot.amber { background: #c9975a; }
+  .status-label { font-size: 0.52rem; text-transform: uppercase; letter-spacing: 0.16em; }
+  .status-label.green { color: #7dba96; }
+  .status-label.amber { color: #c9975a; }
+  .tile-specs { margin-top: 18px; font-size: 0.6rem; color: rgba(255,255,255,.45); }
+
+  /* Hover overlay */
+  .tile-hover-overlay {
+    position: absolute; inset: 0; background: rgba(15,31,28,.85);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity .2s; border-radius: 2px;
+    backdrop-filter: blur(2px);
+    font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.2em; color: rgba(255,255,255,.80);
+  }
+  .tile.available:hover .tile-hover-overlay { opacity: 1; }
+
+  /* Bottom bar */
+  .bottom-bar {
+    margin-top: 40px; padding-top: 32px;
+    border-top: 1px solid rgba(255,255,255,.08);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .bottom-note { font-size: 0.62rem; color: rgba(255,255,255,.35); }
+  .bottom-link { font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.2em; color: rgba(255,255,255,.55); text-decoration: none; }
+  .bottom-link:hover { color: #fff; }
+
+  /* Annotations */
+  .annotations { padding: 40px 24px; max-width: 1180px; margin: 0 auto; border-top: 1px solid rgba(255,255,255,.06); }
+  .ann-title { font-size: 0.58rem; text-transform: uppercase; letter-spacing: 0.18em; color: rgba(255,255,255,.30); margin-bottom: 14px; }
+  .ann-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 14px; }
+  .ann-card { background: rgba(255,255,255,.04); border-radius: 4px; padding: 14px 16px; font-size: 0.66rem; line-height: 1.65; color: rgba(255,255,255,.55); }
+  .ann-card strong { display: block; font-size: 0.58rem; text-transform: uppercase; letter-spacing: 0.14em; margin-bottom: 5px; color: rgba(255,255,255,.80); }
+  code { font-family: monospace; font-size: 0.88em; background: rgba(255,255,255,.08); padding: 1px 4px; border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<div class="section">
+  <div class="header-row">
+    <div>
+      <p class="eyebrow">Disponibilità · Esclusivo</p>
+      <h2 class="heading">Scegli la tua villa.</h2>
+      <p class="sub">Un numero limitato di residenze. Verifica la disponibilità e prenota un appuntamento.</p>
+    </div>
+    <div class="stats">
+      <div class="stat"><p class="stat-num green">3</p><p class="stat-label">Disponibili</p></div>
+      <div class="stat-divider"></div>
+      <div class="stat"><p class="stat-num amber">1</p><p class="stat-label">Prenotate</p></div>
+      <div class="stat-divider"></div>
+      <div class="stat"><p class="stat-num muted">4</p><p class="stat-label">Totali</p></div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="tile available">
+      <div class="tile-hover-overlay">Richiedi informazioni →</div>
+      <div class="tile-top">
+        <div><p class="tile-eyebrow">Villa</p><p class="tile-id">01</p></div>
+        <div class="tile-status"><span class="status-dot green"></span><span class="status-label green">Disponibile</span></div>
+      </div>
+      <p class="tile-specs">Tipo A · 185 m²</p>
+    </div>
+    <div class="tile available">
+      <div class="tile-hover-overlay">Richiedi informazioni →</div>
+      <div class="tile-top">
+        <div><p class="tile-eyebrow">Villa</p><p class="tile-id">02</p></div>
+        <div class="tile-status"><span class="status-dot green"></span><span class="status-label green">Disponibile</span></div>
+      </div>
+      <p class="tile-specs">Tipo A · 185 m²</p>
+    </div>
+    <div class="tile reserved">
+      <div class="tile-top">
+        <div><p class="tile-eyebrow">Villa</p><p class="tile-id">03</p></div>
+        <div class="tile-status"><span class="status-dot amber"></span><span class="status-label amber">Prenotata</span></div>
+      </div>
+      <p class="tile-specs">Tipo B · 215 m²</p>
+    </div>
+    <div class="tile available">
+      <div class="tile-hover-overlay">Richiedi informazioni →</div>
+      <div class="tile-top">
+        <div><p class="tile-eyebrow">Villa</p><p class="tile-id">04</p></div>
+        <div class="tile-status"><span class="status-dot green"></span><span class="status-label green">Disponibile</span></div>
+      </div>
+      <p class="tile-specs">Tipo B · 215 m²</p>
+    </div>
+  </div>
+
+  <div class="bottom-bar">
+    <p class="bottom-note">Le prenotazioni sono vincolate alla firma del contratto preliminare.</p>
+    <a href="#" class="bottom-link">Contattaci →</a>
+  </div>
+</div>
+
+<div class="annotations">
+  <p class="ann-title">Implementation notes</p>
+  <div class="ann-grid">
+    <div class="ann-card">
+      <strong>Data</strong>
+      Array <code>villaUnits[]</code> in cima al file. Aggiungere oggetti per nuove ville. Status: <code>"available" | "reserved" | "sold"</code>. Campo <code>priceLabel</code> opzionale — compare nel tile quando impostato.
+    </div>
+    <div class="ann-card">
+      <strong>Grid scalabile</strong>
+      <code>grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5</code>. 4 ville = 1 riga desktop. 10 ville = 2–3 righe compatte. 20 ville = 4–5 righe, ancora leggibile.
+    </div>
+    <div class="ann-card">
+      <strong>Tile interattiva</strong>
+      Le ville "available" sono <code>&lt;a href="#contatti"&gt;</code>. Hover overlay desktop via <code>group-hover:opacity-100</code>. Reserved/sold non sono cliccabili (<code>cursor-default</code>).
+    </div>
+    <div class="ann-card">
+      <strong>Stats animate</strong>
+      <code>AnimatedCount</code> usa <code>useSpring + useTransform</code> triggerata da <code>useInView</code>. Stesso pattern del simulatore.
+    </div>
+    <div class="ann-card">
+      <strong>Posizione</strong>
+      Tra <code>&lt;TimelineSection /&gt;</code> e <code>&lt;ContactLeadSection /&gt;</code>. Anchor <code>id="disponibilita"</code> per nav linking futuro. Background <code>#0f1f1c</code> crea contrasto dopo la sabbia della timeline.
+    </div>
+    <div class="ann-card">
+      <strong>Status colori</strong>
+      Available: <code>#7dba96</code> (verde muted). Reserved: <code>#c9975a</code> (ambra calda). Sold: <code>white/30</code> dimmed. Luxury-safe: no rossi/verdi saturi.
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
