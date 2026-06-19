@@ -1,9 +1,10 @@
 "use client"
 
-import { motion, useReducedMotion } from "framer-motion"
+import { motion, useMotionValue, useReducedMotion, useSpring, useTransform } from "framer-motion"
 import { ArrowRight } from "lucide-react"
 import type { ReactNode } from "react"
 
+import { MagneticButton } from "@/components/interactive/MagneticButton"
 import { SplitReveal } from "@/components/motion/SplitReveal"
 import { VideoBackground } from "@/components/motion/VideoBackground"
 
@@ -34,10 +35,33 @@ function FadeUp({
 export function HeroSection() {
   const reducedMotion = useReducedMotion()
 
+  // ── Mouse parallax ──────────────────────────────────────────────────────────
+  const rawX = useMotionValue(0)
+  const rawY = useMotionValue(0)
+  const cfg  = { stiffness: 45, damping: 30 }
+  const sX   = useSpring(rawX, cfg)
+  const sY   = useSpring(rawY, cfg)
+
+  // Background layer moves opposite to cursor (further away)
+  const bgX  = useTransform(sX, v => v * -0.45)
+  const bgY  = useTransform(sY, v => v * -0.45)
+  // Text layer moves with cursor but slower (closer layer)
+  const txX  = useTransform(sX, v => v * 0.18)
+  const txY  = useTransform(sY, v => v * 0.18)
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+    if (reducedMotion) return
+    const rect = e.currentTarget.getBoundingClientRect()
+    rawX.set(((e.clientX - rect.left) / rect.width  - 0.5) * 28)
+    rawY.set(((e.clientY - rect.top)  / rect.height - 0.5) * 16)
+  }
+
   return (
     <section
       id="home"
       className="relative min-h-[100svh] overflow-hidden bg-[#0d1e1a] text-white"
+      onMouseMove={handleMouseMove}
+      onMouseLeave={() => { rawX.set(0); rawY.set(0) }}
     >
       <VideoBackground
         src="/videos/elba-hero.mp4"
@@ -45,9 +69,9 @@ export function HeroSection() {
         className="opacity-60"
       />
 
-      {/* Multi-layer cinematic gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/10 to-[#0d1e1a]/90" />
-      <div className="absolute inset-0 bg-gradient-to-r from-[#0d1e1a]/50 via-transparent to-transparent" />
+      {/* Multi-layer cinematic gradient — moves opposite to cursor (depth) */}
+      <motion.div style={{ x: bgX, y: bgY }} className="absolute inset-[-3%] bg-gradient-to-b from-black/60 via-black/10 to-[#0d1e1a]/90" />
+      <motion.div style={{ x: bgX, y: bgY }} className="absolute inset-[-3%] bg-gradient-to-r from-[#0d1e1a]/50 via-transparent to-transparent" />
 
       {/* Thin architectural frame — top */}
       <motion.div
@@ -78,8 +102,11 @@ export function HeroSection() {
 
       <div className="container-premium relative flex min-h-[100svh] flex-col justify-between pb-0 pt-24">
 
-        {/* Main content — vertically centered */}
-        <div className="flex flex-1 flex-col items-start justify-center pb-32 pt-8 sm:items-center sm:text-center lg:pb-40">
+        {/* Main content — vertically centered, floats toward cursor */}
+        <motion.div
+          style={{ x: txX, y: txY }}
+          className="flex flex-1 flex-col items-start justify-center pb-32 pt-8 sm:items-center sm:text-center lg:pb-40"
+        >
 
           {/* Eyebrow */}
           <FadeUp delay={0.15} className="mb-6 sm:mb-8">
@@ -126,28 +153,32 @@ export function HeroSection() {
           {/* CTAs */}
           <FadeUp delay={1.22} className="mt-9 sm:mt-10">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-5">
-              {/* Primary */}
-              <a
-                href="#progetto"
-                className="group relative inline-flex h-12 items-center gap-3 overflow-hidden bg-white px-6 text-[0.7rem] uppercase tracking-[0.18em] text-[#172522] transition-colors duration-300 hover:bg-[#ede7d9] sm:px-8"
-              >
-                <span>Scopri il progetto</span>
-                <ArrowRight className="size-3.5 transition-transform duration-300 group-hover:translate-x-1" />
-              </a>
+              {/* Primary — magnetic */}
+              <MagneticButton>
+                <a
+                  href="#progetto"
+                  className="group relative inline-flex h-12 items-center gap-3 overflow-hidden bg-white px-6 text-[0.7rem] uppercase tracking-[0.18em] text-[#172522] transition-colors duration-300 hover:bg-[#ede7d9] sm:px-8"
+                >
+                  <span>Scopri il progetto</span>
+                  <ArrowRight className="size-3.5 transition-transform duration-300 group-hover:translate-x-1" />
+                </a>
+              </MagneticButton>
 
-              {/* Secondary — refined text link */}
-              <a
-                href="#contatti"
-                className="group inline-flex h-12 items-center gap-2 px-2 text-[0.7rem] uppercase tracking-[0.18em] text-white/70 transition-colors hover:text-white sm:px-0"
-              >
-                <span className="relative">
-                  Richiedi brochure
-                  <span className="absolute -bottom-px left-0 h-px w-0 bg-white/50 transition-all duration-300 group-hover:w-full" />
-                </span>
-              </a>
+              {/* Secondary — refined text link, magnetic */}
+              <MagneticButton strength={0.22}>
+                <a
+                  href="#contatti"
+                  className="group inline-flex h-12 items-center gap-2 px-2 text-[0.7rem] uppercase tracking-[0.18em] text-white/70 transition-colors hover:text-white sm:px-0"
+                >
+                  <span className="relative">
+                    Richiedi brochure
+                    <span className="absolute -bottom-px left-0 h-px w-0 bg-white/50 transition-all duration-300 group-hover:w-full" />
+                  </span>
+                </a>
+              </MagneticButton>
             </div>
           </FadeUp>
-        </div>
+        </motion.div>
 
         {/* Bottom stats bar — pinned */}
         <FadeUp
