@@ -34,7 +34,7 @@ export function Footer() {
         <span>
           Site by{" "}
           <a
-            href="mailto:a.chouikh@pulsarengineering.com"
+            href="mailto:ashraf.ch1998@gmail.com"
             className="text-white/55 transition hover:text-white/80"
           >
             Ashraf Chouikh
