@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion"
 
-const WA_PHONE = "+390565000000"
+const WA_PHONE = "+393272647738"
 const WA_MESSAGE = "Buongiorno, sono interessato alle Elba Luce Villas. Potete darmi maggiori informazioni?"
 
 const href = `https://wa.me/${WA_PHONE.replace(/\D/g, "")}?text=${encodeURIComponent(WA_MESSAGE)}`
