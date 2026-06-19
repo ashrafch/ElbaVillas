@@ -13,16 +13,16 @@ interface MagneticButtonProps {
 
 export function MagneticButton({
   children,
-  strength = 0.35,
-  radius = 80,
+  strength = 0.62,
+  radius = 130,
   className,
 }: MagneticButtonProps) {
   const wrapRef = useRef<HTMLDivElement>(null)
 
   const rawX = useMotionValue(0)
   const rawY = useMotionValue(0)
-  const x = useSpring(rawX, { stiffness: 220, damping: 22, mass: 0.6 })
-  const y = useSpring(rawY, { stiffness: 220, damping: 22, mass: 0.6 })
+  const x = useSpring(rawX, { stiffness: 180, damping: 18, mass: 1.1 })
+  const y = useSpring(rawY, { stiffness: 180, damping: 18, mass: 1.1 })
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const el = wrapRef.current
@@ -55,7 +55,7 @@ export function MagneticButton({
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       className={className}
-      style={{ display: "inline-block", padding: 24, margin: -24 }}
+      style={{ display: "inline-block", padding: 40, margin: -40 }}
     >
       <motion.div style={{ x, y }}>
         {children}

@@ -38,22 +38,25 @@ export function HeroSection() {
   // ── Mouse parallax ──────────────────────────────────────────────────────────
   const rawX = useMotionValue(0)
   const rawY = useMotionValue(0)
-  const cfg  = { stiffness: 45, damping: 30 }
+  const cfg  = { stiffness: 40, damping: 26 }
   const sX   = useSpring(rawX, cfg)
   const sY   = useSpring(rawY, cfg)
 
-  // Background layer moves opposite to cursor (further away)
-  const bgX  = useTransform(sX, v => v * -0.45)
-  const bgY  = useTransform(sY, v => v * -0.45)
-  // Text layer moves with cursor but slower (closer layer)
-  const txX  = useTransform(sX, v => v * 0.18)
-  const txY  = useTransform(sY, v => v * 0.18)
+  // Layer 0 — background gradients: move opposite, largest travel (furthest plane)
+  const bgX  = useTransform(sX, v => v * -0.70)
+  const bgY  = useTransform(sY, v => v * -0.70)
+  // Layer 1 — mid decoration (vertical accent, coordinates): medium travel
+  const mdX  = useTransform(sX, v => v * -0.30)
+  const mdY  = useTransform(sY, v => v * -0.30)
+  // Layer 2 — text content: follows cursor (closest plane)
+  const txX  = useTransform(sX, v => v * 0.45)
+  const txY  = useTransform(sY, v => v * 0.45)
 
   const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
     if (reducedMotion) return
     const rect = e.currentTarget.getBoundingClientRect()
-    rawX.set(((e.clientX - rect.left) / rect.width  - 0.5) * 28)
-    rawY.set(((e.clientY - rect.top)  / rect.height - 0.5) * 16)
+    rawX.set(((e.clientX - rect.left) / rect.width  - 0.5) * 55)
+    rawY.set(((e.clientY - rect.top)  / rect.height - 0.5) * 36)
   }
 
   return (
@@ -81,24 +84,31 @@ export function HeroSection() {
         transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
       />
 
-      {/* Thin vertical accent — left side */}
+      {/* Thin vertical accent — left side (mid parallax layer) */}
       <motion.div
-        className="absolute left-6 top-28 hidden h-32 w-px bg-white/20 md:block lg:left-10"
-        initial={reducedMotion ? false : { scaleY: 0, transformOrigin: "top" }}
-        animate={reducedMotion ? undefined : { scaleY: 1 }}
-        transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: 0.6 }}
-      />
+        style={{ x: mdX, y: mdY }}
+        className="absolute left-6 top-28 hidden md:block lg:left-10"
+      >
+        <motion.div
+          className="h-32 w-px bg-white/20"
+          initial={reducedMotion ? false : { scaleY: 0, transformOrigin: "top" }}
+          animate={reducedMotion ? undefined : { scaleY: 1 }}
+          transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: 0.6 }}
+        />
+      </motion.div>
 
-      {/* Coordinates — left micro-detail */}
+      {/* Coordinates — left micro-detail (mid parallax layer) */}
+      <motion.div style={{ x: mdX, y: mdY }} className="absolute left-6 bottom-48 hidden md:flex lg:left-10 lg:bottom-52">
       <FadeUp
         delay={1.2}
-        className="absolute left-6 bottom-48 hidden flex-col items-center gap-3 md:flex lg:left-10 lg:bottom-52"
+        className="flex flex-col items-center gap-3"
       >
         <span className="[writing-mode:vertical-lr] rotate-180 text-[0.58rem] uppercase tracking-[0.3em] text-white/30">
           42° 46′ N · 10° 11′ E
         </span>
         <div className="h-10 w-px bg-white/20" />
       </FadeUp>
+      </motion.div>
 
       <div className="container-premium relative flex min-h-[100svh] flex-col justify-between pb-0 pt-24">
 
