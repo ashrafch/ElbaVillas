@@ -1,5 +1,6 @@
 import { Footer } from "@/components/layout/Footer"
 import { Header } from "@/components/layout/Header"
+import { WhatsAppButton } from "@/components/layout/WhatsAppButton"
 import { ArchitectureSection } from "@/components/sections/ArchitectureSection"
 import { ContactLeadSection } from "@/components/sections/ContactLeadSection"
 import { DroneVideoSection } from "@/components/sections/DroneVideoSection"
@@ -11,6 +12,7 @@ import { KeyFiguresSection } from "@/components/sections/KeyFiguresSection"
 import { LifestyleSection } from "@/components/sections/LifestyleSection"
 import { LocationSection } from "@/components/sections/LocationSection"
 import { ProjectIntroSection } from "@/components/sections/ProjectIntroSection"
+import { TimelineSection } from "@/components/sections/TimelineSection"
 import { VillasOverviewSection } from "@/components/sections/VillasOverviewSection"
 import { MarqueeText } from "@/components/motion/MarqueeText"
 
@@ -52,10 +54,12 @@ export default function Home() {
         <LocationSection />
         <LifestyleSection />
         <InvestmentSection />
+        <TimelineSection />
         <ContactLeadSection />
         <FaqSection />
       </main>
       <Footer />
+      <WhatsAppButton />
     </>
   )
 }

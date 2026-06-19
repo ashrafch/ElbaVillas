@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Design Preview — TimelineSection</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; background: #f5f0e8; }
+
+  /* ── Container ── */
+  .preview-wrap { padding: 60px 20px; max-width: 1180px; margin: 0 auto; }
+
+  /* ── Header ── */
+  .section-eyebrow {
+    font-size: 0.62rem; letter-spacing: 0.28em; text-transform: uppercase;
+    color: rgba(23,37,34,.45);
+  }
+  .section-heading {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(2rem, 4vw, 3rem); font-weight: 500;
+    color: #172522; margin-top: 14px; line-height: 1.15;
+  }
+  .section-sub {
+    margin-top: 12px; font-size: 0.8rem; line-height: 1.75;
+    color: rgba(23,37,34,.60); max-width: 480px;
+  }
+
+  /* ── Desktop timeline ── */
+  .timeline-desktop { margin-top: 56px; }
+  .timeline-grid { display: grid; grid-template-columns: repeat(5, 1fr); }
+
+  .milestone-label-col {
+    display: flex; flex-direction: column; align-items: center;
+    padding: 0 12px; text-align: center;
+  }
+  .ms-date {
+    font-size: 0.52rem; text-transform: uppercase; letter-spacing: 0.22em;
+  }
+  .ms-title { margin-top: 6px; font-size: 0.72rem; font-weight: 600; line-height: 1.3; }
+  .ms-badge {
+    margin-top: 4px; font-size: 0.48rem; text-transform: uppercase;
+    letter-spacing: 0.2em; color: rgba(23,37,34,.45);
+  }
+
+  /* States */
+  .done    .ms-date, .current .ms-date { color: rgba(23,37,34,.50); }
+  .upcoming .ms-date                   { color: rgba(23,37,34,.28); }
+  .done    .ms-title, .current .ms-title { color: #172522; }
+  .upcoming .ms-title                    { color: rgba(23,37,34,.32); }
+
+  /* Dot row */
+  .dot-row {
+    position: relative; margin: 24px 0;
+    display: grid; grid-template-columns: repeat(5,1fr);
+    align-items: center;
+  }
+  .dot-row::before {
+    content: "";
+    position: absolute; left: 10%; right: 10%;
+    top: 50%; transform: translateY(-50%);
+    height: 1px; background: rgba(23,37,34,.12);
+  }
+  .dot-col { display: flex; justify-content: center; z-index: 1; position: relative; }
+
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .dot-done { background: #172522; }
+  .dot-upcoming { border: 1px solid rgba(23,37,34,.25); background: transparent; }
+  .dot-current-wrap { position: relative; width: 12px; height: 12px; display: flex; align-items: center; justify-content: center; }
+  .dot-pulse {
+    position: absolute; width: 24px; height: 24px; border-radius: 50%;
+    background: rgba(23,37,34,.16);
+    animation: tl-pulse 2.5s ease-in-out infinite;
+  }
+  .dot-current { position: relative; width: 12px; height: 12px; border-radius: 50%; background: #172522; }
+
+  @keyframes tl-pulse {
+    0%, 100% { transform: scale(1); opacity: 0.5; }
+    50%       { transform: scale(2.6); opacity: 0; }
+  }
+
+  /* Description row */
+  .desc-col {
+    padding: 0 12px; text-align: center;
+    font-size: 0.65rem; line-height: 1.6;
+  }
+  .done    .desc-col, .current .desc-col { color: rgba(23,37,34,.55); }
+  .upcoming .desc-col                    { color: rgba(23,37,34,.25); }
+
+  /* ── Annotations ── */
+  .annotations { margin-top: 48px; border-top: 1px solid rgba(23,37,34,.14); padding-top: 24px; }
+  .ann-title { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.18em; color: rgba(23,37,34,.40); margin-bottom: 12px; }
+  .ann-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 16px; }
+  .ann-card {
+    background: rgba(23,37,34,.06); border-radius: 6px; padding: 14px 16px;
+    font-size: 0.68rem; line-height: 1.65; color: rgba(23,37,34,.65);
+  }
+  .ann-card strong { display: block; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.14em; margin-bottom: 4px; color: #172522; }
+
+  /* ── Responsive note ── */
+  .resp-note {
+    margin-top: 36px; background: rgba(23,37,34,.05); border-radius: 6px;
+    padding: 12px 16px; font-size: 0.65rem; color: rgba(23,37,34,.55); line-height: 1.6;
+  }
+  .resp-note strong { color: #172522; }
+</style>
+</head>
+<body>
+
+<div class="preview-wrap">
+
+  <!-- Header -->
+  <p class="section-eyebrow">Avanzamento lavori</p>
+  <h2 class="section-heading">Il progetto prende forma.</h2>
+  <p class="section-sub">Ogni fase è documentata e verificabile. La consegna è prevista per fine 2026.</p>
+
+  <!-- Timeline desktop -->
+  <div class="timeline-desktop">
+
+    <!-- Labels + dates -->
+    <div class="timeline-grid">
+      <div class="milestone-label-col done">
+        <span class="ms-date">Q3 2024</span>
+        <span class="ms-title">Progetto approvato</span>
+      </div>
+      <div class="milestone-label-col done">
+        <span class="ms-date">Q1 2025</span>
+        <span class="ms-title">Cantiere avviato</span>
+      </div>
+      <div class="milestone-label-col current">
+        <span class="ms-date">Q3 2025</span>
+        <span class="ms-title">Struttura completata</span>
+        <span class="ms-badge">in corso</span>
+      </div>
+      <div class="milestone-label-col upcoming">
+        <span class="ms-date">Q2 2026</span>
+        <span class="ms-title">Finiture e giardini</span>
+      </div>
+      <div class="milestone-label-col upcoming">
+        <span class="ms-date">Q4 2026</span>
+        <span class="ms-title">Consegna chiavi</span>
+      </div>
+    </div>
+
+    <!-- Dots + connecting line -->
+    <div class="dot-row">
+      <div class="dot-col"><div class="dot dot-done"></div></div>
+      <div class="dot-col"><div class="dot dot-done"></div></div>
+      <div class="dot-col">
+        <div class="dot-current-wrap">
+          <div class="dot-pulse"></div>
+          <div class="dot-current"></div>
+        </div>
+      </div>
+      <div class="dot-col"><div class="dot dot-upcoming"></div></div>
+      <div class="dot-col"><div class="dot dot-upcoming"></div></div>
+    </div>
+
+    <!-- Descriptions -->
+    <div class="timeline-grid">
+      <div class="done"><p class="desc-col">Permessi edilizi e valutazione d'impatto ambientale ottenuti</p></div>
+      <div class="done"><p class="desc-col">Fondamenta, struttura portante e opere di sbancamento</p></div>
+      <div class="current"><p class="desc-col">Coperture, partizioni interne e facciate in pietra locale</p></div>
+      <div class="upcoming"><p class="desc-col">Pavimentazioni, piscine private e aree esterne progettate</p></div>
+      <div class="upcoming"><p class="desc-col">Collaudo finale e consegna alle prime famiglie</p></div>
+    </div>
+
+  </div>
+
+  <!-- Responsive note -->
+  <div class="resp-note">
+    <strong>Mobile layout:</strong> Timeline becomes vertical — dot + line on the left at <code>left: 5px</code>, content to the right. Hidden with <code>lg:hidden</code> / shown desktop with <code>hidden lg:block</code>. Both layouts use the same milestones data array.
+  </div>
+
+  <!-- Annotations -->
+  <div class="annotations">
+    <p class="ann-title">Implementation notes</p>
+    <div class="ann-grid">
+      <div class="ann-card">
+        <strong>Component</strong>
+        <code>components/sections/TimelineSection.tsx</code> — pure server component, no "use client". Imports <code>FadeIn</code> and <code>cn</code> only.
+      </div>
+      <div class="ann-card">
+        <strong>Pulse animation</strong>
+        CSS-only <code>.timeline-pulse</code> class defined in <code>globals.css</code> (<code>@keyframes timeline-pulse</code>). No Framer Motion needed — safe for server render.
+      </div>
+      <div class="ann-card">
+        <strong>Status system</strong>
+        Type <code>"done" | "current" | "upcoming"</code>. <code>Dot</code> sub-component renders the appropriate dot shape. Opacity/color classes cascade from status.
+      </div>
+      <div class="ann-card">
+        <strong>Section background</strong>
+        <code>#efe7d8</code> (sabbia) — warm editorial break between dark InvestmentSection and lighter ContactLeadSection. Matches the marquee strip color.
+      </div>
+      <div class="ann-card">
+        <strong>Entrance</strong>
+        <code>&lt;FadeIn&gt;</code> wraps heading block (delay 0) and timeline body (delay 0.12s). Standard pattern used across all sections.
+      </div>
+      <div class="ann-card">
+        <strong>Page position</strong>
+        Inserted between <code>&lt;InvestmentSection /&gt;</code> and <code>&lt;ContactLeadSection /&gt;</code> in <code>app/page.tsx</code>. Anchored <code>id="avanzamento"</code> for nav linking.
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

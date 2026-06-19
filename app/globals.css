@@ -227,6 +227,14 @@
   display: none;
 }
 
+@keyframes timeline-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50%       { transform: scale(2.6); opacity: 0; }
+}
+.timeline-pulse {
+  animation: timeline-pulse 2.5s ease-in-out infinite;
+}
+
 @keyframes marquee-scroll {
   from { transform: translateX(0) }
   to { transform: translateX(-50%) }

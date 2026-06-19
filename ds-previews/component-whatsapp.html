@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Design Preview — WhatsAppButton</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; background: #f5f0e8; min-height: 100vh; }
+
+  /* ── Preview canvas ── */
+  .canvas {
+    position: relative; min-height: 420px;
+    background: linear-gradient(135deg, #0d1a18 0%, #172522 100%);
+    border-radius: 12px; margin: 40px 24px; overflow: hidden;
+    display: flex; align-items: flex-end; justify-content: flex-end;
+    padding: 24px;
+  }
+  .canvas-label {
+    position: absolute; top: 16px; left: 20px;
+    font-size: 0.58rem; text-transform: uppercase; letter-spacing: 0.22em;
+    color: rgba(255,255,255,.3);
+  }
+
+  /* ── Button ── */
+  .wa-btn {
+    display: flex; align-items: center; gap: 10px;
+    background: #172522;
+    padding: 10px 16px; border-radius: 9999px;
+    box-shadow: 0 8px 30px rgba(0,0,0,.28);
+    outline: 1px solid rgba(255,255,255,.10);
+    text-decoration: none; cursor: default;
+  }
+  .wa-btn svg { width: 18px; height: 18px; flex-shrink: 0; }
+  .wa-label {
+    font-size: 0.68rem; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; color: rgba(255,255,255,.90);
+  }
+
+  /* ── States panel ── */
+  .states { padding: 32px 24px; display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-end; }
+  .state-group { display: flex; flex-direction: column; gap: 8px; }
+  .state-label { font-size: 0.55rem; text-transform: uppercase; letter-spacing: 0.18em; color: rgba(23,37,34,.40); }
+
+  .btn-resting { opacity: 1; }
+  .btn-hover { box-shadow: 0 12px 40px rgba(0,0,0,.4); outline: 1px solid rgba(255,255,255,.15); background: #1e3330; }
+
+  /* ── Annotations ── */
+  .annotations { padding: 0 24px 40px; }
+  .ann-title { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.18em; color: rgba(23,37,34,.40); margin-bottom: 12px; }
+  .ann-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+  .ann-card {
+    background: rgba(23,37,34,.07); border-radius: 6px; padding: 14px 16px;
+    font-size: 0.68rem; line-height: 1.65; color: rgba(23,37,34,.65);
+  }
+  .ann-card strong { display: block; font-size: 0.58rem; text-transform: uppercase; letter-spacing: 0.14em; margin-bottom: 4px; color: #172522; }
+  code { font-family: monospace; font-size: 0.88em; background: rgba(23,37,34,.08); padding: 1px 4px; border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<!-- Live canvas -->
+<div class="canvas">
+  <span class="canvas-label">Page context (dark section)</span>
+  <a class="wa-btn" href="#" onclick="return false">
+    <svg viewBox="0 0 24 24" fill="#25d366" aria-hidden="true">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+    <span class="wa-label">Scrivici</span>
+  </a>
+</div>
+
+<!-- States -->
+<div class="states">
+  <div class="state-group">
+    <span class="state-label">Resting</span>
+    <a class="wa-btn btn-resting" href="#" onclick="return false">
+      <svg viewBox="0 0 24 24" fill="#25d366" width="18" height="18"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      <span class="wa-label">Scrivici</span>
+    </a>
+  </div>
+  <div class="state-group">
+    <span class="state-label">Hover</span>
+    <a class="wa-btn btn-hover" href="#" onclick="return false">
+      <svg viewBox="0 0 24 24" fill="#25d366" width="18" height="18"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      <span class="wa-label">Scrivici</span>
+    </a>
+  </div>
+</div>
+
+<!-- Annotations -->
+<div class="annotations">
+  <p class="ann-title">Implementation notes</p>
+  <div class="ann-grid">
+    <div class="ann-card">
+      <strong>Component</strong>
+      <code>components/layout/WhatsAppButton.tsx</code> — <code>"use client"</code> (Framer Motion entrance). Imported in <code>app/page.tsx</code> outside <code>&lt;main&gt;</code>, after <code>&lt;Footer /&gt;</code>.
+    </div>
+    <div class="ann-card">
+      <strong>Position</strong>
+      <code>fixed bottom-6 right-6 z-50</code> — floats above all content, never overlaps the simulator modal (modal is <code>fixed inset-0</code> and sits above z-50 at its own layer).
+    </div>
+    <div class="ann-card">
+      <strong>Entrance animation</strong>
+      Framer Motion <code>initial={{ y: 80, opacity: 0 }}</code> → <code>animate={{ y: 0, opacity: 1 }}</code> with 3 s delay and custom ease <code>[0.22, 1, 0.36, 1]</code>. Appears after the page has loaded and the user has had time to orient.
+    </div>
+    <div class="ann-card">
+      <strong>Deep-link</strong>
+      <code>wa.me/{digits}?text={encoded}</code> format. Phone stored as <code>WA_PHONE</code> constant — digits stripped with <code>.replace(/\D/g, "")</code>. Pre-filled Italian greeting message.
+    </div>
+    <div class="ann-card">
+      <strong>Icon</strong>
+      Inline SVG WhatsApp logo, <code>fill="#25d366"</code> (brand green). 18 × 18 px. No external dependency.
+    </div>
+    <div class="ann-card">
+      <strong>Style</strong>
+      <code>#172522</code> bg (same brand dark as header), <code>ring-1 ring-white/10</code>, pill shape. Shadow deepens on hover via <code>transition-shadow</code>. Matches luxury tone — no loud green background.
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
