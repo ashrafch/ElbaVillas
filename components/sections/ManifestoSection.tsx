@@ -74,8 +74,6 @@ export function ManifestoSection() {
         </div>
       </div>
 
-      {/* Gradient fade into cream — removes hard jump before marquee */}
-      <div className="h-14 bg-gradient-to-b from-[#172522] to-[#efe7d8]" />
     </section>
   )
 }

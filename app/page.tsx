@@ -42,7 +42,7 @@ export default function Home() {
         <ManifestoSection />
 
         {/* Brand keyword marquee strip */}
-        <div className="overflow-hidden border-b border-[#172522]/12 bg-[#efe7d8] py-4">
+        <div className="overflow-hidden border-y border-[#172522]/12 bg-[#efe7d8] py-4">
           <MarqueeText
             items={marqueeKeywords}
             speed={55}
