@@ -14,6 +14,7 @@ import { LocationSection } from "@/components/sections/LocationSection"
 import { ProjectIntroSection } from "@/components/sections/ProjectIntroSection"
 import { AvailabilitySection } from "@/components/sections/AvailabilitySection"
 import { InteractiveWave } from "@/components/interactive/InteractiveWave"
+import { ManifestoSection } from "@/components/sections/ManifestoSection"
 import { TimelineSection } from "@/components/sections/TimelineSection"
 import { VillasOverviewSection } from "@/components/sections/VillasOverviewSection"
 import { MarqueeText } from "@/components/motion/MarqueeText"
@@ -54,6 +55,7 @@ export default function Home() {
         <ImmersiveGallerySection />
         <ArchitectureSection />
         <InteractiveWave />
+        <ManifestoSection />
         <LocationSection />
         <LifestyleSection />
         <InvestmentSection />
