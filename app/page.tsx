@@ -38,6 +38,8 @@ export default function Home() {
       <Header />
       <main id="main-content" tabIndex={-1}>
         <HeroSection />
+        <InteractiveWave />
+        <ManifestoSection />
 
         {/* Brand keyword marquee strip */}
         <div className="overflow-hidden border-y border-border/50 bg-[#efe7d8] py-4">
@@ -54,8 +56,6 @@ export default function Home() {
         <DroneVideoSection />
         <ImmersiveGallerySection />
         <ArchitectureSection />
-        <InteractiveWave />
-        <ManifestoSection />
         <LocationSection />
         <LifestyleSection />
         <InvestmentSection />
