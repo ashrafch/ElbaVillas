@@ -31,7 +31,7 @@ export function SplitReveal({
   return (
     <span className={className} aria-label={children} role="text">
       {words.map((word, i) => (
-        <span key={i} className="inline-block overflow-hidden leading-[1.15]">
+        <span key={i} className={`inline-block overflow-hidden leading-[1.15]${italic ? " pr-[0.1em]" : ""}`}>
           <motion.span
             className={`inline-block${italic ? " italic" : ""}`}
             initial={{ y: "115%", opacity: 0 }}
