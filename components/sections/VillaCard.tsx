@@ -8,9 +8,10 @@ import { Badge } from "@/components/ui/badge"
 import type { Villa } from "@/types/villa"
 
 const statusConfig: Record<Villa["status"], { label: string; cls: string }> = {
-  available: { label: "Disponibile", cls: "bg-white/90 text-[#172522]" },
-  reserved: { label: "Riservata", cls: "bg-[#172522]/90 text-white" },
-  "coming-soon": { label: "Prossimamente", cls: "bg-[#efe7d8]/95 text-[#172522]" },
+  available:    { label: "Disponibile",  cls: "bg-white/90 text-[#172522]"       },
+  reserved:     { label: "Riservata",    cls: "bg-[#172522]/90 text-white"        },
+  "coming-soon":{ label: "Prossimamente",cls: "bg-[#efe7d8]/95 text-[#172522]"   },
+  sold:         { label: "Venduta",      cls: "bg-white/30 text-[#172522]"        },
 }
 
 export function VillaCard({ villa }: { villa: Villa }) {
