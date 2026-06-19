@@ -266,27 +266,35 @@ export function TimelineSection() {
         </div>
 
         {/* ── Mobile: vertical timeline ── */}
-        <div className="relative lg:hidden">
-          <motion.div
-            className="absolute left-[5px] top-2 bottom-2 w-px bg-[#172522]/12"
-            initial={{ scaleY: 0 }}
-            animate={inView ? { scaleY: 1 } : {}}
-            style={{ transformOrigin: "top" }}
-            transition={{ duration: 1.0, ease }}
-          />
+        {/* Each row owns its own segment so the line ends exactly at the last dot */}
+        <div className="lg:hidden">
+          {milestones.map((m, i) => {
+            const isLast = i === milestones.length - 1
+            return (
+              <motion.div
+                key={m.label}
+                initial={{ opacity: 0, x: -14 }}
+                animate={inView ? { opacity: 1, x: 0 } : {}}
+                transition={{ delay: 0.18 + i * 0.12, duration: 0.5, ease }}
+                className={cn("relative pl-7", !isLast && "pb-9")}
+              >
+                {/* Dot */}
+                <div className="absolute left-0 top-0.5 z-10">
+                  <MobileDot status={m.status} delay={0.28 + i * 0.12} inView={inView} />
+                </div>
 
-          {milestones.map((m, i) => (
-            <motion.div
-              key={m.label}
-              initial={{ opacity: 0, x: -14 }}
-              animate={inView ? { opacity: 1, x: 0 } : {}}
-              transition={{ delay: 0.18 + i * 0.12, duration: 0.5, ease }}
-              className="flex items-start gap-5 pb-9 last:pb-0"
-            >
-              <div className="relative z-10 mt-0.5 shrink-0" style={{ width: 10, height: 10 }}>
-                <MobileDot status={m.status} delay={0.28 + i * 0.12} inView={inView} />
-              </div>
-              <div>
+                {/* Segment line — only between milestones, not after the last */}
+                {!isLast && (
+                  <motion.div
+                    className="absolute left-[4px] top-3.5 bottom-0 w-px bg-[#172522]/12"
+                    initial={{ scaleY: 0 }}
+                    animate={inView ? { scaleY: 1 } : {}}
+                    style={{ transformOrigin: "top" }}
+                    transition={{ delay: 0.32 + i * 0.12, duration: 0.65, ease }}
+                  />
+                )}
+
+                {/* Content */}
                 <span className={cn(
                   "text-[0.55rem] uppercase tracking-[0.22em]",
                   m.status === "upcoming" ? "text-[#172522]/28" : "text-[#172522]/50",
@@ -315,9 +323,9 @@ export function TimelineSection() {
                 )}>
                   {m.description}
                 </p>
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            )
+          })}
         </div>
 
       </div>
