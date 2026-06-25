@@ -1,203 +1,254 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 
-interface Tap {
-  x: number
-  strength: number
-  createdAt: number // seconds
-}
-
-// Stokes wave: asymmetric crests, flat troughs — real ocean shape
-function waveY(x: number, tSec: number, freq: number, speed: number, amp: number, phase = 0): number {
-  const p = freq * x - speed * tSec + phase
-  return (
-    amp       * Math.sin(p) +
-    amp * 0.3 * Math.sin(2 * p) +
-    amp * 0.1 * Math.sin(3 * p)
-  )
-}
+const SEA_SRC = "/images/wave/sea.jpg"
+const MAX_PIXELS = 70000 // sim grid budget — keeps the per-frame loop cheap
+const DAMPING = 0.962
+const OFFSET = 1.5 // refraction strength (source px per unit slope)
+const MAX_OFFSET = 14
 
 export function InteractiveWave() {
-  const canvasRef  = useRef<HTMLCanvasElement>(null)
-  const tapsRef    = useRef<Tap[]>([])
-  const lastXRef   = useRef(-999)
-  const animRef    = useRef<number>(0)
+  const wrapRef = useRef<HTMLDivElement>(null)
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const [interacted, setInteracted] = useState(false)
 
   useEffect(() => {
+    const wrap = wrapRef.current
     const canvas = canvasRef.current
-    if (!canvas) return
-    const ctx = canvas.getContext("2d")!
+    if (!wrap || !canvas) return
 
-    let cssW = 0
-    let cssH = 0
+    const reduced =
+      typeof window !== "undefined" &&
+      window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
 
-    const setSize = () => {
-      const dpr = window.devicePixelRatio || 1
-      cssW = canvas.offsetWidth
-      cssH = canvas.offsetHeight
-      canvas.width  = Math.round(cssW * dpr)
-      canvas.height = Math.round(cssH * dpr)
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+    const ctx = canvas.getContext("2d")
+    if (!ctx) return
+
+    let w = 0
+    let h = 0
+    let curr = new Float32Array(0)
+    let next = new Float32Array(0)
+    let src: Uint8ClampedArray = new Uint8ClampedArray(0)
+    let out: ImageData | null = null
+    let raf = 0
+    let visible = false
+    let lastGX = -999
+    let lastGY = -999
+    let ambientT = 0
+
+    const img = new Image()
+    let ready = false
+
+    const offscreen = document.createElement("canvas")
+    const offctx = offscreen.getContext("2d", { willReadFrequently: true })!
+
+    const buildGrid = () => {
+      const cssW = Math.max(1, wrap.clientWidth)
+      const cssH = Math.max(1, wrap.clientHeight)
+      const k = Math.min(0.62, Math.sqrt(MAX_PIXELS / (cssW * cssH)))
+      w = Math.max(64, Math.round(cssW * k))
+      h = Math.max(48, Math.round(cssH * k))
+      canvas.width = w
+      canvas.height = h
+      curr = new Float32Array(w * h)
+      next = new Float32Array(w * h)
+      out = ctx.createImageData(w, h)
+      // sample the sea photo into the grid
+      offscreen.width = w
+      offscreen.height = h
+      offctx.drawImage(img, 0, 0, w, h)
+      src = offctx.getImageData(0, 0, w, h).data
+      // seed output with the calm sea so borders / untouched pixels show it
+      if (out) out.data.set(src)
     }
-    const ro = new ResizeObserver(setSize)
-    ro.observe(canvas)
-    setSize()
 
-    // Auto-ripples when section enters viewport
-    const triggerAutoRipples = () => {
-      const now = performance.now() / 1000
-      tapsRef.current.push({ x: cssW * 0.28, strength: 26, createdAt: now })
-      setTimeout(() => {
-        tapsRef.current.push({ x: cssW * 0.68, strength: 22, createdAt: performance.now() / 1000 })
-      }, 600)
-      setTimeout(() => {
-        tapsRef.current.push({ x: cssW * 0.48, strength: 18, createdAt: performance.now() / 1000 })
-      }, 1200)
+    const drawStatic = () => {
+      // reduced-motion / fallback: just the calm sea
+      ctx.drawImage(img, 0, 0, w, h)
     }
+
+    const drop = (sx: number, sy: number, radius: number, power: number) => {
+      const r = Math.round(radius)
+      for (let y = -r; y <= r; y++) {
+        for (let x = -r; x <= r; x++) {
+          const px = sx + x
+          const py = sy + y
+          if (px < 1 || py < 1 || px >= w - 1 || py >= h - 1) continue
+          const d = Math.sqrt(x * x + y * y)
+          if (d > r) continue
+          curr[py * w + px] += power * (1 - d / r)
+        }
+      }
+    }
+
+    const render = () => {
+      if (!out) return
+      const o = out.data
+      for (let y = 1; y < h - 1; y++) {
+        for (let x = 1; x < w - 1; x++) {
+          const i = y * w + x
+          let xo = (curr[i - 1] - curr[i + 1]) * OFFSET
+          let yo = (curr[i - w] - curr[i + w]) * OFFSET
+          if (xo > MAX_OFFSET) xo = MAX_OFFSET
+          else if (xo < -MAX_OFFSET) xo = -MAX_OFFSET
+          if (yo > MAX_OFFSET) yo = MAX_OFFSET
+          else if (yo < -MAX_OFFSET) yo = -MAX_OFFSET
+
+          let sx = x + (xo | 0)
+          let sy = y + (yo | 0)
+          if (sx < 0) sx = 0
+          else if (sx >= w) sx = w - 1
+          if (sy < 0) sy = 0
+          else if (sy >= h) sy = h - 1
+
+          const si = (sy * w + sx) * 4
+          const di = i * 4
+          // specular sparkle on ripple slopes
+          let shade = (xo + yo) * 1.6
+          if (shade > 60) shade = 60
+          else if (shade < -40) shade = -40
+          o[di] = src[si] + shade
+          o[di + 1] = src[si + 1] + shade
+          o[di + 2] = src[si + 2] + shade
+        }
+      }
+      ctx.putImageData(out, 0, 0)
+    }
+
+    const step = () => {
+      // propagate the height field
+      for (let y = 1; y < h - 1; y++) {
+        for (let x = 1; x < w - 1; x++) {
+          const i = y * w + x
+          let v = (curr[i - 1] + curr[i + 1] + curr[i - w] + curr[i + w]) * 0.5 - next[i]
+          v *= DAMPING
+          next[i] = v
+        }
+      }
+      const tmp = curr
+      curr = next
+      next = tmp
+      render()
+    }
+
+    const loop = (t: number) => {
+      if (!visible) return
+      // ambient drops keep the water alive and hint at interactivity
+      if (!reduced && t - ambientT > 2200) {
+        ambientT = t
+        drop(
+          2 + Math.floor((Math.sin(t * 0.0013) * 0.5 + 0.5) * (w - 4)),
+          2 + Math.floor((Math.cos(t * 0.0021) * 0.5 + 0.5) * (h - 4)),
+          Math.max(2, w * 0.012),
+          120,
+        )
+      }
+      step()
+      raf = requestAnimationFrame(loop)
+    }
+
+    const start = () => {
+      if (!ready) return
+      if (reduced) {
+        drawStatic()
+        return
+      }
+      cancelAnimationFrame(raf)
+      raf = requestAnimationFrame(loop)
+    }
+
+    const ro = new ResizeObserver(() => {
+      if (!ready) return
+      buildGrid()
+      if (reduced) drawStatic()
+    })
 
     const io = new IntersectionObserver(
       (entries) => {
-        if (entries[0].isIntersecting) {
-          triggerAutoRipples()
-          io.disconnect()
-        }
+        visible = entries[0].isIntersecting
+        if (visible) start()
+        else cancelAnimationFrame(raf)
       },
-      { threshold: 0.3 }
+      { threshold: 0.05 },
     )
-    io.observe(canvas)
 
-    const t0 = performance.now()
+    img.onload = () => {
+      ready = true
+      buildGrid()
+      ro.observe(wrap)
+      io.observe(wrap)
+    }
+    img.src = SEA_SRC
 
-    const draw = () => {
-      const tSec = (performance.now() - t0) / 1000
-      const now  = performance.now() / 1000
-
-      // Clean stale taps once per frame
-      tapsRef.current = tapsRef.current.filter(t => now - t.createdAt < 5)
-
-      ctx.clearRect(0, 0, cssW, cssH)
-
-      const cy = cssH * 0.52
-
-      // Long ocean swell: low frequency, slow speed
-      const F  = 0.0038  // wavenumber — long waves
-      const SP = 0.50    // phase speed
-
-      // Build main wave points
-      const pts: [number, number][] = []
-      for (let x = 0; x <= cssW; x += 2) {
-        let y = cy
-          + waveY(x, tSec, F, SP, 20)           // primary swell
-          + waveY(x, tSec, F * 1.6, SP * 0.75, 8, 1.1)  // secondary system
-          + waveY(x, tSec, F * 2.9, SP * 0.45, 4, 2.6)  // chop
-
-        // Tap ripples: concentric, decay+spread
-        for (const tap of tapsRef.current) {
-          const age      = now - tap.createdAt
-          const decay    = Math.exp(-age / 1.8)
-          const spread   = 35 + age * 70
-          const envelope = Math.exp(-((x - tap.x) ** 2) / (2 * spread ** 2))
-          y += tap.strength * decay * envelope * Math.sin(Math.PI * 2.2 * age - 0.4)
-        }
-
-        pts.push([x, y])
+    // pointer interaction
+    const toGrid = (clientX: number, clientY: number) => {
+      const rect = canvas.getBoundingClientRect()
+      return {
+        x: Math.round(((clientX - rect.left) / rect.width) * w),
+        y: Math.round(((clientY - rect.top) / rect.height) * h),
       }
-
-      // ── Deep background swell (slower, dimmer, offset) ───────────────────
-      ctx.beginPath()
-      for (let i = 0; i < pts.length; i++) {
-        const x = pts[i][0]
-        const y = cy + 18 + waveY(x, tSec, F * 0.8, SP * 0.6, 14, 1.9)
-        i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y)
-      }
-      ctx.lineTo(cssW, cssH)
-      ctx.lineTo(0, cssH)
-      ctx.closePath()
-      const deepFill = ctx.createLinearGradient(0, cy, 0, cssH)
-      deepFill.addColorStop(0,   "rgba(23,100,85,0.07)")
-      deepFill.addColorStop(0.5, "rgba(11,23,19,0.18)")
-      deepFill.addColorStop(1,   "rgba(7,14,11,0.30)")
-      ctx.fillStyle = deepFill
-      ctx.fill()
-
-      // ── Sea fill below main wave ─────────────────────────────────────────
-      ctx.beginPath()
-      ctx.moveTo(pts[0][0], pts[0][1])
-      for (const [x, y] of pts) ctx.lineTo(x, y)
-      ctx.lineTo(cssW, cssH)
-      ctx.lineTo(0, cssH)
-      ctx.closePath()
-      const seaFill = ctx.createLinearGradient(0, cy - 25, 0, cssH)
-      seaFill.addColorStop(0,    "rgba(30,120,100,0.10)")
-      seaFill.addColorStop(0.35, "rgba(15,50,40,0.22)")
-      seaFill.addColorStop(1,    "rgba(7,14,11,0.40)")
-      ctx.fillStyle = seaFill
-      ctx.fill()
-
-      // ── Main wave line ───────────────────────────────────────────────────
-      ctx.beginPath()
-      ctx.moveTo(pts[0][0], pts[0][1])
-      for (const [x, y] of pts) ctx.lineTo(x, y)
-      ctx.strokeStyle = "rgba(255,255,255,0.22)"
-      ctx.lineWidth   = 1.5
-      ctx.stroke()
-
-      // ── Foam flecks at wave crests ───────────────────────────────────────
-      for (let i = 3; i < pts.length - 3; i++) {
-        const [x, y] = pts[i]
-        const yPrev  = pts[i - 2][1]
-        const yNext  = pts[i + 2][1]
-        if (y < yPrev && y < yNext && y < cy - 11) {
-          const prominence = (yPrev + yNext) / 2 - y
-          const alpha = Math.min(prominence / 18, 1) * 0.55
-          ctx.beginPath()
-          ctx.arc(x, y - 1, 1.2, 0, Math.PI * 2)
-          ctx.fillStyle = `rgba(255,255,255,${alpha.toFixed(2)})`
-          ctx.fill()
-        }
-      }
-
-      animRef.current = requestAnimationFrame(draw)
+    }
+    const onMove = (e: PointerEvent) => {
+      if (reduced || !ready) return
+      const { x, y } = toGrid(e.clientX, e.clientY)
+      const dx = x - lastGX
+      const dy = y - lastGY
+      if (dx * dx + dy * dy < 2) return // throttle by distance
+      lastGX = x
+      lastGY = y
+      drop(x, y, Math.max(2, w * 0.01), 70)
+      if (!interacted) setInteracted(true)
+    }
+    const onDown = (e: PointerEvent) => {
+      if (reduced || !ready) return
+      const { x, y } = toGrid(e.clientX, e.clientY)
+      drop(x, y, Math.max(3, w * 0.02), 320)
+      if (!interacted) setInteracted(true)
     }
 
-    draw()
+    canvas.addEventListener("pointermove", onMove)
+    canvas.addEventListener("pointerdown", onDown)
 
     return () => {
+      cancelAnimationFrame(raf)
       ro.disconnect()
       io.disconnect()
-      cancelAnimationFrame(animRef.current)
+      canvas.removeEventListener("pointermove", onMove)
+      canvas.removeEventListener("pointerdown", onDown)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLCanvasElement>) => {
-    const x = e.clientX - e.currentTarget.getBoundingClientRect().left
-    if (Math.abs(x - lastXRef.current) > 18) {
-      tapsRef.current.push({ x, strength: 24, createdAt: performance.now() / 1000 })
-      if (tapsRef.current.length > 10) tapsRef.current.shift()
-      lastXRef.current = x
-    }
-  }
-
-  const handleClick = (e: React.MouseEvent<HTMLCanvasElement>) => {
-    const x = e.clientX - e.currentTarget.getBoundingClientRect().left
-    tapsRef.current.push({ x, strength: 38, createdAt: performance.now() / 1000 })
-  }
-
-  const handleMouseLeave = () => { lastXRef.current = -999 }
-
   return (
-    <section aria-hidden className="relative bg-[#0b1713]">
-      <canvas
-        ref={canvasRef}
-        className="block h-[190px] w-full cursor-crosshair touch-none"
-        onMouseMove={handleMouseMove}
-        onClick={handleClick}
-        onMouseLeave={handleMouseLeave}
-      />
-      <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-        <span className="select-none text-[0.5rem] uppercase tracking-[0.35em] text-white/14">
-          Isola d&apos;Elba · Mar Tirreno · 42° 46′ N
+    <section
+      aria-hidden
+      className="relative w-full overflow-hidden bg-[#0b1713] select-none"
+    >
+      <div ref={wrapRef} className="relative h-[210px] w-full sm:h-[260px]">
+        <canvas
+          ref={canvasRef}
+          className="block h-full w-full touch-none [image-rendering:auto]"
+          style={{ cursor: "crosshair" }}
+        />
+        {/* blend into the dark sections above and below */}
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-[#0d1e1a] to-transparent" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#172522] to-transparent" />
+
+        {/* interaction hint */}
+        <div
+          className={`pointer-events-none absolute inset-0 flex items-center justify-center transition-opacity duration-700 ${
+            interacted ? "opacity-0" : "opacity-100"
+          }`}
+        >
+          <span className="text-[0.6rem] uppercase tracking-[0.32em] text-white/55">
+            Tocca l&apos;acqua
+          </span>
+        </div>
+
+        {/* required attribution for the sea photograph */}
+        <span className="pointer-events-none absolute bottom-2 right-3 text-[0.5rem] tracking-wide text-white/25">
+          mare · Š. Burdulis, CC BY-SA
         </span>
       </div>
     </section>
