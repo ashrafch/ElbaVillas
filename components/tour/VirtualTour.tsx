@@ -11,59 +11,36 @@ type Stop = {
   name: string
   tag: string
   blurb: string
-  value: string // why it matters / investment angle
+  value: string // why it matters for life around the residences / value
   image: string
   credit: { author: string; license: string; source: string }
-  lat: number
-  lng: number
+  lat?: number
+  lng?: number
 }
 
-// Real Isola d'Elba locations with real, freely-licensed photography
-// (Wikimedia Commons) — see `credit` for the required attribution.
+// The surroundings of the residences — real, freely-licensed photography of
+// the beaches, coves, villages and nature around the project (Wikimedia
+// Commons). See `credit` for the required attribution.
 const STOPS: Stop[] = [
-  {
-    id: "portoferraio",
-    name: "Portoferraio",
-    tag: "Capoluogo · Porto mediceo",
-    blurb:
-      "Il porto storico dell'isola, fondato da Cosimo I de' Medici nel 1548. Forti a strapiombo sul mare, vicoli ripidi e la residenza dove visse Napoleone.",
-    value: "Il cuore dei servizi e dei collegamenti: l'accesso più comodo all'isola tutto l'anno.",
-    image: "/images/tour/portoferraio.jpg",
-    credit: { author: "Geak", license: "CC BY-SA 4.0", source: "https://commons.wikimedia.org/wiki/File:Portoferraio-Panorama.jpg" },
-    lat: 42.8092,
-    lng: 10.33,
-  },
   {
     id: "sansone",
     name: "Spiaggia di Sansone",
-    tag: "Spiaggia · Costa nord",
+    tag: "Il mare a pochi minuti",
     blurb:
-      "Ghiaia bianca e acqua trasparente dai toni del turchese, racchiusa da alte scogliere chiare. Una delle cale più fotografate dell'isola.",
-    value: "Mare cristallino a pochi minuti d'auto: il lusso quotidiano di un'acqua da cartolina.",
+      "Ghiaia bianca e acqua trasparente racchiusa da scogliere chiare: il mare dell'Elba nella sua versione più limpida, a breve distanza dalle residenze.",
+    value: "Accesso al mare come gesto quotidiano — il lusso più semplice e più raro.",
     image: "/images/tour/sansone.jpg",
     credit: { author: "Carlo Pelagalli", license: "CC BY-SA 3.0", source: "https://commons.wikimedia.org/wiki/File:Spiaggia_di_Sansone,_Elba_-_panoramio.jpg" },
     lat: 42.8133,
     lng: 10.2719,
   },
   {
-    id: "capanne",
-    name: "Monte Capanne",
-    tag: "Natura · 1.019 m",
-    blurb:
-      "La vetta più alta dell'Arcipelago Toscano. Una cabinovia sale tra granito e macchia mediterranea fino a un panorama che spazia su tutto il Tirreno.",
-    value: "Natura protetta e sentieri: un paesaggio che resta intatto e valorizza nel tempo.",
-    image: "/images/tour/capanne.jpg",
-    credit: { author: "Ferpint", license: "CC BY-SA 4.0", source: "https://commons.wikimedia.org/wiki/File:Monte_Capanne_(Elba_Island).JPG" },
-    lat: 42.7669,
-    lng: 10.1903,
-  },
-  {
     id: "fetovaia",
-    name: "Spiaggia di Fetovaia",
-    tag: "Spiaggia · Costa sud-ovest",
+    name: "Cala di Fetovaia",
+    tag: "Le cale dei dintorni",
     blurb:
-      "Una mezzaluna di sabbia dorata protetta dal promontorio delle Tombe. Acque calme e basse, tra le baie più amate dell'isola.",
-    value: "Un'icona balneare dell'Elba: forte richiamo turistico e potenziale di locazione.",
+      "Una mezzaluna di sabbia dorata protetta dal promontorio delle Tombe, tra le baie più amate del versante sud-ovest dell'isola.",
+    value: "Calette e baie raggiungibili in giornata: ogni weekend un mare diverso.",
     image: "/images/tour/fetovaia.jpg",
     credit: { author: "philiTizzani", license: "CC BY-SA 2.0", source: "https://commons.wikimedia.org/wiki/File:Fetovaia01.jpg" },
     lat: 42.735,
@@ -72,26 +49,50 @@ const STOPS: Stop[] = [
   {
     id: "capoliveri",
     name: "Capoliveri",
-    tag: "Borgo · Sud-est",
+    tag: "I borghi vicini",
     blurb:
-      "Borgo medievale arroccato sul promontorio del Calamita. Vicoli stretti, botteghe, enogastronomia e tramonti aperti sul golfo.",
-    value: "Vita di borgo ed esperienze tutto l'anno: domanda costante oltre la sola estate.",
+      "Borgo medievale arroccato sul promontorio del Calamita: vicoli stretti, botteghe, enogastronomia e terrazze aperte sul golfo.",
+    value: "Borghi vivi tutto l'anno a breve distanza: vita sociale oltre la stagione estiva.",
     image: "/images/tour/capoliveri.jpg",
     credit: { author: "Gregory Zeier", license: "CC BY 3.0", source: "https://commons.wikimedia.org/wiki/File:Capoliveri_Elbe_Elba.JPG" },
     lat: 42.743,
     lng: 10.376,
   },
   {
-    id: "portoazzurro",
-    name: "Porto Azzurro",
-    tag: "Borgo di mare · Est",
+    id: "capanne",
+    name: "Monte Capanne",
+    tag: "Natura e sentieri",
     blurb:
-      "Un golfo riparato dominato dal Forte San Giacomo. Lungomare, piazze vivaci e barche all'ancora nel cuore del versante orientale.",
-    value: "Borgo di mare vivo e servito: ristoranti, nautica e passeggio sul porto.",
-    image: "/images/tour/portoazzurro.jpg",
-    credit: { author: "Wolfgang Sauber", license: "CC BY-SA 3.0", source: "https://commons.wikimedia.org/wiki/File:Elba_-_Porto_Azzurro_-_Piazza_am_Hafen.jpg" },
-    lat: 42.7589,
-    lng: 10.3936,
+      "La vetta più alta dell'arcipelago: sentieri, granito e macchia mediterranea, con una cabinovia che sale al panorama sul Tirreno.",
+    value: "Natura protetta intorno a casa: un paesaggio che resta intatto e protegge il valore.",
+    image: "/images/tour/capanne.jpg",
+    credit: { author: "Ferpint", license: "CC BY-SA 4.0", source: "https://commons.wikimedia.org/wiki/File:Monte_Capanne_(Elba_Island).JPG" },
+    lat: 42.7669,
+    lng: 10.1903,
+  },
+  {
+    id: "portoferraio",
+    name: "Portoferraio",
+    tag: "Porti e servizi",
+    blurb:
+      "Il capoluogo e il suo porto mediceo: traghetti, servizi, ristoranti e storia, a breve distanza dalle residenze.",
+    value: "Collegamenti e servizi tutto l'anno: comodità reale, non solo vacanza.",
+    image: "/images/tour/portoferraio.jpg",
+    credit: { author: "Geak", license: "CC BY-SA 4.0", source: "https://commons.wikimedia.org/wiki/File:Portoferraio-Panorama.jpg" },
+    lat: 42.8092,
+    lng: 10.33,
+  },
+  {
+    id: "tramonto",
+    name: "Tramonti sulla costa ovest",
+    tag: "La luce della sera",
+    blurb:
+      "La costa tra Pomonte e Chiessi, dove il sole cala dritto nel mare: il rito serale dell'isola, a pochi chilometri dal progetto.",
+    value: "La luce della sera sul Tirreno: il valore intangibile che si vive ogni giorno.",
+    image: "/images/tour/tramonto.jpg",
+    credit: { author: "Carlo Pelagalli", license: "CC BY-SA 3.0", source: "https://commons.wikimedia.org/wiki/File:Tramonto_tra_Pomonte_e_Chiessi_-_panoramio.jpg" },
+    lat: 42.783,
+    lng: 10.107,
   },
 ]
 
@@ -133,16 +134,15 @@ export function VirtualTour() {
         <div className="flex items-center gap-3">
           <div className="h-px w-10 bg-white/30" />
           <span className="text-[0.68rem] uppercase tracking-[0.3em] text-white/55">
-            I luoghi dell&apos;Isola d&apos;Elba
+            I dintorni delle residenze · Isola d&apos;Elba
           </span>
         </div>
         <h1 className="mt-6 max-w-3xl font-heading text-[clamp(2.4rem,6vw,4.6rem)] font-medium leading-[1.02] tracking-[-0.02em]">
-          Un paradiso da vivere, un investimento che ha senso.
+          Tutto il meglio dell&apos;Elba, a pochi passi da casa.
         </h1>
         <p className="mt-6 max-w-2xl text-base leading-8 text-white/60 sm:text-lg">
-          Sei luoghi reali che raccontano l&apos;Elba: mare cristallino, natura protetta e borghi
-          autentici. Lo scenario in cui nascono le residenze Elba Luce — e le ragioni per cui
-          valgono nel tempo.
+          Spiagge, cale, borghi e natura che circondano il progetto: il contesto quotidiano delle
+          residenze Elba Luce — e una parte concreta del loro valore.
         </p>
       </section>
 
@@ -241,9 +241,11 @@ export function VirtualTour() {
                   <span className="text-[0.62rem] uppercase tracking-[0.18em] text-white/85">
                     {stop.name}
                   </span>
-                  <span className="text-[0.58rem] tabular-nums text-white/45">
-                    {fmt(stop.lat, "N", "S")} · {fmt(stop.lng, "E", "O")}
-                  </span>
+                  {stop.lat != null && stop.lng != null && (
+                    <span className="text-[0.58rem] tabular-nums text-white/45">
+                      {fmt(stop.lat, "N", "S")} · {fmt(stop.lng, "E", "O")}
+                    </span>
+                  )}
                 </div>
                 <span className="text-[0.55rem] uppercase tracking-[0.28em] text-white/40">
                   {String(index + 1).padStart(2, "0")} / {String(STOPS.length).padStart(2, "0")}

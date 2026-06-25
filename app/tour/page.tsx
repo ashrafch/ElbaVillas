@@ -3,9 +3,9 @@ import type { Metadata } from "next"
 import { VirtualTour } from "@/components/tour/VirtualTour"
 
 export const metadata: Metadata = {
-  title: "I luoghi dell'Isola d'Elba",
+  title: "I dintorni delle residenze",
   description:
-    "Borghi, porti e spiagge dell'Isola d'Elba in immagini reali: lo scenario in cui nascono le residenze Elba Luce Villas.",
+    "Spiagge, cale, borghi e natura che circondano Elba Luce Villas: il contesto quotidiano del progetto, in immagini reali dell'Isola d'Elba.",
   alternates: { canonical: "/tour" },
 }
 

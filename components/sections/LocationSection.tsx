@@ -94,7 +94,7 @@ export function LocationSection() {
               className="group inline-flex min-h-12 w-full items-center justify-center gap-2.5 border border-primary/30 px-5 py-3 text-center text-xs uppercase tracking-[0.13em] text-primary transition hover:border-primary hover:bg-primary/[0.04] sm:w-auto sm:px-6 sm:text-sm sm:tracking-[0.18em]"
             >
               <Compass className="size-4 transition-transform duration-300 group-hover:rotate-45" />
-              Scopri i luoghi dell&apos;Elba
+              Esplora i dintorni
             </a>
           </div>
         </div>
