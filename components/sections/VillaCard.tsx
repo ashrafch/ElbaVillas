@@ -34,6 +34,11 @@ export function VillaCard({ villa }: { villa: Villa }) {
         {/* Gradient from bottom */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/15 to-transparent" />
 
+        {/* Diagonal light sweep on hover */}
+        <div className="pointer-events-none absolute inset-0 overflow-hidden">
+          <div className="absolute -inset-y-8 -left-1/2 w-1/2 -skew-x-12 bg-gradient-to-r from-transparent via-white/18 to-transparent transition-[left] duration-[900ms] ease-out group-hover:left-full" />
+        </div>
+
         {/* Status badge */}
         <Badge
           className={`absolute left-4 top-4 rounded-none border-0 text-[0.62rem] uppercase tracking-[0.12em] ${cls}`}

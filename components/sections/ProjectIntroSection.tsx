@@ -19,16 +19,16 @@ export function ProjectIntroSection() {
           </p>
         </FadeIn>
         <div className="mt-12 grid items-center gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:gap-16">
-          <FadeIn direction="right">
-            <div className="grid gap-4 sm:grid-cols-2">
-            {points.map((point) => (
-              <div key={point} className="flex items-start gap-3 border-t border-border pt-4 text-sm leading-6 text-foreground/80">
-                <Check className="mt-0.5 size-4 text-accent" />
-                <span>{point}</span>
-              </div>
+          <div className="grid gap-4 sm:grid-cols-2">
+            {points.map((point, i) => (
+              <FadeIn key={point} direction="up" delay={i * 0.09}>
+                <div className="flex items-start gap-3 border-t border-border pt-4 text-sm leading-6 text-foreground/80">
+                  <Check className="mt-0.5 size-4 text-accent" />
+                  <span>{point}</span>
+                </div>
+              </FadeIn>
             ))}
-            </div>
-          </FadeIn>
+          </div>
           <FadeIn delay={0.1} direction="left">
             <div className="relative mx-auto max-w-[560px]">
               <ParallaxImage src="/images/architecture/architecture-elba.svg" alt="Architettura mediterranea integrata nel paesaggio" className="relative aspect-[4/5] overflow-hidden rounded-sm" />
