@@ -13,11 +13,13 @@ type Stop = {
   blurb: string
   value: string // why it matters / investment angle
   image: string
+  credit: { author: string; license: string; source: string }
   lat: number
   lng: number
 }
 
-// Real Isola d'Elba locations, paired with evocative scene artwork.
+// Real Isola d'Elba locations with real, freely-licensed photography
+// (Wikimedia Commons) — see `credit` for the required attribution.
 const STOPS: Stop[] = [
   {
     id: "portoferraio",
@@ -26,7 +28,8 @@ const STOPS: Stop[] = [
     blurb:
       "Il porto storico dell'isola, fondato da Cosimo I de' Medici nel 1548. Forti a strapiombo sul mare, vicoli ripidi e la residenza dove visse Napoleone.",
     value: "Il cuore dei servizi e dei collegamenti: l'accesso più comodo all'isola tutto l'anno.",
-    image: "/images/tour/portoferraio.svg",
+    image: "/images/tour/portoferraio.jpg",
+    credit: { author: "Geak", license: "CC BY-SA 4.0", source: "https://commons.wikimedia.org/wiki/File:Portoferraio-Panorama.jpg" },
     lat: 42.8092,
     lng: 10.33,
   },
@@ -37,7 +40,8 @@ const STOPS: Stop[] = [
     blurb:
       "Ghiaia bianca e acqua trasparente dai toni del turchese, racchiusa da alte scogliere chiare. Una delle cale più fotografate dell'isola.",
     value: "Mare cristallino a pochi minuti d'auto: il lusso quotidiano di un'acqua da cartolina.",
-    image: "/images/tour/sansone.svg",
+    image: "/images/tour/sansone.jpg",
+    credit: { author: "Carlo Pelagalli", license: "CC BY-SA 3.0", source: "https://commons.wikimedia.org/wiki/File:Spiaggia_di_Sansone,_Elba_-_panoramio.jpg" },
     lat: 42.8133,
     lng: 10.2719,
   },
@@ -48,7 +52,8 @@ const STOPS: Stop[] = [
     blurb:
       "La vetta più alta dell'Arcipelago Toscano. Una cabinovia sale tra granito e macchia mediterranea fino a un panorama che spazia su tutto il Tirreno.",
     value: "Natura protetta e sentieri: un paesaggio che resta intatto e valorizza nel tempo.",
-    image: "/images/tour/capanne.svg",
+    image: "/images/tour/capanne.jpg",
+    credit: { author: "Ferpint", license: "CC BY-SA 4.0", source: "https://commons.wikimedia.org/wiki/File:Monte_Capanne_(Elba_Island).JPG" },
     lat: 42.7669,
     lng: 10.1903,
   },
@@ -59,7 +64,8 @@ const STOPS: Stop[] = [
     blurb:
       "Una mezzaluna di sabbia dorata protetta dal promontorio delle Tombe. Acque calme e basse, tra le baie più amate dell'isola.",
     value: "Un'icona balneare dell'Elba: forte richiamo turistico e potenziale di locazione.",
-    image: "/images/tour/fetovaia.svg",
+    image: "/images/tour/fetovaia.jpg",
+    credit: { author: "philiTizzani", license: "CC BY-SA 2.0", source: "https://commons.wikimedia.org/wiki/File:Fetovaia01.jpg" },
     lat: 42.735,
     lng: 10.15,
   },
@@ -70,7 +76,8 @@ const STOPS: Stop[] = [
     blurb:
       "Borgo medievale arroccato sul promontorio del Calamita. Vicoli stretti, botteghe, enogastronomia e tramonti aperti sul golfo.",
     value: "Vita di borgo ed esperienze tutto l'anno: domanda costante oltre la sola estate.",
-    image: "/images/tour/capoliveri.svg",
+    image: "/images/tour/capoliveri.jpg",
+    credit: { author: "Gregory Zeier", license: "CC BY 3.0", source: "https://commons.wikimedia.org/wiki/File:Capoliveri_Elbe_Elba.JPG" },
     lat: 42.743,
     lng: 10.376,
   },
@@ -81,7 +88,8 @@ const STOPS: Stop[] = [
     blurb:
       "Un golfo riparato dominato dal Forte San Giacomo. Lungomare, piazze vivaci e barche all'ancora nel cuore del versante orientale.",
     value: "Borgo di mare vivo e servito: ristoranti, nautica e passeggio sul porto.",
-    image: "/images/tour/portoazzurro.svg",
+    image: "/images/tour/portoazzurro.jpg",
+    credit: { author: "Wolfgang Sauber", license: "CC BY-SA 3.0", source: "https://commons.wikimedia.org/wiki/File:Elba_-_Porto_Azzurro_-_Piazza_am_Hafen.jpg" },
     lat: 42.7589,
     lng: 10.3936,
   },
@@ -125,14 +133,14 @@ export function VirtualTour() {
         <div className="flex items-center gap-3">
           <div className="h-px w-10 bg-white/30" />
           <span className="text-[0.68rem] uppercase tracking-[0.3em] text-white/55">
-            Giro virtuale · Isola d&apos;Elba
+            I luoghi dell&apos;Isola d&apos;Elba
           </span>
         </div>
         <h1 className="mt-6 max-w-3xl font-heading text-[clamp(2.4rem,6vw,4.6rem)] font-medium leading-[1.02] tracking-[-0.02em]">
           Un paradiso da vivere, un investimento che ha senso.
         </h1>
         <p className="mt-6 max-w-2xl text-base leading-8 text-white/60 sm:text-lg">
-          Sei luoghi che raccontano l&apos;Elba: mare cristallino, natura protetta e borghi
+          Sei luoghi reali che raccontano l&apos;Elba: mare cristallino, natura protetta e borghi
           autentici. Lo scenario in cui nascono le residenze Elba Luce — e le ragioni per cui
           valgono nel tempo.
         </p>
@@ -291,9 +299,18 @@ export function VirtualTour() {
               </a>
             </div>
 
-            <p className="mt-6 text-[0.62rem] leading-relaxed text-white/25">
-              Rappresentazioni illustrative dei luoghi dell&apos;Isola d&apos;Elba. Le coordinate
-              indicano la posizione reale di ciascuna tappa.
+            <p className="mt-6 text-[0.62rem] leading-relaxed text-white/30">
+              Foto:{" "}
+              <a
+                href={stop.credit.source}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline decoration-white/20 underline-offset-2 transition hover:text-white/60"
+              >
+                {stop.credit.author}
+              </a>{" "}
+              · {stop.credit.license} · Wikimedia Commons. Le coordinate indicano la posizione
+              reale di ciascuna tappa.
             </p>
           </div>
         </div>

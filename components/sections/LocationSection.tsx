@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Anchor, Footprints, Sailboat, Trees } from "lucide-react"
+import { Anchor, Compass, Sailboat, Trees } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { IslandMap, type MapPoi } from "@/components/sections/IslandMap"
@@ -93,8 +93,8 @@ export function LocationSection() {
               href="/tour"
               className="group inline-flex min-h-12 w-full items-center justify-center gap-2.5 border border-primary/30 px-5 py-3 text-center text-xs uppercase tracking-[0.13em] text-primary transition hover:border-primary hover:bg-primary/[0.04] sm:w-auto sm:px-6 sm:text-sm sm:tracking-[0.18em]"
             >
-              <Footprints className="size-4 transition-transform duration-300 group-hover:translate-x-0.5" />
-              Inizia il giro virtuale
+              <Compass className="size-4 transition-transform duration-300 group-hover:rotate-45" />
+              Scopri i luoghi dell&apos;Elba
             </a>
           </div>
         </div>
