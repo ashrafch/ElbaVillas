@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Anchor, Sailboat, Trees } from "lucide-react"
+import { Anchor, Footprints, Sailboat, Trees } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { IslandMap, type MapPoi } from "@/components/sections/IslandMap"
@@ -82,12 +82,21 @@ export function LocationSection() {
             })}
           </div>
 
-          <a
-            href="#contatti"
-            className="mt-10 inline-flex min-h-12 w-full items-center justify-center bg-primary px-5 py-3 text-center text-xs uppercase tracking-[0.13em] text-primary-foreground transition hover:bg-primary/90 sm:w-auto sm:px-6 sm:text-sm sm:tracking-[0.18em]"
-          >
-            Ricevi la posizione e il dossier completo
-          </a>
+          <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
+            <a
+              href="#contatti"
+              className="inline-flex min-h-12 w-full items-center justify-center bg-primary px-5 py-3 text-center text-xs uppercase tracking-[0.13em] text-primary-foreground transition hover:bg-primary/90 sm:w-auto sm:px-6 sm:text-sm sm:tracking-[0.18em]"
+            >
+              Ricevi la posizione e il dossier completo
+            </a>
+            <a
+              href="/tour"
+              className="group inline-flex min-h-12 w-full items-center justify-center gap-2.5 border border-primary/30 px-5 py-3 text-center text-xs uppercase tracking-[0.13em] text-primary transition hover:border-primary hover:bg-primary/[0.04] sm:w-auto sm:px-6 sm:text-sm sm:tracking-[0.18em]"
+            >
+              <Footprints className="size-4 transition-transform duration-300 group-hover:translate-x-0.5" />
+              Inizia il giro virtuale
+            </a>
+          </div>
         </div>
 
         {/* ── Nautical-chart island map ─────────────────────────────────── */}
