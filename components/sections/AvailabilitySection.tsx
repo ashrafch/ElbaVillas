@@ -49,7 +49,7 @@ function VillaTile({
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ delay, duration: 0.5, ease }}
       className={cn(
-        "group relative flex flex-col justify-between overflow-hidden rounded-sm border p-4 transition-all duration-300 sm:p-5",
+        "group relative flex h-full w-full flex-col justify-between overflow-hidden rounded-sm border p-5 transition-all duration-300 sm:p-6",
         "border-white/8 bg-white/[0.03]",
         st.interactive
           ? "cursor-pointer hover:border-white/18 hover:bg-white/[0.07]"
@@ -76,7 +76,7 @@ function VillaTile({
       </div>
 
       {/* Bottom: specs */}
-      <div className="mt-3 flex items-center gap-2 text-[0.6rem] text-white/40">
+      <div className="mt-4 flex items-center gap-2 text-[0.62rem] text-white/45">
         <span>{villa.surface}</span>
         <span className="text-white/20">·</span>
         <span>{villa.bedrooms} cam.</span>
@@ -87,6 +87,11 @@ function VillaTile({
           </>
         )}
       </div>
+
+      {/* Outdoor — fills the wider tile, adds substance */}
+      <p className="mt-2 line-clamp-1 text-[0.6rem] leading-relaxed text-white/30">
+        {villa.outdoor}
+      </p>
 
       {/* Price — shown when set */}
       {villa.priceLabel && (
@@ -190,16 +195,16 @@ export function AvailabilitySection() {
           </motion.div>
         </div>
 
-        {/* Villa grid — 2 cols mobile → 3 sm → 4 lg → 5 xl → 6 2xl */}
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
+        {/* Villa grid — symmetric 3×3 on sm+; on mobile a centred 2-up wrap
+            so a leftover tile sits centred instead of orphaned to the left */}
+        <div className="flex flex-wrap justify-center gap-3 sm:gap-4">
           {villas.map((villa, i) => (
-            <VillaTile
+            <div
               key={villa.id}
-              villa={villa}
-              index={i}
-              delay={0.25 + i * 0.07}
-              inView={inView}
-            />
+              className="flex w-[calc(50%_-_0.375rem)] sm:w-[calc(33.333%_-_0.667rem)]"
+            >
+              <VillaTile villa={villa} index={i} delay={0.2 + i * 0.06} inView={inView} />
+            </div>
           ))}
         </div>
 
