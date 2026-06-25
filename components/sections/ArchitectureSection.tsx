@@ -1,6 +1,5 @@
-import Image from "next/image"
-
 import { FadeIn } from "@/components/motion/FadeIn"
+import { ParallaxImage } from "@/components/motion/ParallaxImage"
 
 const features = [
   ["01", "Pietra locale", "Basamenti e dettagli dialogano con la materia dell'isola."],
@@ -12,26 +11,18 @@ export function ArchitectureSection() {
   return (
     <section className="bg-[#f7f1e7] py-24 md:py-32">
       <div className="container-premium grid gap-12 lg:grid-cols-2 lg:items-center">
-        {/* Staggered image pair */}
+        {/* Staggered image pair — gentle scroll parallax */}
         <FadeIn direction="right" className="relative hidden gap-4 sm:grid-cols-2 lg:grid">
-          <div className="relative aspect-[4/5] overflow-hidden sm:mt-16">
-            <Image
-              src="/images/architecture/stone-detail.svg"
-              alt="Dettaglio di materiali naturali"
-              fill
-              className="object-cover transition duration-700 hover:scale-105"
-              sizes="(min-width: 1024px) 25vw, 50vw"
-            />
-          </div>
-          <div className="relative aspect-[4/5] overflow-hidden">
-            <Image
-              src="/images/architecture/architecture-elba.svg"
-              alt="Villa contemporanea con terrazza panoramica"
-              fill
-              className="object-cover transition duration-700 hover:scale-105"
-              sizes="(min-width: 1024px) 25vw, 50vw"
-            />
-          </div>
+          <ParallaxImage
+            src="/images/architecture/stone-detail.svg"
+            alt="Dettaglio di materiali naturali"
+            className="relative aspect-[4/5] overflow-hidden sm:mt-16"
+          />
+          <ParallaxImage
+            src="/images/architecture/architecture-elba.svg"
+            alt="Villa contemporanea con terrazza panoramica"
+            className="relative aspect-[4/5] overflow-hidden"
+          />
         </FadeIn>
 
         {/* Text + features list */}

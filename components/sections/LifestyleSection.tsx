@@ -1,6 +1,5 @@
-import Image from "next/image"
-
 import { FadeIn } from "@/components/motion/FadeIn"
+import { ParallaxImage } from "@/components/motion/ParallaxImage"
 
 const moments = ["mare al mattino", "pranzi all'aperto", "sentieri tra i profumi", "privacy di famiglia"]
 
@@ -30,39 +29,27 @@ export function LifestyleSection() {
             </div>
           </FadeIn>
 
-          {/* Image mosaic */}
+          {/* Image mosaic — gentle scroll parallax */}
           <FadeIn direction="left" delay={0.1}>
             <div className="grid grid-cols-2 gap-3">
               {/* Tall left image spanning 2 rows */}
-              <div className="relative row-span-2 aspect-[3/4] overflow-hidden">
-                <Image
-                  src="/images/gallery/elba-coastline.svg"
-                  alt="Costa dell'Isola d'Elba al tramonto"
-                  fill
-                  className="object-cover opacity-85 transition duration-700 hover:scale-105"
-                  sizes="(min-width: 1024px) 28vw, 45vw"
-                />
-              </div>
+              <ParallaxImage
+                src="/images/gallery/elba-coastline.svg"
+                alt="Costa dell'Isola d'Elba al tramonto"
+                className="relative row-span-2 aspect-[3/4] overflow-hidden opacity-90"
+              />
               {/* Top-right square */}
-              <div className="relative aspect-square overflow-hidden">
-                <Image
-                  src="/images/gallery/living-light.svg"
-                  alt="Spazio living con luce naturale"
-                  fill
-                  className="object-cover opacity-85 transition duration-700 hover:scale-105"
-                  sizes="(min-width: 1024px) 14vw, 22vw"
-                />
-              </div>
+              <ParallaxImage
+                src="/images/gallery/living-light.svg"
+                alt="Spazio living con luce naturale"
+                className="relative aspect-square overflow-hidden opacity-90"
+              />
               {/* Bottom-right square */}
-              <div className="relative aspect-square overflow-hidden">
-                <Image
-                  src="/images/gallery/private-pool.svg"
-                  alt="Piscina privata con vista"
-                  fill
-                  className="object-cover opacity-85 transition duration-700 hover:scale-105"
-                  sizes="(min-width: 1024px) 14vw, 22vw"
-                />
-              </div>
+              <ParallaxImage
+                src="/images/gallery/private-pool.svg"
+                alt="Piscina privata con vista"
+                className="relative aspect-square overflow-hidden opacity-90"
+              />
             </div>
           </FadeIn>
         </div>

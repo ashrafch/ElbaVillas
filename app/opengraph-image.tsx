@@ -33,7 +33,7 @@ export default function Image() {
           </div>
         </div>
         <div style={{ display: "flex", gap: 18, fontSize: 20, letterSpacing: 3, textTransform: "uppercase" }}>
-          <span>4 ville</span>
+          <span>9 ville</span>
           <span>Vista mare</span>
           <span>Disponibilita limitata</span>
         </div>

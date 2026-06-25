@@ -8,7 +8,7 @@ import { MagneticButton } from "@/components/interactive/MagneticButton"
 import { SplitReveal } from "@/components/motion/SplitReveal"
 import { VideoBackground } from "@/components/motion/VideoBackground"
 
-const stats = ["4 ville esclusive", "Isola d'Elba", "Vista mare", "Disponibilità limitata"]
+const stats = ["9 ville esclusive", "Isola d'Elba", "Vista mare", "Disponibilità limitata"]
 
 function FadeUp({
   children,

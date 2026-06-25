@@ -1,12 +1,21 @@
+"use client"
+
+import { useRef } from "react"
 import { ArrowUpRight } from "lucide-react"
+import { motion, useInView } from "framer-motion"
 
 import { FadeIn } from "@/components/motion/FadeIn"
+import { CountUp } from "@/components/motion/CountUp"
 import { InvestmentSimulatorModal } from "@/components/sections/InvestmentSimulatorModal"
 
-const stats = [
-  { value: "3ª", label: "Isola toscana per estensione" },
-  { value: "100%", label: "Vista mare garantita" },
-  { value: "Limitata", label: "Offerta residenziale" },
+type Stat =
+  | { kind: "num"; to: number; suffix?: string; label: string }
+  | { kind: "text"; value: string; label: string }
+
+const stats: Stat[] = [
+  { kind: "num", to: 3, suffix: "ª", label: "Isola toscana per estensione" },
+  { kind: "num", to: 100, suffix: "%", label: "Vista mare garantita" },
+  { kind: "text", value: "Limitata", label: "Offerta residenziale" },
 ]
 
 const items = [
@@ -16,19 +25,44 @@ const items = [
   "Valore legato a posizione, progetto e scarsità",
 ]
 
+const ease = [0.22, 1, 0.36, 1] as const
+
 export function InvestmentSection() {
+  const statsRef = useRef<HTMLDivElement>(null)
+  const statsInView = useInView(statsRef, { once: true, margin: "-80px" })
+
   return (
     <section id="investimento" className="bg-[#172522] py-20 text-white sm:py-24 md:py-32">
       <div className="container-premium">
         {/* Stats band */}
-        <FadeIn className="mb-16 grid grid-cols-3 divide-x divide-white/12 border-y border-white/12">
-          {stats.map((stat) => (
-            <div key={stat.label} className="px-4 py-8 text-center sm:px-8 sm:py-10">
-              <p className="font-heading text-4xl font-medium sm:text-5xl">{stat.value}</p>
-              <p className="mt-2 text-[0.65rem] uppercase tracking-[0.22em] text-white/50 sm:text-xs">{stat.label}</p>
-            </div>
+        <div
+          ref={statsRef}
+          className="mb-16 grid grid-cols-3 divide-x divide-white/12 border-y border-white/12"
+        >
+          {stats.map((stat, i) => (
+            <motion.div
+              key={stat.label}
+              initial={{ opacity: 0, y: 18 }}
+              animate={statsInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: i * 0.12, duration: 0.6, ease }}
+              className="px-4 py-8 text-center sm:px-8 sm:py-10"
+            >
+              <p className="font-heading text-4xl font-medium tabular-nums sm:text-5xl">
+                {stat.kind === "num" ? (
+                  <>
+                    <CountUp to={stat.to} stiffness={stat.to > 50 ? 110 : 90} />
+                    {stat.suffix && <span>{stat.suffix}</span>}
+                  </>
+                ) : (
+                  stat.value
+                )}
+              </p>
+              <p className="mt-2 text-[0.65rem] uppercase tracking-[0.22em] text-white/50 sm:text-xs">
+                {stat.label}
+              </p>
+            </motion.div>
           ))}
-        </FadeIn>
+        </div>
 
         <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
           <FadeIn direction="right" className="text-center lg:text-left">

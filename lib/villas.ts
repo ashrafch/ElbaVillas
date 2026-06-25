@@ -1,5 +1,9 @@
 import type { Villa } from "@/types/villa"
 
+// Nine villas. Names are evocative placeholders (winds, Mediterranean plants,
+// light) — the studio can rename them; the structure is production-ready.
+// `featured` villas appear as large editorial cards in VillasOverviewSection;
+// all nine appear in the AvailabilitySection status board.
 export const villas: Villa[] = [
   {
     id: "villa-azzurra",
@@ -60,5 +64,75 @@ export const villas: Villa[] = [
     status: "coming-soon",
     featured: true,
     highlights: ["Tramonti", "Suite indipendente", "Piscina a sfioro", "Ampia terrazza"],
+  },
+  {
+    id: "villa-levante",
+    name: "Villa Levante",
+    description:
+      "Orientata all'alba, accoglie la prima luce con grandi vetrate a est e una sequenza di spazi che si aprono progressivamente sul giardino.",
+    image: "/images/villas/villa-levante.svg",
+    surface: "190 m²",
+    bedrooms: 3,
+    bathrooms: 3,
+    outdoor: "Terrazza dell'alba e giardino a est",
+    pool: true,
+    status: "available",
+    highlights: ["Luce del mattino", "Piscina privata", "Vetrate a est", "Giardino riservato"],
+  },
+  {
+    id: "villa-corallo",
+    name: "Villa Corallo",
+    description:
+      "Toni caldi e materiali tattili per una villa intima, raccolta intorno a una corte d'acqua che modula privacy e socialità.",
+    image: "/images/villas/villa-corallo.svg",
+    surface: "175 m²",
+    bedrooms: 3,
+    bathrooms: 2,
+    outdoor: "Corte d'acqua e solarium protetto",
+    pool: true,
+    status: "reserved",
+    highlights: ["Corte d'acqua", "Materiali caldi", "Atmosfera intima", "Solarium"],
+  },
+  {
+    id: "villa-mirto",
+    name: "Villa Mirto",
+    description:
+      "Immersa nella macchia, dialoga con il verde attraverso patii e schermature naturali che garantiscono ombra e frescura tutto l'anno.",
+    image: "/images/villas/villa-mirto.svg",
+    surface: "160 m²",
+    bedrooms: 2,
+    bathrooms: 2,
+    outdoor: "Patii nel verde e giardino mediterraneo",
+    pool: false,
+    status: "available",
+    highlights: ["Immersa nel verde", "Schermature naturali", "Patii ombreggiati", "Frescura naturale"],
+  },
+  {
+    id: "villa-elicriso",
+    name: "Villa Elicriso",
+    description:
+      "La residenza più ampia: spazi generosi, doppia altezza nel living e un esterno scenografico pensato per la convivialità.",
+    image: "/images/villas/villa-elicriso.svg",
+    surface: "230 m²",
+    bedrooms: 4,
+    bathrooms: 4,
+    outdoor: "Giardino panoramico, piscina e zona pranzo all'aperto",
+    pool: true,
+    status: "sold",
+    highlights: ["Living a doppia altezza", "Piscina panoramica", "Spazi generosi", "Esterno conviviale"],
+  },
+  {
+    id: "villa-scirocco",
+    name: "Villa Scirocco",
+    description:
+      "Avvolta da una luce dorata e da brezze calde, unisce ambienti raccolti a una terrazza esposta che diventa il cuore della casa.",
+    image: "/images/villas/villa-scirocco.svg",
+    surface: "185 m²",
+    bedrooms: 3,
+    bathrooms: 3,
+    outdoor: "Terrazza esposta e giardino con pergola",
+    pool: true,
+    status: "coming-soon",
+    highlights: ["Luce dorata", "Terrazza centrale", "Pergola", "Piscina privata"],
   },
 ]

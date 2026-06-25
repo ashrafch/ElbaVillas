@@ -6,9 +6,9 @@ import { motion, useInView } from "framer-motion"
 import { CountUp } from "@/components/motion/CountUp"
 
 const figures = [
-  { value: 4, label: "Ville esclusive", sub: "unità indipendenti" },
-  { value: 210, unit: "m²", label: "Superficie massima", sub: "spazi interni" },
-  { value: 4, label: "Piscine private", sub: "una per villa" },
+  { value: 9, label: "Ville esclusive", sub: "unità indipendenti" },
+  { value: 230, unit: "m²", label: "Superficie massima", sub: "spazi interni" },
+  { value: 7, label: "Piscine private", sub: "su nove residenze" },
   { value: 2026, label: "Anno di consegna", sub: "prenotazioni aperte" },
 ]
 
