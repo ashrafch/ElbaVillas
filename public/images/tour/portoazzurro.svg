@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000">
+  <defs>
+    <linearGradient id="pa-sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#6aa6d2"/>
+      <stop offset="0.65" stop-color="#bbdcec"/>
+      <stop offset="1" stop-color="#e8f3f4"/>
+    </linearGradient>
+    <linearGradient id="pa-sea" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2c7fa3"/>
+      <stop offset="0.5" stop-color="#4a9fb8"/>
+      <stop offset="1" stop-color="#86c3c7"/>
+    </linearGradient>
+    <linearGradient id="pa-ref" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.4"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="1000" fill="url(#pa-sky)"/>
+  <!-- distant coast -->
+  <path d="M0 540 C 240 512 460 530 720 516 C 1020 500 1300 528 1600 514 L1600 580 L0 580 Z" fill="#b6cfc6" opacity="0.55"/>
+  <!-- fort headland left -->
+  <path d="M0 560 C 80 470 200 440 320 458 C 360 464 390 500 410 560 Z" fill="#9a8f78"/>
+  <g fill="#7c715c"><rect x="150" y="452" width="120" height="50"/><rect x="150" y="436" width="22" height="20"/><rect x="248" y="436" width="22" height="20"/></g>
+  <!-- village cluster by the water (right of fort) -->
+  <g fill="#d8c6a6">
+    <rect x="700" y="498" width="28" height="62"/><rect x="732" y="512" width="22" height="48"/>
+    <rect x="758" y="486" width="32" height="74"/><rect x="794" y="516" width="20" height="44"/>
+    <rect x="818" y="502" width="28" height="58"/><rect x="850" y="520" width="22" height="40"/>
+    <rect x="876" y="494" width="30" height="66"/>
+  </g>
+  <g fill="#b39c74"><rect x="700" y="498" width="28" height="10"/><rect x="758" y="486" width="32" height="10"/><rect x="876" y="494" width="30" height="10"/></g>
+  <!-- sea -->
+  <rect y="560" width="1600" height="440" fill="url(#pa-sea)"/>
+  <rect x="740" y="560" width="120" height="300" fill="url(#pa-ref)"/>
+  <g stroke="#ffffff" stroke-opacity="0.2" stroke-width="3" fill="none">
+    <path d="M200 660 q 70 -10 140 0 t 140 0"/>
+    <path d="M980 720 q 80 -12 160 0 t 160 0"/>
+    <path d="M300 820 q 80 -12 160 0 t 160 0"/>
+  </g>
+  <!-- boats -->
+  <g fill="#28403f">
+    <path d="M560 636 l50 0 -10 16 -30 0 z"/><path d="M582 612 l2 24 14 0 z"/>
+    <path d="M1080 686 l44 0 -8 14 -28 0 z"/><path d="M1100 666 l1 20 12 0 z"/>
+  </g>
+</svg>

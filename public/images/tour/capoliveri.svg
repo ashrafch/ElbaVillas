@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000">
+  <defs>
+    <linearGradient id="cl-sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#6a5a86"/>
+      <stop offset="0.45" stop-color="#d98a72"/>
+      <stop offset="0.8" stop-color="#f4b878"/>
+      <stop offset="1" stop-color="#fad79a"/>
+    </linearGradient>
+    <radialGradient id="cl-sun" cx="0.5" cy="0.62" r="0.42">
+      <stop offset="0" stop-color="#fff0c4" stop-opacity="0.95"/>
+      <stop offset="1" stop-color="#fff0c4" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1600" height="1000" fill="url(#cl-sky)"/>
+  <rect width="1600" height="1000" fill="url(#cl-sun)"/>
+  <circle cx="800" cy="600" r="86" fill="#ffe9b0" opacity="0.92"/>
+  <!-- distant hills -->
+  <path d="M0 640 C 280 590 520 612 820 596 C 1120 580 1340 616 1600 600 L1600 720 L0 720 Z" fill="#9a6f72" opacity="0.6"/>
+  <!-- village hill silhouette -->
+  <path d="M0 1000 L0 760 C 220 700 420 720 560 640 C 660 584 760 560 880 600 C 1060 660 1320 700 1600 690 L1600 1000 Z" fill="#4a3a52"/>
+  <!-- village cluster on the crest -->
+  <g fill="#3a2c44">
+    <rect x="600" y="560" width="24" height="48"/><rect x="628" y="572" width="20" height="36"/>
+    <rect x="652" y="548" width="28" height="60"/><rect x="684" y="576" width="18" height="32"/>
+    <rect x="706" y="566" width="24" height="42"/><rect x="734" y="582" width="20" height="26"/>
+  </g>
+  <g fill="#ffd27a"><rect x="606" y="576" width="6" height="8"/><rect x="660" y="566" width="6" height="9"/><rect x="712" y="580" width="6" height="8"/></g>
+  <!-- vineyard rows foreground -->
+  <g stroke="#33283c" stroke-width="6" opacity="0.55">
+    <path d="M0 880 C 360 854 720 866 1080 884"/>
+    <path d="M0 930 C 380 900 760 914 1120 936"/>
+    <path d="M0 980 C 400 946 800 962 1180 986"/>
+  </g>
+</svg>

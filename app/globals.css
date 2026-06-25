@@ -240,6 +240,18 @@
   to { transform: translateX(-50%) }
 }
 
+@keyframes tour-kenburns {
+  from { transform: scale(1); }
+  to   { transform: scale(1.08); }
+}
+.tour-kenburns {
+  animation: tour-kenburns 16s ease-in-out infinite alternate;
+  transform-origin: center;
+}
+@media (prefers-reduced-motion: reduce) {
+  .tour-kenburns { animation: none !important; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .marquee-track {
     animation: none !important;

@@ -1,8 +1,8 @@
 "use client"
 
-import { useEffect, useState } from "react"
 import { AnimatePresence, motion } from "framer-motion"
-import { ArrowLeft, ArrowRight, Footprints, MapPin, Navigation } from "lucide-react"
+import { ArrowLeft, ArrowRight, MapPin, Sparkles } from "lucide-react"
+import { useState } from "react"
 
 import { cn } from "@/lib/utils"
 
@@ -11,52 +11,57 @@ type Stop = {
   name: string
   tag: string
   blurb: string
+  value: string // why it matters / investment angle
+  image: string
   lat: number
   lng: number
-  zoom: number
 }
 
-// Real Isola d'Elba locations with real coordinates and descriptions.
+// Real Isola d'Elba locations, paired with evocative scene artwork.
 const STOPS: Stop[] = [
   {
     id: "portoferraio",
     name: "Portoferraio",
     tag: "Capoluogo · Porto mediceo",
     blurb:
-      "Il porto storico dell'isola, fondato da Cosimo I de' Medici nel 1548. Forti medicei a strapiombo sul mare, vicoli ripidi e la residenza dove Napoleone visse parte del suo esilio.",
+      "Il porto storico dell'isola, fondato da Cosimo I de' Medici nel 1548. Forti a strapiombo sul mare, vicoli ripidi e la residenza dove visse Napoleone.",
+    value: "Il cuore dei servizi e dei collegamenti: l'accesso più comodo all'isola tutto l'anno.",
+    image: "/images/tour/portoferraio.svg",
     lat: 42.8092,
     lng: 10.33,
-    zoom: 15,
   },
   {
     id: "sansone",
     name: "Spiaggia di Sansone",
     tag: "Spiaggia · Costa nord",
     blurb:
-      "Ghiaia bianca e acqua trasparente dai toni del turchese, racchiusa da alte scogliere chiare. Una delle cale più fotografate del versante settentrionale.",
+      "Ghiaia bianca e acqua trasparente dai toni del turchese, racchiusa da alte scogliere chiare. Una delle cale più fotografate dell'isola.",
+    value: "Mare cristallino a pochi minuti d'auto: il lusso quotidiano di un'acqua da cartolina.",
+    image: "/images/tour/sansone.svg",
     lat: 42.8133,
     lng: 10.2719,
-    zoom: 16,
   },
   {
     id: "capanne",
     name: "Monte Capanne",
     tag: "Natura · 1.019 m",
     blurb:
-      "La vetta più alta dell'Arcipelago Toscano. Una cabinovia da Marciana sale tra granito e macchia mediterranea fino a un panorama che spazia su tutto il Tirreno.",
+      "La vetta più alta dell'Arcipelago Toscano. Una cabinovia sale tra granito e macchia mediterranea fino a un panorama che spazia su tutto il Tirreno.",
+    value: "Natura protetta e sentieri: un paesaggio che resta intatto e valorizza nel tempo.",
+    image: "/images/tour/capanne.svg",
     lat: 42.7669,
     lng: 10.1903,
-    zoom: 14,
   },
   {
     id: "fetovaia",
     name: "Spiaggia di Fetovaia",
     tag: "Spiaggia · Costa sud-ovest",
     blurb:
-      "Una mezzaluna di sabbia dorata protetta dal promontorio delle Tombe. Acque calme e basse, tra le baie più amate dell'intera isola.",
+      "Una mezzaluna di sabbia dorata protetta dal promontorio delle Tombe. Acque calme e basse, tra le baie più amate dell'isola.",
+    value: "Un'icona balneare dell'Elba: forte richiamo turistico e potenziale di locazione.",
+    image: "/images/tour/fetovaia.svg",
     lat: 42.735,
     lng: 10.15,
-    zoom: 16,
   },
   {
     id: "capoliveri",
@@ -64,9 +69,10 @@ const STOPS: Stop[] = [
     tag: "Borgo · Sud-est",
     blurb:
       "Borgo medievale arroccato sul promontorio del Calamita. Vicoli stretti, botteghe, enogastronomia e tramonti aperti sul golfo.",
+    value: "Vita di borgo ed esperienze tutto l'anno: domanda costante oltre la sola estate.",
+    image: "/images/tour/capoliveri.svg",
     lat: 42.743,
     lng: 10.376,
-    zoom: 16,
   },
   {
     id: "portoazzurro",
@@ -74,9 +80,10 @@ const STOPS: Stop[] = [
     tag: "Borgo di mare · Est",
     blurb:
       "Un golfo riparato dominato dal Forte San Giacomo. Lungomare, piazze vivaci e barche all'ancora nel cuore del versante orientale.",
+    value: "Borgo di mare vivo e servito: ristoranti, nautica e passeggio sul porto.",
+    image: "/images/tour/portoazzurro.svg",
     lat: 42.7589,
     lng: 10.3936,
-    zoom: 16,
   },
 ]
 
@@ -85,26 +92,10 @@ const ease = [0.22, 1, 0.36, 1] as const
 const fmt = (n: number, pos: string, neg: string) =>
   `${Math.abs(n).toFixed(4)}°${n >= 0 ? pos : neg}`
 
-function embedSrc(s: Stop) {
-  return `https://maps.google.com/maps?q=${s.lat},${s.lng}&z=${s.zoom}&hl=it&output=embed`
-}
-function streetViewHref(s: Stop) {
-  return `https://www.google.com/maps?layer=c&cbll=${s.lat},${s.lng}`
-}
-function mapsHref(s: Stop) {
-  return `https://www.google.com/maps/search/?api=1&query=${s.lat},${s.lng}`
-}
-
 export function VirtualTour() {
   const [activeId, setActiveId] = useState(STOPS[0].id)
-  const [loaded, setLoaded] = useState(false)
-
   const index = STOPS.findIndex((s) => s.id === activeId)
   const stop = STOPS[index]
-
-  useEffect(() => {
-    setLoaded(false)
-  }, [activeId])
 
   const go = (dir: 1 | -1) => {
     const next = (index + dir + STOPS.length) % STOPS.length
@@ -138,11 +129,12 @@ export function VirtualTour() {
           </span>
         </div>
         <h1 className="mt-6 max-w-3xl font-heading text-[clamp(2.4rem,6vw,4.6rem)] font-medium leading-[1.02] tracking-[-0.02em]">
-          Cammina sull&apos;isola, prima ancora di arrivarci.
+          Un paradiso da vivere, un investimento che ha senso.
         </h1>
         <p className="mt-6 max-w-2xl text-base leading-8 text-white/60 sm:text-lg">
-          Sei tappe reali tra borghi, porti e spiagge. Esplora ogni luogo sulla mappa
-          interattiva, poi entra in Street View per percorrere vie e calette come se fossi lì.
+          Sei luoghi che raccontano l&apos;Elba: mare cristallino, natura protetta e borghi
+          autentici. Lo scenario in cui nascono le residenze Elba Luce — e le ragioni per cui
+          valgono nel tempo.
         </p>
       </section>
 
@@ -214,45 +206,39 @@ export function VirtualTour() {
             </ol>
           </div>
 
-          {/* Map + info */}
+          {/* Scene + info */}
           <div>
-            {/* Interactive map */}
-            <div className="relative aspect-[4/3] w-full overflow-hidden border border-white/10 bg-[#0b1713] sm:aspect-[16/10] lg:aspect-[16/9]">
+            {/* Scene image */}
+            <div className="relative aspect-[16/10] w-full overflow-hidden border border-white/10 bg-[#0b1713] sm:aspect-[16/9]">
               <AnimatePresence>
-                {!loaded && (
-                  <motion.div
-                    key="loader"
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.4 }}
-                    className="absolute inset-0 z-10 flex items-center justify-center bg-[#0b1713]"
-                  >
-                    <div className="flex items-center gap-3 text-[0.7rem] uppercase tracking-[0.24em] text-white/40">
-                      <span className="size-2 animate-ping rounded-full bg-[#7dba96]" />
-                      Carico la mappa…
-                    </div>
-                  </motion.div>
-                )}
+                <motion.img
+                  key={stop.id}
+                  src={stop.image}
+                  alt={`${stop.name}, Isola d'Elba`}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.9, ease }}
+                  className="tour-kenburns absolute inset-0 h-full w-full object-cover"
+                />
               </AnimatePresence>
 
-              <iframe
-                key={stop.id}
-                title={`Mappa interattiva di ${stop.name}, Isola d'Elba`}
-                src={embedSrc(stop)}
-                onLoad={() => setLoaded(true)}
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                allowFullScreen
-                className="h-full w-full"
-              />
+              {/* Legibility gradient */}
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0d1e1a]/70 via-transparent to-[#0d1e1a]/15" />
 
-              {/* Caption overlay */}
-              <div className="pointer-events-none absolute left-0 top-0 m-4 flex items-center gap-2 bg-[#0d1e1a]/85 px-3 py-2 backdrop-blur-sm">
-                <MapPin className="size-3.5 text-[#7dba96]" />
-                <span className="text-[0.62rem] uppercase tracking-[0.18em] text-white/80">
-                  {stop.name}
-                </span>
-                <span className="text-[0.58rem] tabular-nums text-white/40">
-                  {fmt(stop.lat, "N", "S")} · {fmt(stop.lng, "E", "O")}
+              {/* Caption */}
+              <div className="pointer-events-none absolute bottom-0 left-0 right-0 flex items-end justify-between p-5">
+                <div className="flex items-center gap-2 bg-[#0d1e1a]/70 px-3 py-2 backdrop-blur-sm">
+                  <MapPin className="size-3.5 text-[#7dba96]" />
+                  <span className="text-[0.62rem] uppercase tracking-[0.18em] text-white/85">
+                    {stop.name}
+                  </span>
+                  <span className="text-[0.58rem] tabular-nums text-white/45">
+                    {fmt(stop.lat, "N", "S")} · {fmt(stop.lng, "E", "O")}
+                  </span>
+                </div>
+                <span className="text-[0.55rem] uppercase tracking-[0.28em] text-white/40">
+                  {String(index + 1).padStart(2, "0")} / {String(STOPS.length).padStart(2, "0")}
                 </span>
               </div>
             </div>
@@ -272,6 +258,10 @@ export function VirtualTour() {
                   </p>
                   <h2 className="mt-2 font-heading text-3xl font-medium sm:text-4xl">{stop.name}</h2>
                   <p className="mt-3 max-w-xl text-sm leading-7 text-white/60">{stop.blurb}</p>
+                  <p className="mt-4 flex max-w-xl items-start gap-2.5 text-sm leading-7 text-[#a9d4bc]">
+                    <Sparkles className="mt-1 size-3.5 shrink-0" />
+                    <span>{stop.value}</span>
+                  </p>
                 </motion.div>
               </AnimatePresence>
 
@@ -285,31 +275,25 @@ export function VirtualTour() {
               </button>
             </div>
 
-            {/* Real-asset actions */}
+            {/* CTAs — toward the investment story */}
             <div className="mt-7 flex flex-col gap-3 border-t border-white/10 pt-7 sm:flex-row sm:items-center">
               <a
-                href={streetViewHref(stop)}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group inline-flex h-12 items-center justify-center gap-2.5 bg-white px-6 text-[0.7rem] uppercase tracking-[0.18em] text-[#0d1e1a] transition hover:bg-[#efe3cf]"
+                href="/#contatti"
+                className="inline-flex h-12 items-center justify-center gap-2.5 bg-white px-6 text-[0.7rem] uppercase tracking-[0.18em] text-[#0d1e1a] transition hover:bg-[#efe3cf]"
               >
-                <Footprints className="size-4" />
-                Cammina in Street View
+                Richiedi informazioni
               </a>
               <a
-                href={mapsHref(stop)}
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/#investimento"
                 className="inline-flex h-12 items-center justify-center gap-2.5 border border-white/25 px-6 text-[0.7rem] uppercase tracking-[0.18em] text-white/80 transition hover:border-white hover:text-white"
               >
-                <Navigation className="size-4" />
-                Apri in Google Maps
+                Scopri l&apos;investimento
               </a>
             </div>
 
-            <p className="mt-6 text-[0.62rem] leading-relaxed text-white/30">
-              Mappe e Street View © Google. Le immagini stradali e satellitari sono fornite da
-              Google Maps e si aprono nel servizio ufficiale.
+            <p className="mt-6 text-[0.62rem] leading-relaxed text-white/25">
+              Rappresentazioni illustrative dei luoghi dell&apos;Isola d&apos;Elba. Le coordinate
+              indicano la posizione reale di ciascuna tappa.
             </p>
           </div>
         </div>
