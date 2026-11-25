@@ -2,6 +2,7 @@ import { Check } from "lucide-react"
 
 import { FadeIn } from "@/components/motion/FadeIn"
 import { ParallaxImage } from "@/components/motion/ParallaxImage"
+import { projectMedia } from "@/lib/project-media"
 
 const points = ["Architettura integrata nel paesaggio", "Privacy tra le unita", "Materiali naturali e durevoli", "Vista, luce e orientamento", "Spazi esterni realmente vivibili"]
 
@@ -31,10 +32,10 @@ export function ProjectIntroSection() {
           </div>
           <FadeIn delay={0.1} direction="left">
             <div className="relative mx-auto max-w-[560px]">
-              <ParallaxImage src="/images/architecture/architecture-elba.svg" alt="Architettura mediterranea integrata nel paesaggio" className="relative aspect-[4/5] overflow-hidden rounded-sm" />
+              <ParallaxImage {...projectMedia.villas} className="relative aspect-[4/5] overflow-hidden rounded-sm" />
               <div className="absolute -bottom-6 -left-4 hidden w-2/5 border border-background bg-[#172522] p-3 shadow-xl sm:block">
                 <div className="relative aspect-[4/3] overflow-hidden">
-                  <ParallaxImage src="/images/gallery/stone-detail.svg" alt="Dettaglio materico di pietra locale" className="relative h-full overflow-hidden" />
+                  <ParallaxImage {...projectMedia.pergola} className="relative h-full overflow-hidden" />
                 </div>
               </div>
             </div>

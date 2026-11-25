@@ -2,6 +2,12 @@
 
 Guida completa per sostituire i placeholder con materiali reali e costruire progressivamente l'identità visiva del progetto.
 
+## Masterplan interattivo
+
+- I fotogrammi in `public/images/progetto/` provengono da `elba-hero.mp4` (~1,15 s, 4,75 s, 7,35 s e 8,88 s) e da `elba-drone.mp4` (~8,3 s). Il secondo filmato mostra la vista arredata del primo piano.
+- Il prototipo Blender riprende le coperture in coppi, la pietra, i pergolati e le logge dei render. Posizioni delle ville, geometrie e distribuzioni interne sono indicative. La texture del mare usa `public/images/wave/sea.jpg` (Š. Burdulis, CC BY-SA).
+- Con Blender 5.3, eseguire `blender --background --python scripts/masterplan/build_scene.py` dalla radice del progetto. Lo script genera il sorgente `assets/elba-prototype/elba-luce.blend`, il GLB, le immagini in `public/masterplan/` e le posizioni camera in `lib/masterplan-views.json`. Il parametro `-- --model-only` salta i render.
+
 ---
 
 ## Stato Corrente degli Asset

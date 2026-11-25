@@ -3,6 +3,8 @@
 import { Volume2, VolumeX } from "lucide-react"
 import { useRef, useState } from "react"
 
+import { projectMedia } from "@/lib/project-media"
+
 export function DroneVideoSection() {
   const [muted, setMuted] = useState(true)
   const videoRef = useRef<HTMLVideoElement>(null)
@@ -21,7 +23,7 @@ export function DroneVideoSection() {
         <video
           ref={videoRef}
           src="/videos/elba-drone.mp4"
-          poster="/images/hero/elba-villas-hero.svg"
+          poster={projectMedia.upperFloor.src}
           autoPlay
           muted
           loop
@@ -37,9 +39,9 @@ export function DroneVideoSection() {
         {/* Overlay copy */}
         <div className="absolute inset-0 flex items-end">
           <div className="container-premium pb-8 text-white sm:pb-12 md:pb-16">
-            <p className="text-[0.68rem] uppercase tracking-[0.3em] text-white/45 sm:text-xs">Video drone</p>
+            <p className="text-[0.68rem] uppercase tracking-[0.3em] text-white/65 sm:text-xs">Render architettonico</p>
             <h2 className="mt-3 max-w-xl font-heading text-3xl font-medium leading-tight sm:text-4xl md:text-5xl">
-              Sorvola il progetto e il suo rapporto con il mare.
+              Il primo piano, ambiente per ambiente.
             </h2>
           </div>
         </div>
@@ -59,7 +61,7 @@ export function DroneVideoSection() {
       <div className="bg-[#172522] py-6 sm:py-8">
         <div className="container-premium">
           <p className="max-w-3xl text-sm leading-7 text-white/55 sm:text-base sm:leading-8">
-            Una vista panoramica pensata per mostrare distanze, orientamenti e relazione tra architettura, mare e vegetazione.
+            Una vista dall’alto mostra la distribuzione degli ambienti e il loro collegamento con gli spazi esterni.
           </p>
         </div>
       </div>

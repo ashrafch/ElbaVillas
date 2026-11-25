@@ -128,10 +128,16 @@
     @apply scroll-smooth font-sans;
   }
   body {
-    overflow-x: hidden;
+    overflow-x: clip;
   }
   ::selection {
     background: color-mix(in oklab, var(--primary) 20%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
 }
 

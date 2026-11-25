@@ -1,0 +1,500 @@
+.journey {
+  --story-progress: 0;
+  --story-outro: 0;
+  min-block-size: calc(max(650px, 100svh) + 380svh);
+  background: #0d1e1a;
+}
+
+.hero {
+  --paper: #f7f0df;
+  --line: #f7f0df48;
+  --ink: #13231d;
+  position: sticky;
+  inset-block-start: 0;
+  isolation: isolate;
+  min-block-size: 650px;
+  block-size: 100svh;
+  overflow: hidden;
+  background: #1c3834;
+  color: var(--paper);
+}
+
+.poster,
+.canvas,
+.referenceCoast,
+.dissolve,
+.scrim {
+  position: absolute;
+  inset: 0;
+}
+
+.poster picture {
+  position: absolute;
+  inset: 0;
+}
+
+.poster img {
+  object-fit: cover;
+  object-position: center 47%;
+}
+
+.referenceCoast {
+  opacity: var(--story-outro);
+  pointer-events: none;
+}
+
+.referenceCoast img {
+  object-fit: cover;
+  object-position: 43% center;
+}
+
+.dissolve {
+  opacity: 0;
+  pointer-events: none;
+  background: #10231d;
+}
+
+.canvas {
+  opacity: 0;
+  transition: opacity 350ms ease;
+}
+
+.canvas[data-live="true"] {
+  opacity: 1;
+}
+
+.canvas canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+}
+
+.canvas canvas:active {
+  cursor: grabbing;
+}
+
+.scrim {
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, #0a1816b8 0%, #0a18165c 13%, transparent 33%),
+    linear-gradient(0deg, #0b1714ed 0%, #0b1714a6 13%, transparent 40%),
+    linear-gradient(90deg, #0b17143b, transparent 37%);
+}
+
+.topBar {
+  position: absolute;
+  z-index: 3;
+  top: 88px;
+  left: max(28px, (100% - 1320px) / 2);
+  right: max(28px, (100% - 1320px) / 2);
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: none;
+}
+
+.tag,
+.back,
+.concept {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--paper);
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+}
+
+.stageLabel {
+  display: grid;
+  justify-items: end;
+  gap: 7px;
+}
+
+.storyLine {
+  width: 128px;
+  height: 1px;
+  background: #f7f0df52;
+}
+
+.storyLine span {
+  display: block;
+  width: 100%;
+  height: 1px;
+  transform: scaleX(var(--story-progress));
+  transform-origin: left center;
+  background: #f7f0df;
+}
+
+.back {
+  min-height: 42px;
+  border: 1px solid var(--line);
+  padding: 0 13px 0 9px;
+  background: #14251fd9;
+  pointer-events: auto;
+}
+
+.concept {
+  font-size: 10px;
+  letter-spacing: .12em;
+}
+
+.marker,
+.zoom button,
+.plotList button,
+.neighbors button {
+  display: grid;
+  place-items: center;
+  color: var(--paper);
+}
+
+.marker {
+  position: absolute;
+  z-index: 2;
+  width: 38px;
+  height: 38px;
+  visibility: hidden;
+  transform: translate(-50%, -50%);
+  border: 1px solid #fff4dba8;
+  border-radius: 50%;
+  background: #172922e8;
+  box-shadow: 0 1px 13px #06120e70;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .07em;
+  transition: color 160ms ease, background 160ms ease, box-shadow 160ms ease;
+}
+
+.marker::after {
+  position: absolute;
+  inset: -5px;
+  border: 1px solid #f7f0df5a;
+  border-radius: inherit;
+  content: "";
+  pointer-events: none;
+}
+
+.zoom {
+  z-index: 3;
+  position: absolute;
+  right: max(28px, (100% - 1320px) / 2);
+  top: 50%;
+  display: grid;
+  transform: translateY(-50%);
+  border: 1px solid var(--line);
+  background: #13241cdf;
+}
+
+.zoom button {
+  width: 44px;
+  height: 44px;
+}
+
+.zoom button + button {
+  border-top: 1px solid var(--line);
+}
+
+.bottom {
+  position: absolute;
+  z-index: 4;
+  right: max(28px, (100% - 1320px) / 2);
+  bottom: 32px;
+  left: max(28px, (100% - 1320px) / 2);
+  display: flex;
+  gap: 22px;
+  align-items: flex-end;
+  justify-content: space-between;
+  pointer-events: none;
+}
+
+.intro {
+  min-width: 0;
+}
+
+.title {
+  width: fit-content;
+  font-family: var(--font-heading), Georgia, serif;
+  font-size: clamp(52px, 6.1vw, 112px);
+  font-weight: 500;
+  line-height: .88;
+  letter-spacing: -.055em;
+  text-wrap: balance;
+  text-shadow: 0 2px 20px #06120e5c;
+  outline: none;
+}
+
+.title em {
+  color: #ebd5ae;
+  font-weight: inherit;
+}
+
+.description {
+  max-width: 430px;
+  margin-top: 16px;
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.eyebrow {
+  margin-bottom: 12px;
+  font-size: 12px;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+
+.eyebrow span {
+  margin-inline: 3px;
+  color: #e1c49d;
+}
+
+.overviewControls,
+.villaControls {
+  flex: 0 0 auto;
+  width: min(100%, 390px);
+  padding: 15px;
+  border: 1px solid var(--line);
+  background: #10231de8;
+  box-shadow: 0 14px 38px #09151133;
+  backdrop-filter: blur(12px);
+  pointer-events: auto;
+}
+
+.hint {
+  margin-bottom: 10px;
+  font-size: 13px;
+}
+
+.plotList {
+  display: grid;
+  grid-template-columns: repeat(9, minmax(0, 1fr));
+  gap: 3px;
+}
+
+.plotList button {
+  min-height: 39px;
+  border: 1px solid var(--line);
+  font-size: 11px;
+}
+
+.villaBar {
+  display: flex;
+  gap: 6px;
+  align-items: stretch;
+  justify-content: space-between;
+}
+
+.homeTabs,
+.roomTabs,
+.neighbors {
+  display: flex;
+  align-items: center;
+}
+
+.homeTabs {
+  flex: 1;
+}
+
+.homeTabs button,
+.roomTabs button {
+  flex: 1;
+  min-height: 41px;
+  padding-inline: 8px;
+  border: 1px solid var(--line);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.homeTabs button + button,
+.roomTabs button + button {
+  border-inline-start: 0;
+}
+
+.roomTabs {
+  margin-top: 6px;
+}
+
+.neighbors button {
+  width: 34px;
+  height: 41px;
+  border: 1px solid var(--line);
+}
+
+.neighbors button + button {
+  border-inline-start: 0;
+}
+
+.projectLink {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 2px 0;
+  border-bottom: 1px solid #e8cfa1a6;
+  color: #f3ddb5;
+  font-size: 13px;
+}
+
+.projectLink:hover {
+  color: white;
+}
+
+.panelLinks {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0 8px;
+}
+
+.hero button.projectLink:hover {
+  color: white;
+  background: transparent;
+}
+
+.lookHint {
+  color: #f7f0dfb5;
+  font-size: 11px;
+}
+
+.seaCredit {
+  position: absolute;
+  right: max(28px, (100% - 1320px) / 2);
+  bottom: 8px;
+  color: #f7f0df8a;
+  font-size: 9px;
+}
+
+.hero button {
+  cursor: pointer;
+}
+
+.hero button:hover,
+.hero button[aria-pressed="true"] {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.hero :is(button, a):focus-visible {
+  z-index: 1;
+  outline: 2px solid #fff2cf;
+  outline-offset: 3px;
+}
+
+@media (max-width: 780px) {
+  .journey {
+    min-block-size: calc(max(650px, 100svh) + 330svh);
+  }
+
+  .topBar {
+    top: 80px;
+    left: 16px;
+    right: 16px;
+  }
+
+  .concept {
+    font-size: 9px;
+    text-align: right;
+  }
+
+  .storyLine {
+    width: 86px;
+  }
+
+  .zoom {
+    right: 16px;
+    top: 46%;
+  }
+
+  .zoom button {
+    width: 37px;
+    height: 37px;
+  }
+
+  .marker {
+    width: 32px;
+    height: 32px;
+    font-size: 10px;
+  }
+
+  .bottom {
+    left: 16px;
+    right: 16px;
+    bottom: 24px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 15px;
+  }
+
+  .title {
+    font-size: clamp(47px, 10vw, 70px);
+  }
+
+  .description {
+    margin-top: 10px;
+    font-size: 13px;
+  }
+
+  .overviewControls,
+  .villaControls {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .hint,
+  .projectLink {
+    font-size: 12px;
+  }
+
+  .plotList button {
+    min-height: 37px;
+  }
+
+  .roomTabs button,
+  .homeTabs button {
+    padding-inline: 6px;
+  }
+
+  .seaCredit {
+    right: 16px;
+    bottom: 7px;
+  }
+
+  .scrim {
+    background:
+      linear-gradient(180deg, #0a1816b8 0%, #0a18164c 15%, transparent 31%),
+      linear-gradient(0deg, #0b1714f8 0%, #0b1714ba 19%, transparent 43%);
+  }
+}
+
+@media (max-width: 380px) {
+  .homeTabs button,
+  .roomTabs button {
+    padding-inline: 4px;
+    font-size: 11px;
+  }
+
+  .neighbors button {
+    width: 29px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .journey {
+    min-block-size: 0;
+  }
+
+  .hero {
+    position: relative;
+  }
+
+  .storyLine {
+    display: none;
+  }
+
+  .canvas,
+  .marker {
+    transition: none;
+  }
+}

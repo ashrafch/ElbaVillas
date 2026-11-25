@@ -4,10 +4,11 @@ import { useEffect, useRef } from "react"
 import {
   motion,
   useInView,
-  useReducedMotion,
   useSpring,
   useTransform,
 } from "framer-motion"
+
+import { useMotionPreference } from "./use-motion-preference"
 
 interface CountUpProps {
   to: number
@@ -25,7 +26,7 @@ interface CountUpProps {
 export function CountUp({ to, decimals = 0, className, stiffness = 70 }: CountUpProps) {
   const ref = useRef<HTMLSpanElement>(null)
   const inView = useInView(ref, { once: true, margin: "-60px" })
-  const reduced = useReducedMotion()
+  const reduced = useMotionPreference()
 
   const mv = useSpring(0, { stiffness, damping: 24, mass: 1 })
   const text = useTransform(mv, (v) =>

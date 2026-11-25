@@ -1,5 +1,6 @@
 import { FadeIn } from "@/components/motion/FadeIn"
 import { ParallaxImage } from "@/components/motion/ParallaxImage"
+import { projectMedia } from "@/lib/project-media"
 
 const features = [
   ["01", "Pietra locale", "Basamenti e dettagli dialogano con la materia dell'isola."],
@@ -12,15 +13,13 @@ export function ArchitectureSection() {
     <section className="bg-[#f7f1e7] py-24 md:py-32">
       <div className="container-premium grid gap-12 lg:grid-cols-2 lg:items-center">
         {/* Staggered image pair — gentle scroll parallax */}
-        <FadeIn direction="right" className="relative hidden gap-4 sm:grid-cols-2 lg:grid">
+        <FadeIn direction="right" className="relative grid grid-cols-2 gap-4">
           <ParallaxImage
-            src="/images/architecture/stone-detail.svg"
-            alt="Dettaglio di materiali naturali"
+            {...projectMedia.pergola}
             className="relative aspect-[4/5] overflow-hidden sm:mt-16"
           />
           <ParallaxImage
-            src="/images/architecture/architecture-elba.svg"
-            alt="Villa contemporanea con terrazza panoramica"
+            {...projectMedia.facade}
             className="relative aspect-[4/5] overflow-hidden"
           />
         </FadeIn>

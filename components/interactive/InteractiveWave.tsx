@@ -228,7 +228,7 @@ export function InteractiveWave() {
       <div ref={wrapRef} className="relative h-[210px] w-full sm:h-[260px]">
         <canvas
           ref={canvasRef}
-          className="block h-full w-full touch-none [image-rendering:auto]"
+          className="block h-full w-full touch-pan-y [image-rendering:auto]"
           style={{ cursor: "crosshair" }}
         />
         {/* blend into the dark sections above and below */}
